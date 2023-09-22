@@ -1,0 +1,12 @@
+res://trail_gradient_presets/base.tres::68eeb100a4581238c63b1443aedd0e4a::1693333125::res://.godot/exported/133200997/export-91c82827023982a126fe06d9e17d6056-base.res
+res://trail_gradient_presets/boost.tres::7148b325f2471d617319527e7effb0f7::1692119249::res://.godot/exported/133200997/export-44108ec3d4efa0dbc2cda7edefda53fd-boost.res
+res://scenes/turret.tscn::8abd38f9946928c98ef9de75e523cef0::1694885789::res://.godot/exported/133200997/export-39a5d02370b65c0577139fa32878e6d6-turret.scn
+res://scenes/player.tscn::5b7508dda8e0ea37686f58b2fe138514::1694885789::res://.godot/exported/133200997/export-234fb6894ec6226e856ab7f825500d3d-player.scn
+res://scenes/bullet.tscn::b5ff92517a91c4b0383c839604cf6cea::1694885789::res://.godot/exported/133200997/export-6d8e6ff1e6f20a36e0402d27c623c86c-bullet.scn
+res://scenes/ui/pause_menu.tscn::9deb9cdf51cfb3faac923a9054b7273a::1694885789::res://.godot/exported/133200997/export-14114c379f76b1c04097459e2387a1e6-pause_menu.scn
+res://scenes/ui/pause_main_menu.tscn::6a64e54c316bf9e7774820e74a55e640::1694885789::res://.godot/exported/133200997/export-9ac1be7317d27e93343f8e2c1e50b6da-pause_main_menu.scn
+res://scenes/ui/pause_menu_options.tscn::d4cf29f14e804c52c0a7d79eea7d4ce4::1694886085::res://.godot/exported/133200997/export-cdf31c8035da0a539d7d5f94948bc7fb-pause_menu_options.scn
+res://scenes/ui/pause_menu_inputs.tscn::5ff5180639bfa5aeb21b4da36fbb6d23::1694885971::res://.godot/exported/133200997/export-4ab7678dcec8516befcea93c04b6c6bb-pause_menu_inputs.scn
+res://scenes/target.tscn::a5d35f3b4d7e2ea9c53321827c7be17b::1694885789::res://.godot/exported/133200997/export-f635ba2759e519dad7ea795ed4e0873f-target.scn
+res://scenes/death_particles.tscn::2167185dcd395f192e9db90c2b6b1f39::1694885789::res://.godot/exported/133200997/export-8005ddacf6f94d9a61fc15010526600b-death_particles.scn
+res://test.tscn::6fbc159ab4364577896ff5cf6a5cb1f2::1694885789::res://.godot/exported/133200997/export-f0a4ea32b72b64218d23e48a955cbc61-test.scn

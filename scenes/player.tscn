@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3 uid="uid://pa4b5sl2ju1n"]
+
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_pyu58"]
+[ext_resource type="PackedScene" uid="uid://bhrculwo037fi" path="res://scenes/ui/pause_menu.tscn" id="2_flw1n"]
+[ext_resource type="Script" path="res://scenes/PolygonBody.gd" id="2_o4n6e"]
+[ext_resource type="PackedScene" uid="uid://ctlk12wtd554v" path="res://scenes/target.tscn" id="3_u408q"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bcdmy"]
+height = 22.0
+
+[node name="player" type="CharacterBody2D"]
+motion_mode = 1
+wall_min_slide_angle = 3.14159
+platform_on_leave = 2
+safe_margin = 0.1
+script = ExtResource("1_pyu58")
+
+[node name="body" type="Polygon2D" parent="."]
+position = Vector2(0, 1)
+color = Color(50.89, 49.11, 47.93, 1)
+polygon = PackedVector2Array(-17, -16, 38, -1, -17, 14, -10, -1)
+script = ExtResource("2_o4n6e")
+
+[node name="camera" type="Camera2D" parent="."]
+zoom = Vector2(0.25, 0.25)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="ui" type="CanvasLayer" parent="camera"]
+process_mode = 3
+
+[node name="pause_menu" parent="camera/ui" instance=ExtResource("2_flw1n")]
+
+[node name="shoot_timer" type="Timer" parent="."]
+
+[node name="col" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_bcdmy")
+
+[node name="ray_boost" type="RayCast2D" parent="."]
+target_position = Vector2(-50, 0)
+
+[node name="stun_timer" type="Timer" parent="."]
+
+[node name="target" parent="." instance=ExtResource("3_u408q")]
+visible = false
+
+[node name="auto_target" type="Area2D" parent="."]
+visible = false
+collision_layer = 3
+collision_mask = 3
+
+[node name="col" type="CollisionPolygon2D" parent="auto_target"]
+position = Vector2(-108, 15)
+polygon = PackedVector2Array(-2466, -1452, 2669, -1445, 2631, 1425, -2451, 1432)
+
+[node name="trail_timer" type="Timer" parent="."]
+
+[node name="trail" type="Line2D" parent="."]
+
+[connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="timeout" from="stun_timer" to="." method="_on_stun_timer_timeout"]
+[connection signal="body_entered" from="auto_target" to="." method="_on_auto_target_body_entered"]
+[connection signal="body_exited" from="auto_target" to="." method="_on_auto_target_body_exited"]
+[connection signal="timeout" from="trail_timer" to="." method="_on_trail_timer_timeout"]

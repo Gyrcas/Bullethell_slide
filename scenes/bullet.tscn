@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://3x4b0ya0m6qr"]
+
+[ext_resource type="Script" path="res://scenes/bullet.gd" id="1_d8fmb"]
+[ext_resource type="Script" path="res://scenes/PolygonBody.gd" id="2_aj6r4"]
+
+[node name="bullet" type="CharacterBody2D"]
+scale = Vector2(1.5, 1.5)
+collision_layer = 2
+script = ExtResource("1_d8fmb")
+
+[node name="sprite" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-9, -11, 17, 0, -8, 9, -4, 0)
+script = ExtResource("2_aj6r4")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-9, -11, 17, 0, -8, 9, -4, 0)

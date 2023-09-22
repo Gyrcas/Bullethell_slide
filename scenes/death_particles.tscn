@@ -1,0 +1,72 @@
+[gd_scene load_steps=11 format=3 uid="uid://jnmauf8sxcsu"]
+
+[ext_resource type="Script" path="res://scenes/death_particles.gd" id="1_dpkyi"]
+[ext_resource type="Texture2D" uid="uid://dm8gav5stwvra" path="res://spot.png" id="2_e2onb"]
+
+[sub_resource type="Gradient" id="Gradient_utwlv"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_e4j0c"]
+gradient = SubResource("Gradient_utwlv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_svevc"]
+resource_local_to_scene = true
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+flatness = 1.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_max = 487.18
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 3.0
+scale_max = 3.0
+color_ramp = SubResource("GradientTexture1D_e4j0c")
+
+[sub_resource type="Gradient" id="Gradient_bajbf"]
+offsets = PackedFloat32Array(0, 0.617647, 1)
+colors = PackedColorArray(0.917647, 0.917647, 0.917647, 0.388235, 0.993462, 0.993462, 0.993462, 0.0784314, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tpjob"]
+gradient = SubResource("Gradient_bajbf")
+
+[sub_resource type="Curve" id="Curve_dl7n8"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.18797, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_5dmtf"]
+curve = SubResource("Curve_dl7n8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mcqih"]
+resource_local_to_scene = true
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 10.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_5dmtf")
+color_ramp = SubResource("GradientTexture1D_tpjob")
+turbulence_noise_strength = 5.87
+turbulence_noise_speed_random = 2.45
+
+[node name="death_particles" type="GPUParticles2D"]
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_svevc")
+one_shot = true
+explosiveness = 1.0
+randomness = 0.84
+trail_enabled = true
+script = ExtResource("1_dpkyi")
+
+[node name="disapear_timer" type="Timer" parent="."]
+
+[node name="blast" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_mcqih")
+texture = ExtResource("2_e2onb")
+one_shot = true
+
+[connection signal="timeout" from="disapear_timer" to="." method="_on_disapear_timer_timeout"]

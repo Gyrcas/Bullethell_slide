@@ -1,0 +1,10 @@
+res://test.tscn
+res://scenes/ui/InputsMapper.gd
+res://data/settings.json
+res://scenes/turret.tscn
+res://scenes/bullet.tscn
+res://scenes/target.tscn
+res://scenes/player.tscn
+res://scenes/death_particles.tscn
+res://scenes/ui/pause_menu.tscn
+res://scenes/ui/pause_menu_inputs.tscn
