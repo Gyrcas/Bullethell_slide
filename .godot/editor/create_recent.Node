@@ -1,8 +1,9 @@
+Polygon2D
+Scatter2D
 MultiMeshInstance2D
 DialogueNode
 PolygonNavigationRegion2D
 Sprite2D
-Polygon2D
 ColorRect
 SmoothStaticPolygon2D
 SmoothPolygon2D
@@ -29,5 +30,3 @@ GPUParticles2D
 CollisionShape2D
 CollisionPolygon2D
 Area2D
-DialogueBoxMSG
-DialogueBoxCondition
