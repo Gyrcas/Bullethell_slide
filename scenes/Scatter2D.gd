@@ -1,18 +1,27 @@
 @tool
-extends Node2D
+extends Sprite2D
 class_name Scatter2D
 
-@export var texture : Texture2D : set = set_texture
+@export var scatter_texture : Texture2D : set = set_scatter_texture
 
-func set_texture(value : Texture2D) -> void:
-	texture = value
+func set_scatter_texture(value : Texture2D) -> void:
+	scatter_texture = value
 	if preload_scatter:
 		generate(seed_)
 
-@export var color : Color : set = set_color
+		
+func _set(property : StringName, value : Variant) -> bool:
+	if property == "texture":
+		texture = value
+		if preload_scatter:
+			generate(seed_)
+		return true
+	return false
 
-func set_color(value : Color) -> void:
-	color = value
+@export var resolution : Vector2i = Vector2i(1280,720) : set = set_resolution
+
+func set_resolution(value : Vector2i) -> void:
+	resolution = value
 	if preload_scatter:
 		generate(seed_)
 
@@ -47,7 +56,6 @@ func set_preload_scatter(value : bool) -> void:
 
 func set_dimensions(value : Vector2) -> void:
 	dimensions = value
-	queue_redraw()
 	if preload_scatter:
 		generate(seed_)
 
@@ -93,17 +101,6 @@ func set_rotate_range_max(value : float) -> void:
 	if preload_scatter:
 		generate(seed_)
 
-func _draw() -> void:
-	if Engine.is_editor_hint():
-		var zone : PackedVector2Array = [
-			Vector2.ZERO,
-			Vector2(0, dimensions.y),
-			dimensions,
-			Vector2(dimensions.x, 0),
-			Vector2.ZERO
-		]
-		draw_polyline(zone,Color(0,0,0))
-
 func _ready() -> void:
 	if !Engine.is_editor_hint():
 		if !preload_scatter && use_seed:
@@ -111,31 +108,49 @@ func _ready() -> void:
 		elif !use_seed:
 			generate()
 
-func create_sprite(sprite : Sprite2D, pos : Vector2, rot : float) -> void:
+func create_sprite(node : Node2D,sprite : Sprite2D, pos : Vector2, rot : float) -> void:
 	var new_sprite : Sprite2D = sprite.duplicate()
 	new_sprite.position = pos
 	new_sprite.rotation_degrees = rot
-	add_child(new_sprite)
+	node.add_child(new_sprite)
 
 func generate(_seed : int = -1) -> int:
+	if !Engine.is_editor_hint():
+		return _seed
 	UT.remove_children(self)
 	if _seed < 0:
 		randomize()
 		_seed = randi_range(0,100000000)
 	seed(_seed)
+	var view : SubViewport = SubViewport.new()
+	view.size = dimensions
+	add_child(view)
+	var background : ColorRect = ColorRect.new()
+	background.color = Color(1,1,1)
+	background.size = dimensions
+	view.add_child(background)
+	var node : Node2D = Node2D.new()
+	view.add_child(node)
 	var pos : Vector2 = Vector2.ZERO
 	var sprite : Sprite2D = Sprite2D.new()
-	sprite.texture = texture
-	sprite.modulate = color
+	sprite.texture = scatter_texture
 	var sprite_scale : float = randf_range(min_scale,max_scale)
 	sprite.scale = Vector2(sprite_scale,sprite_scale)
 	while pos.x < dimensions.x || pos.y < dimensions.y:
 		var sprite_pos : Vector2 = pos
 		var pos_y : float = randf_range(min_distance.y,max_distance.y) * 1 if randi_range(-1,1) >= 0 else -1.0
 		sprite_pos.y += pos_y if sprite_pos.y + pos_y < dimensions.y else dimensions.y
-		create_sprite(sprite,sprite_pos, randf_range(rotate_range_min,rotate_range_max) * 1 if randf_range(-1,1) >= 0 else -1.0)
+		create_sprite(node,sprite,sprite_pos, randf_range(rotate_range_min,rotate_range_max) * 1 if randf_range(-1,1) >= 0 else -1.0)
 		pos.x += randf_range(min_distance.x, max_distance.x)
 		if pos.x > dimensions.x && pos.y < dimensions.y:
 			pos.y += (max_distance.y - min_distance.y) / 2 + min_distance.y
 			pos.x = 0
+	view.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	await RenderingServer.frame_post_draw
+	var view_texture : ViewportTexture = view.get_texture()
+	var image : Image = view_texture.duplicate().get_image()
+	image.resize(resolution.x,resolution.y)
+	#image.flip_y()
+	texture = ImageTexture.create_from_image(image)
+	view.queue_free()
 	return _seed

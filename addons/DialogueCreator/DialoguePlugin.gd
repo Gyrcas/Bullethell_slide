@@ -3,7 +3,7 @@ extends EditorPlugin
 
 
 func _enter_tree() -> void:
-	var path : String = "res://addons/DialogueCreator/"
+	const path : String = "res://addons/DialogueCreator/"
 	add_custom_type("DialogueNode","Node",load(path + "nodes/DialogueNode.gd"),load(path + "icons/icon.svg"))
 	add_custom_type("DialoguePlayer","DialogueNode",load(path + "nodes/DialoguePlayer.gd"),load(path + "icons/icon.svg"))
 	add_custom_type("DialogueTree","DialogueNode",load(path + "nodes/DialogueTree.gd"),load(path + "icons/icon.svg"))

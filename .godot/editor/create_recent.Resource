@@ -1,3 +1,4 @@
+Resource
 JSON
 ShaderMaterial
 Curve
