@@ -1,10 +1,2 @@
 res://test.tscn
-res://entities/turret.tscn
-res://entities/bullet.tscn
-res://scenes/death_particles.tscn
-res://menus/pause_menu_inputs.tscn
-res://entities/player.tscn
-res://menus/pause_menu_options.tscn
-res://ui/target.tscn
-res://addons/smoothpolygon/OutlineSmoothPolygon2D.gd
 res://addons/smoothpolygon/SmoothPolygon2D.gd

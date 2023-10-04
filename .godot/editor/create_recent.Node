@@ -1,14 +1,15 @@
+VisibleOnScreenNotifier2D
+Node2D
+Node
 Turret
 GPUParticles2D
 CPUParticles2D
-Node2D
 SmoothStaticPolygon2D
 MeshInstance2D
 Sprite2D
 Scatter2D
 MultiMeshInstance2D
 SmoothPolygon2D
-VisibleOnScreenNotifier2D
 CollisionShape2D
 CollisionPolygon2D
 Area2D
@@ -29,4 +30,3 @@ DirectionalLight2D
 GridContainer
 InputsMapper
 Container
-Label

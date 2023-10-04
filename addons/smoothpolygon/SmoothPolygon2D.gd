@@ -57,6 +57,18 @@ func set_ignore_points_outline(value : PackedInt32Array) -> void:
 	var results : Dictionary = smoothen_polygon(polygon)
 	outline_node.outlines = results.outlines
 
+@export var angle_tolerance : float = 50 : set = set_angle_tolerance
+
+func set_angle_tolerance(value : float) -> void:
+	angle_tolerance = value
+	queue_redraw()
+
+@export var max_skips : int = 100 : set = set_max_skips
+
+func set_max_skips(value : int) -> void:
+	max_skips = value
+	queue_redraw()
+
 @export_group("DON'T TOUCH")
 ## Do not change value of this variable
 @export var smoothed_pol : PackedVector2Array = []
@@ -132,11 +144,25 @@ func smoothen_polygon(pol : PackedVector2Array) -> Dictionary:
 	
 	var cur_point : int = 0
 	#While curve not finished
+	var ang_tol : float = deg_to_rad(angle_tolerance)
+	var cur_skips : int = 0
+	var i = 0
 	while last_pos != pos:
 		t += intervale
+		
+		#Test the angle of the point and skip it depending on given params
+		var sample : Vector2 = curve.sample_baked(t,true)
+		var angle : float = abs(curve.sample_baked(t - intervale * 2).direction_to(pos).normalized().angle_to(pos.direction_to(sample).normalized()))
+		if angle < ang_tol:
+			cur_skips += 1
+			if cur_skips < max_skips:
+				continue
+			else:
+				cur_skips = 0
+		i += 1
 		last_pos = pos
 		#Get pos from the curve offset t
-		pos = curve.sample_baked(t,true)
+		pos = sample
 		#Check if there is any actual possible change to the form. 
 		#If not, skip to the next
 		if (cur_point + 1 < curve.point_count &&
@@ -182,6 +208,7 @@ func smoothen_polygon(pol : PackedVector2Array) -> Dictionary:
 		current_outline = []
 	
 	#Return the new polygon, the rect and the outlines
+	print(i)
 	return {
 		"polygon":new_poly,
 		"top":top+global_position.y,
