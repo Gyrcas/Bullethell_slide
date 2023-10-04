@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dtqgsir4gl6sa"]
+[gd_scene load_steps=8 format=3 uid="uid://dtqgsir4gl6sa"]
 
 [ext_resource type="Script" path="res://entities/entities_script/turret.gd" id="1_h6hpn"]
 [ext_resource type="Script" path="res://scenes/PolygonBody.gd" id="2_0vk7u"]
@@ -59,6 +59,21 @@ _data = {
 "death": SubResource("Animation_0a6kv")
 }
 
+[sub_resource type="Shader" id="Shader_sf3ja"]
+code = "shader_type particles;
+
+void start() {
+	// Place start code here.
+}
+
+void process() {
+	// Place process code here.
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hyryx"]
+shader = SubResource("Shader_sf3ja")
+
 [node name="turret" type="StaticBody2D"]
 script = ExtResource("1_h6hpn")
 
@@ -88,6 +103,9 @@ libraries = {
 
 [node name="target_node" type="Node2D" parent="."]
 position = Vector2(0, -41)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+process_material = SubResource("ShaderMaterial_hyryx")
 
 [connection signal="timeout" from="timer_burst" to="." method="_on_timer_burst_timeout"]
 [connection signal="timeout" from="timer_bullet" to="." method="_on_timer_bullet_timeout"]

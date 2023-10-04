@@ -1,20 +1,26 @@
-[gd_scene load_steps=10 format=3 uid="uid://ch0xv1s53qf6m"]
+[gd_scene load_steps=8 format=3 uid="uid://ch0xv1s53qf6m"]
 
-[ext_resource type="Script" path="res://addons/smoothpolygon/SmoothPolygon2D.gd" id="3_5ocb5"]
-[ext_resource type="Script" path="res://addons/smoothpolygon/SmoothStaticPolygon2D.gd" id="4_3t85v"]
+[ext_resource type="Script" path="res://addons/smoothpolygon/SmoothStaticPolygon2D.gd" id="3_8ddh7"]
 [ext_resource type="PackedScene" uid="uid://pa4b5sl2ju1n" path="res://entities/player.tscn" id="4_nr1bs"]
-[ext_resource type="Texture2D" uid="uid://dm8gav5stwvra" path="res://spot.png" id="5_vk4ia"]
-[ext_resource type="PackedScene" uid="uid://dtqgsir4gl6sa" path="res://entities/turret.tscn" id="6_4avjo"]
-[ext_resource type="Script" path="res://light/sun.gd" id="6_b6epa"]
-[ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="7_fnlnu"]
+[ext_resource type="Texture2D" uid="uid://dcd0o2gh4toex" path="res://star.png" id="4_pvx28"]
+[ext_resource type="PackedScene" uid="uid://dtqgsir4gl6sa" path="res://entities/turret.tscn" id="5_4bmb6"]
+[ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="6_4r8h5"]
 
-[sub_resource type="Curve" id="Curve_lkdio"]
-max_value = 3.0
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.503106, 3), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
+[sub_resource type="ArrayMesh" id="ArrayMesh_62w4p"]
+_surfaces = [{
+"2d": true,
+"aabb": AABB(-100, -100, 0, 200, 200, 0),
+"attribute_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0),
+"format": 33558545,
+"index_count": 6,
+"index_data": PackedByteArray(3, 0, 0, 0, 1, 0, 1, 0, 2, 0, 3, 0),
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 200, 66, 0, 0, 200, 66, 0, 0, 200, 194, 0, 0, 200, 66, 0, 0, 200, 194, 0, 0, 200, 194, 0, 0, 200, 66, 0, 0, 200, 194)
+}]
 
-[sub_resource type="Resource" id="Resource_uwh8e"]
-script = ExtResource("7_fnlnu")
+[sub_resource type="Resource" id="Resource_chews"]
+script = ExtResource("6_4r8h5")
 ignore_sender = true
 speed = 2.5
 max_speed = 15.0
@@ -26,82 +32,44 @@ precision = 0.05
 [node name="test" type="Node2D"]
 position = Vector2(0, 1)
 
-[node name="Level" type="Node2D" parent="."]
-position = Vector2(-3481, 1089)
-
-[node name="Polygon2D" type="Polygon2D" parent="Level"]
-position = Vector2(-6526, 1548)
-color = Color(0.321569, 0, 0.478431, 1)
-polygon = PackedVector2Array(-24431, -18753, 51932, -24777, 43062, 21926, -18406, 13115)
-
-[node name="sun" type="PointLight2D" parent="Level"]
+[node name="Sprite2D" type="MeshInstance2D" parent="."]
 visible = false
-position = Vector2(5535, -5201.99)
-scale = Vector2(7.58453, 2.6325)
-color = Color(1, 0.254902, 0.0705882, 1)
-energy = 3.0
-texture = ExtResource("5_vk4ia")
-texture_scale = 50.0
-script = ExtResource("6_b6epa")
-light_curve = SubResource("Curve_lkdio")
-
-[node name="SmoothPolygon2D" type="Polygon2D" parent="Level"]
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(-4008, -5460, -1062, -8304, 2671, -8914, 5059, -7822, 6405, -7390, 7421, -8177, 8437, -8965, 10494, -8685, 11205, -6349, 10824, -3606, 11739, -1447, 12881, -202, 10799, 1347, 5999, 992, 1884, 433)
-script = ExtResource("3_5ocb5")
-polygon_color = Color(0.172549, 0.694118, 1, 1)
-ignore_points = PackedInt32Array()
-outline = Color(0, 0, 0, 1)
-ignore_points_outline = PackedInt32Array()
-base_polygon = PackedVector2Array(-4008, -5460, -1062, -8304, 2671, -8914, 5059, -7822, 6405, -7390, 7421, -8177, 8437, -8965, 10494, -8685, 11205, -6349, 10824, -3606, 11739, -1447, 12881, -202, 10799, 1347, 5999, 992, 1884, 433)
-
-[node name="SmoothPolygon2D" type="Polygon2D" parent="Level/SmoothPolygon2D"]
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(-1384, -5307, -743, -6418, 282, -7122, 1990, -7400, 3678, -7037, 5279, -6418, 6369, -5777, 7800, -6161, 8334, -7635, 9167, -7870, 9167, -6653, 8568, -4901, 8782, -3171, 12989, -715, 10939, 1250, 8291, -1911, 7138, -2424, 6646, -2103, 6390, -1634, 4511, -1377, 3849, -1399, 3635, -2232, 2161, -2381, 1456, -2338, 1435, -2766, 2460, -3065, 3977, -2744, 4511, -1954, 6027, -1890, 6604, -2445, 7330, -2680, 8077, -2531, 8269, -2851, 7992, -4218, 5835, -5649, 3998, -6482, 2289, -6695, 709, -6033, 196, -4111, -1213, -4175)
-script = ExtResource("3_5ocb5")
-polygon_color = Color(0, 0.596078, 1, 1)
-ignore_points = PackedInt32Array()
-outline = Color(0, 0, 0, 1)
-ignore_points_outline = PackedInt32Array()
-base_polygon = PackedVector2Array(-1384, -5307, -743, -6418, 282, -7122, 1990, -7400, 3678, -7037, 5279, -6418, 6369, -5777, 7800, -6161, 8334, -7635, 9167, -7870, 9167, -6653, 8568, -4901, 8782, -3171, 12989, -715, 10939, 1250, 8291, -1911, 7138, -2424, 6646, -2103, 6390, -1634, 4511, -1377, 3849, -1399, 3635, -2232, 2161, -2381, 1456, -2338, 1435, -2766, 2460, -3065, 3977, -2744, 4511, -1954, 6027, -1890, 6604, -2445, 7330, -2680, 8077, -2531, 8269, -2851, 7992, -4218, 5835, -5649, 3998, -6482, 2289, -6695, 709, -6033, 196, -4111, -1213, -4175)
-
-[node name="Polygon2D2" type="Polygon2D" parent="Level"]
-polygon = PackedVector2Array(9696, 727, 12276, -1015, 13930, -975, 13334, 194, 11840, 1727, 9786, 2233)
-vertex_colors = PackedColorArray(0, 0.596078, 1, 1, 0, 0.596078, 1, 1, 0.321569, 0, 0.478431, 1, 0.321569, 0, 0.478431, 1, 0.321569, 0, 0.478431, 1, 0.321569, 0, 0.478431, 1)
-
-[node name="SmoothStaticPolygon2D" type="Polygon2D" parent="Level"]
-clip_children = 2
-z_index = 2
-position = Vector2(2286, -665)
-scale = Vector2(6.79653, 5.34244)
-color = Color(0.239216, 0.239216, 0.239216, 0)
-polygon = PackedVector2Array(-532.477, 617.508, -1072.31, 526.913, -1440.15, 36.3129, -1677.47, -906.889, -1440.15, -2212.47, -372.396, -2808.64, 1413.22, -3155.86, 2371.36, -1126.26, 1638.63, 111.934, 1074.52, -373.05, 992.271, -748.534, 1086.14, -1342.46, 842.93, -1395.24, 641.21, -1036.79, -136.687, -1423.13, -81.8064, -1079.47, 241.3, -1063.18, 476.861, -911.943, 775.543, -594.672, 845.284, -399.817, 698.15, -402.063, 529.241, -278.15, 394.76, -287.509, 350.032, -435.007, -271.609, -1020.32, -664.898, -735.245, -184.065, -259.058, -72.2427, -211.514, 65.916, -268.042, 168.321, -218.065, 159.199, -32.9437, 411.681, -92.0928, 629.733, -163.783, 775.543, -258.87, 1294.48, 353.396, 831.895, 670.293, 48.8485, 685.455)
-uv = PackedVector2Array(-532.477, 617.508, -1072.31, 526.913, -1440.15, 36.3129, -1677.47, -906.889, -1440.15, -2212.47, -372.396, -2808.64, 1413.22, -3155.86, 1960.41, -1142.36, 1638.63, 111.934, 1074.52, -373.05, 992.271, -748.534, 1086.14, -1342.46, 842.93, -1395.24, 641.21, -1036.79, -138.894, -1481.91, -601.63, -976.333, -548.221, -587.746, 185.389, -677.219, 153.608, -841.937, -131.685, -902.397, -81.8064, -1079.47, 241.3, -1063.18, 476.861, -911.943, 783.047, -615.449, 845.284, -399.817, 698.15, -402.063, 529.241, -278.15, 394.76, -287.509, 350.032, -435.007, -51.4968, -502.392, -196.424, -387.838, -184.065, -259.058, -72.2427, -211.514, 114.617, -282.829, 159.346, -30.8847, 394.76, -102.2, 629.733, -163.783, 775.543, -258.87, 1294.48, 353.396, 831.895, 670.293, 48.8485, 685.455)
-script = ExtResource("4_3t85v")
-polygon_color = Color(0, 0.505882, 0.596078, 1)
-ignore_points = PackedInt32Array()
-outline = true
-outline_color = true
-outline_width = 4
-ignore_points_outline = PackedInt32Array()
-base_polygon = PackedVector2Array(-532.477, 617.508, -1072.31, 526.913, -1440.15, 36.3129, -1677.47, -906.889, -1440.15, -2212.47, -372.396, -2808.64, 1413.22, -3155.86, 2371.36, -1126.26, 1638.63, 111.934, 1074.52, -373.05, 992.271, -748.534, 1086.14, -1342.46, 842.93, -1395.24, 641.21, -1036.79, -136.687, -1423.13, -81.8064, -1079.47, 241.3, -1063.18, 476.861, -911.943, 775.543, -594.672, 845.284, -399.817, 698.15, -402.063, 529.241, -278.15, 394.76, -287.509, 350.032, -435.007, -271.609, -1020.32, -664.898, -735.245, -184.065, -259.058, -72.2427, -211.514, 65.916, -268.042, 168.321, -218.065, 159.199, -32.9437, 411.681, -92.0928, 629.733, -163.783, 775.543, -258.87, 1294.48, 353.396, 831.895, 670.293, 48.8485, 685.455)
-
-[node name="SmoothPolygon2D2" type="Polygon2D" parent="Level"]
-z_index = 2
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(-4316, -8749, -4452, -9562, -3367, -9562, 7397, -11325, 4634, -8545, 362, -8613, -2180, -7393, -2601, -2985, -1148, -2743, -27, -2360, 256, -1956, 870, -213, -1605, -1828, -3274, -2151)
-script = ExtResource("3_5ocb5")
-polygon_color = Color(1, 0.301961, 0.0470588, 1)
-ignore_points = PackedInt32Array()
-outline = true
-outline_color = true
-outline_width = 16
-ignore_points_outline = PackedInt32Array()
-base_polygon = PackedVector2Array(-4316, -8749, -4452, -9562, -3367, -9562, 7397, -11325, 4634, -8545, 362, -8613, -2180, -7393, -2601, -2985, -1148, -2743, -27, -2360, 256, -1956, 870, -213, -1605, -1828, -3274, -2151)
+mesh = SubResource("ArrayMesh_62w4p")
+texture = ExtResource("4_pvx28")
 
 [node name="player" parent="." instance=ExtResource("4_nr1bs")]
 position = Vector2(2, 15)
 
-[node name="turret" parent="." instance=ExtResource("6_4avjo")]
-position = Vector2(-653, -1004)
-bullet_preset = SubResource("Resource_uwh8e")
+[node name="turret" parent="." instance=ExtResource("5_4bmb6")]
+position = Vector2(-1492, 1678)
+rotation = -0.580779
+bullet_preset = SubResource("Resource_chews")
+
+[node name="SmoothStaticPolygon2D" type="Polygon2D" parent="."]
+self_modulate = Color(0.498039, 0.627451, 1, 1)
+clip_children = 2
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(-7422, 1244, -6707, 627, -4205, 1831, -1885, 1831, 16, 819, 2879, 950, 4088, 143, 2577, -955, -61, -1241, 1091, -2521, 5309, -1866, 6234, 126, 5619, 2583, 1971, 4119, -1389, 4215, -4141, 3911, -6061, 3511, -8045, 2599)
+script = ExtResource("3_8ddh7")
+allowed_distance = 3000.0
+ignore_points = PackedInt32Array()
+outline = true
+outline_color = true
+outline_width = 10
+ignore_points_outline = PackedInt32Array()
+base_polygon = PackedVector2Array(-7422, 1244, -6707, 627, -4205, 1831, -1885, 1831, 16, 819, 2879, 950, 4088, 143, 2577, -955, -61, -1241, 1091, -2521, 5309, -1866, 6234, 126, 5619, 2583, 1971, 4119, -1389, 4215, -4141, 3911, -6061, 3511, -8045, 2599)
+
+[node name="SmoothStaticPolygon2D2" type="Polygon2D" parent="."]
+self_modulate = Color(0.498039, 0.627451, 1, 1)
+clip_children = 2
+position = Vector2(6877, 5681)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(-7422, 1244, -6707, 627, -4205, 1831, -1885, 1831, 16, 819, 2879, 950, 4088, 143, 2577, -955, -61, -1241, 1091, -2521, 5309, -1866, 6234, 126, 5619, 2583, 1971, 4119, -1389, 4215, -4141, 3911, -6061, 3511, -8045, 2599)
+script = ExtResource("3_8ddh7")
+allowed_distance = 3000.0
+ignore_points = PackedInt32Array()
+outline = true
+outline_color = true
+outline_width = 10
+ignore_points_outline = PackedInt32Array()
+base_polygon = PackedVector2Array(-7422, 1244, -6707, 627, -4205, 1831, -1885, 1831, 16, 819, 2879, 950, 4088, 143, 2577, -955, -61, -1241, 1091, -2521, 5309, -1866, 6234, 126, 5619, 2583, 1971, 4119, -1389, 4215, -4141, 3911, -6061, 3511, -8045, 2599)

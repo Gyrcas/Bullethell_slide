@@ -1,16 +1,17 @@
-extends GPUParticles2D
+extends Node2D
+class_name DeathParticles
 
-@onready var blast : GPUParticles2D = $blast
+@onready var sparkle : GPUParticles2D = $sparkle
+@onready var blast : GPUParticles2D = $sparkle/blast
+
+var lifetime : float = 1
 
 func _ready() -> void:
-	$disapear_timer.start(lifetime)
-	emitting = true
+	sparkle.lifetime = lifetime
 	blast.lifetime = lifetime
-	blast.process_material.scale_max *= lifetime / 2
-	blast.process_material.color = process_material.color
-	blast.process_material.scale_min = blast.process_material.scale_max
+	sparkle.emitting = true
 	blast.emitting = true
 
-
-func _on_disapear_timer_timeout() -> void:
-	get_parent().remove_child.call_deferred(self)
+func _process(_delta : float) -> void:
+	if !sparkle.emitting && !blast.emitting:
+		queue_free()

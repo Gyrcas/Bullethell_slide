@@ -1,11 +1,13 @@
 @tool
-extends Sprite2D
+extends MultiMeshInstance2D
 class_name Scatter2D
 
-@export var scatter_texture : Texture2D : set = set_scatter_texture
+@export var scatter_mesh : MeshInstance2D : set = set_scatter_mesh
 
-func set_scatter_texture(value : Texture2D) -> void:
-	scatter_texture = value
+func set_scatter_mesh(value : MeshInstance2D) -> void:
+	scatter_mesh = value
+	multimesh.mesh = scatter_mesh.mesh
+	texture = scatter_mesh.texture
 	if preload_scatter:
 		generate(seed_)
 
@@ -17,13 +19,6 @@ func _set(property : StringName, value : Variant) -> bool:
 			generate(seed_)
 		return true
 	return false
-
-@export var resolution : Vector2i = Vector2i(1280,720) : set = set_resolution
-
-func set_resolution(value : Vector2i) -> void:
-	resolution = value
-	if preload_scatter:
-		generate(seed_)
 
 @export_group("Seed")
 @export var seed_ : int = 12345678 : set = set_seed_
@@ -108,49 +103,36 @@ func _ready() -> void:
 		elif !use_seed:
 			generate()
 
-func create_sprite(node : Node2D,sprite : Sprite2D, pos : Vector2, rot : float) -> void:
-	var new_sprite : Sprite2D = sprite.duplicate()
-	new_sprite.position = pos
-	new_sprite.rotation_degrees = rot
-	node.add_child(new_sprite)
-
 func generate(_seed : int = -1) -> int:
-	if !Engine.is_editor_hint():
-		return _seed
-	UT.remove_children(self)
+	#Generate new seed if one not given
 	if _seed < 0:
 		randomize()
 		_seed = randi_range(0,100000000)
 	seed(_seed)
-	var view : SubViewport = SubViewport.new()
-	view.size = dimensions
-	add_child(view)
-	var background : ColorRect = ColorRect.new()
-	background.color = Color(1,1,1)
-	background.size = dimensions
-	view.add_child(background)
-	var node : Node2D = Node2D.new()
-	view.add_child(node)
+	
+	multimesh.instance_count = 0
 	var pos : Vector2 = Vector2.ZERO
-	var sprite : Sprite2D = Sprite2D.new()
-	sprite.texture = scatter_texture
-	var sprite_scale : float = randf_range(min_scale,max_scale)
-	sprite.scale = Vector2(sprite_scale,sprite_scale)
+	var instances_infos : Array[Dictionary] = []
+	
 	while pos.x < dimensions.x || pos.y < dimensions.y:
+		multimesh.instance_count += 1
+		
+		var rot : float = deg_to_rad(randf_range(rotate_range_min,rotate_range_max))
+		
+		var sprite_scale : float = randf_range(min_scale,max_scale)
+		
 		var sprite_pos : Vector2 = pos
 		var pos_y : float = randf_range(min_distance.y,max_distance.y) * 1 if randi_range(-1,1) >= 0 else -1.0
 		sprite_pos.y += pos_y if sprite_pos.y + pos_y < dimensions.y else dimensions.y
-		create_sprite(node,sprite,sprite_pos, randf_range(rotate_range_min,rotate_range_max) * 1 if randf_range(-1,1) >= 0 else -1.0)
+		
 		pos.x += randf_range(min_distance.x, max_distance.x)
 		if pos.x > dimensions.x && pos.y < dimensions.y:
 			pos.y += (max_distance.y - min_distance.y) / 2 + min_distance.y
 			pos.x = 0
-	view.render_target_update_mode = SubViewport.UPDATE_ALWAYS
-	await RenderingServer.frame_post_draw
-	var view_texture : ViewportTexture = view.get_texture()
-	var image : Image = view_texture.duplicate().get_image()
-	image.resize(resolution.x,resolution.y)
-	#image.flip_y()
-	texture = ImageTexture.create_from_image(image)
-	view.queue_free()
+			
+		instances_infos.append({"pos":sprite_pos,"rot":rot,"scale":Vector2(sprite_scale,sprite_scale)})
+		
+	for i in multimesh.instance_count:
+		multimesh.set_instance_transform_2d(i,Transform2D(instances_infos[i].rot,instances_infos[i].scale,0.0,instances_infos[i].pos))
+		
 	return _seed

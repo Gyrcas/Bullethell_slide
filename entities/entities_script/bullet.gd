@@ -25,7 +25,6 @@ func set_ignore_sender(value : bool) -> void:
 @export var precision : float = 0.05
 
 func assign(bullet : BulletRes) -> Bullet:
-	print(bullet.precision)
 	speed = bullet.speed
 	max_speed = bullet.max_speed
 	turn_speed = bullet.turn_speed
@@ -59,12 +58,11 @@ func _ready() -> void:
 func die() -> void:
 	if sender != null:
 		sender.nano += nano
-	var particles : GPUParticles2D = death_particles_scene.instantiate()
+	var particles : DeathParticles = death_particles_scene.instantiate()
 	particles.global_position = global_position
 	particles.lifetime = 0.5
-	particles.process_material.color = sprite.color
+	particles.modulate = sprite.color
 	get_parent().add_child(particles)
-	particles.emitting = true
 	queue_free()
 
 func _physics_process(delta : float) -> void:

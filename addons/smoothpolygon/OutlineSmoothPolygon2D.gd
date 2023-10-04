@@ -10,7 +10,7 @@ var outlines : Array = [] : set = set_outlines
 func set_outlines(value : Array) -> void:
 	outlines = value
 	queue_redraw()
-var color : Color = Color(0,0,0)
+var color : Color = Color(0,0,0) : set = set_color
 func set_color(value : Color) -> void:
 	color = value
 	queue_redraw()

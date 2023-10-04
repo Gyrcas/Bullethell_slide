@@ -3,13 +3,6 @@ extends Polygon2D
 class_name SmoothPolygon2D
 ## Will smoothen the transition between each points of the polygon
 
-## Color of the polygon
-@export var polygon_color : Color = color : set = set_polygon_color
-
-func set_polygon_color(value : Color) -> void:
-	polygon_color = value
-	queue_redraw()
-
 ## How far the new smoothed polygon can be from the old polygon lines
 @export var allowed_distance : float = 5000 : set = set_allowed_distance
 
@@ -59,7 +52,8 @@ func set_outline_width(value : int) -> void:
 
 func set_ignore_points_outline(value : PackedInt32Array) -> void:
 	ignore_points_outline = value
-	outline_node.outlines = smoothen_polygon(base_polygon).outlines
+	var results : Dictionary = smoothen_polygon(base_polygon)
+	outline_node.outlines = results.outlines
 
 @export_group("DON'T TOUCH")
 ## Do not change value of this variable
@@ -77,8 +71,8 @@ func _init() -> void:
 func _set(property : StringName, value : Variant) -> bool:
 	match(property):
 		"polygon":
-			polygon = value
-			base_polygon = polygon
+			base_polygon = value
+			polygon = base_polygon
 			return true
 		"color":
 			if Engine.is_editor_hint():
@@ -89,17 +83,18 @@ func _set(property : StringName, value : Variant) -> bool:
 func _draw() -> void:
 	var results = smoothen_polygon(polygon)
 	if Engine.is_editor_hint():
-		draw_colored_polygon(results.polygon,polygon_color)
+		draw_colored_polygon(results.polygon,modulate)
 	else:
 		polygon = results.polygon
-		color = polygon_color
 	outline_node.outlines = results.outlines
+
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
 		var results : Dictionary = smoothen_polygon(base_polygon)
 		polygon = results.polygon
-		color = polygon_color
+		color = modulate
+		base_polygon.clear()
 	else:
 		color.a = 0
 	add_child(outline_node)
@@ -134,21 +129,28 @@ func smoothen_polygon(pol : PackedVector2Array) -> Dictionary:
 	var t : float = 0.0
 	
 	var cur_point : int = 0
-	
 	#While curve not finished
 	while last_pos != pos:
 		t += intervale
 		last_pos = pos
 		#Get pos from the curve offset t
 		pos = curve.sample_baked(t,true)
+		#Check if there is any actual possible change to the form. 
+		#If not, skip to the next
+		if (cur_point + 1 < curve.point_count &&
+			curve.get_point_position(cur_point).distance_to(pos) > allowed_distance && 
+			curve.get_point_position(cur_point + 1).distance_to(pos) > allowed_distance):
+			t += curve.get_point_position(cur_point + 1).distance_to(pos) - allowed_distance
+			continue
 		#Check if closer to the next original point
-		if cur_point + 1 < curve.point_count:
-			if t > curve.get_closest_offset(curve.get_point_position(cur_point + 1)):
-				cur_point += 1
+		if (cur_point + 1 < curve.point_count && 
+			t > curve.get_closest_offset(curve.get_point_position(cur_point + 1))):
+			cur_point += 1
 		#Skip point if is in ignore_points
 		if ignore_points.has(cur_point):
 			if cur_point + 1 < curve.point_count - 1:
 				cur_point += 1
+				var p : Vector2 = curve.get_point_position(cur_point)
 				pos = curve.get_point_position(cur_point)
 				t = curve.get_closest_offset(curve.get_point_position(cur_point))
 			else:
@@ -176,6 +178,7 @@ func smoothen_polygon(pol : PackedVector2Array) -> Dictionary:
 	if !current_outline.is_empty():
 		outlines.append(current_outline)
 		current_outline = []
+	
 	#Return the new polygon, the rect and the outlines
 	return {
 		"polygon":new_poly,

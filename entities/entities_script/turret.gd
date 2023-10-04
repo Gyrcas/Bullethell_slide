@@ -14,7 +14,7 @@ class_name Turret
 @onready var detection : RayCast2D = $detection
 @onready var anim_player : AnimationPlayer = $anim_player
 
-@export var bullet_preset : BulletRes
+@export var bullet_preset : BulletRes = BulletRes.new()
 var bullet_scene : Bullet = preload(NodeLinker.bullet_scene).instantiate()
 
 var death_particles_scene : PackedScene = preload(NodeLinker.death_particles)
@@ -33,11 +33,10 @@ func set_health(value : int) -> void:
 		timer_bullet.stop()
 		timer_burst.stop()
 		can_shoot = false
-		var particles : GPUParticles2D = death_particles_scene.instantiate()
+		var particles : DeathParticles = death_particles_scene.instantiate()
 		particles.global_position = global_position
 		particles.lifetime = 3
 		get_parent().add_child(particles)
-		particles.emitting = true
 		died.emit()
 var can_be_hurt : bool = true
 

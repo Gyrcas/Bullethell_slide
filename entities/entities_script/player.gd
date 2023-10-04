@@ -162,7 +162,6 @@ func _physics_process(delta : float) -> void:
 	trail.points[trail.points.size() - 1] = global_position
 	
 	auto_target.global_position = camera.get_screen_center_position()
-	
 
 # Allow shooting once shoot_cooldown is finished
 func _on_shoot_timer_timeout() -> void:

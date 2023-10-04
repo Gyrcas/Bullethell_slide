@@ -45,8 +45,7 @@ func _process(_delta : float) -> void:
 		visible = false
 		follow_mouse = true
 		target_lost.emit()
-	else:
-		pass
+		
 	if Input.is_action_pressed("right_click") && can_place_target:
 		if current_target != self:
 			change_target(self)
