@@ -20,8 +20,8 @@ func _ready() -> void:
 func _set(property : StringName, value : Variant) -> bool:
 	var parent_return : bool = super(property, value)
 	if property == "polygon":
-		col.polygon = value
-		polygon = value
-		return true
+		if !Engine.is_editor_hint():
+			col.polygon = value
+			return true
 	return parent_return
 	

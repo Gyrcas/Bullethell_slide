@@ -52,12 +52,16 @@ func set_outline_width(value : int) -> void:
 
 func set_ignore_points_outline(value : PackedInt32Array) -> void:
 	ignore_points_outline = value
-	var results : Dictionary = smoothen_polygon(base_polygon)
+	if !Engine.is_editor_hint():
+		return
+	var results : Dictionary = smoothen_polygon(polygon)
 	outline_node.outlines = results.outlines
 
 @export_group("DON'T TOUCH")
 ## Do not change value of this variable
-@export var base_polygon : PackedVector2Array = []
+@export var smoothed_pol : PackedVector2Array = []
+
+@export var outlines_array : Array[PackedVector2Array] = []
 
 var outline_node : OutlineSmoothPolygon2D = OutlineSmoothPolygon2D.new()
 
@@ -70,10 +74,6 @@ func _init() -> void:
 
 func _set(property : StringName, value : Variant) -> bool:
 	match(property):
-		"polygon":
-			base_polygon = value
-			polygon = base_polygon
-			return true
 		"color":
 			if Engine.is_editor_hint():
 				color.a = 0;
@@ -81,20 +81,22 @@ func _set(property : StringName, value : Variant) -> bool:
 	return false
 
 func _draw() -> void:
+	if !Engine.is_editor_hint():
+		return
 	var results = smoothen_polygon(polygon)
-	if Engine.is_editor_hint():
-		draw_colored_polygon(results.polygon,modulate)
-	else:
-		polygon = results.polygon
-	outline_node.outlines = results.outlines
-
+	smoothed_pol = results.polygon
+	draw_colored_polygon(smoothed_pol,modulate)
+	outlines_array = results.outlines
+	
+	outline_node.outlines = outlines_array
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
-		var results : Dictionary = smoothen_polygon(base_polygon)
-		polygon = results.polygon
+		polygon = smoothed_pol
+		outline_node.outlines = outlines_array.duplicate()
+		smoothed_pol.clear()
+		outlines_array.clear()
 		color = modulate
-		base_polygon.clear()
 	else:
 		color.a = 0
 	add_child(outline_node)
@@ -113,7 +115,7 @@ func smoothen_polygon(pol : PackedVector2Array) -> Dictionary:
 		curve.add_point(point)
 	curve.add_point(pol[0])
 	#Outline
-	var outlines : Array = []
+	var outlines : Array[PackedVector2Array] = []
 	var current_outline : PackedVector2Array = []
 	#Positions of t
 	var last_pos : Vector2 = pol[0]
