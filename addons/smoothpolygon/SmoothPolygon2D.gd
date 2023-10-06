@@ -11,7 +11,7 @@ func set_allowed_distance(value : float) -> void:
 	queue_redraw()
 
 ## Lenght of each new segment. The smaller it is, the smoother it is, but performances will suffer
-@export var intervale : float = 10 : set = set_interval
+@export var intervale : float = 50 : set = set_interval
 
 func set_interval(value : float) -> void:
 	intervale = value
@@ -24,8 +24,53 @@ func set_ignore_points(value : PackedInt32Array) -> void:
 	ignore_points = value
 	queue_redraw()
 
-@export_group("outline")
+@export var angle_tolerance : float = 100 : set = set_angle_tolerance
 
+func set_angle_tolerance(value : float) -> void:
+	angle_tolerance = value
+	queue_redraw()
+
+@export var max_skips : int = 3 : set = set_max_skips
+
+func set_max_skips(value : int) -> void:
+	max_skips = value
+	queue_redraw()
+
+@export_group("Polygon operation")
+
+@export_enum("merge","clip") var operation : String = "merge"
+
+@export var polygon_to_operate : Polygon2D : set = set_polygon_to_operate
+
+func set_polygon_to_operate(value : Polygon2D) -> void:
+	if value == null:
+		return
+	do_polygon_operation(value)
+
+func do_polygon_operation(value : Polygon2D, operate : String = operation, do_delete : bool = delete_other_polygon) -> void:
+	if value == self || value == null:
+		push_error("Can't combine self or null")
+		return
+	var pol2 : PackedVector2Array = value.polygon
+	for i in pol2.size():
+		pol2[i] += value.global_position - global_position
+	var results : Array[PackedVector2Array] = []
+	match operate:
+		"merge":
+			results = Geometry2D.merge_polygons(polygon, pol2)
+		"clip":
+			results = Geometry2D.clip_polygons(polygon, pol2)
+	if results.size() == 0:
+		queue_free()
+		return
+	set("polygon",results[0])
+	print(polygon.size())
+	if do_delete:
+		value.queue_free()
+
+@export var delete_other_polygon : bool = false
+
+@export_group("Outline")
 ## Use the outline?
 @export var outline : bool = false : set = set_outline
 
@@ -57,18 +102,6 @@ func set_ignore_points_outline(value : PackedInt32Array) -> void:
 	var results : Dictionary = smoothen_polygon(polygon)
 	outline_node.outlines = results.outlines
 
-@export var angle_tolerance : float = 50 : set = set_angle_tolerance
-
-func set_angle_tolerance(value : float) -> void:
-	angle_tolerance = value
-	queue_redraw()
-
-@export var max_skips : int = 100 : set = set_max_skips
-
-func set_max_skips(value : int) -> void:
-	max_skips = value
-	queue_redraw()
-
 @export_group("DON'T TOUCH")
 ## Do not change value of this variable
 @export var smoothed_pol : PackedVector2Array = []
@@ -86,6 +119,9 @@ func _init() -> void:
 
 func _set(property : StringName, value : Variant) -> bool:
 	match(property):
+		"polygon":
+			if !Engine.is_editor_hint():
+				polygon = value
 		"color":
 			if Engine.is_editor_hint():
 				color.a = 0;
@@ -147,6 +183,7 @@ func smoothen_polygon(pol : PackedVector2Array) -> Dictionary:
 	var ang_tol : float = deg_to_rad(angle_tolerance)
 	var cur_skips : int = 0
 	var i = 0
+	#var last_t : float = 0
 	while last_pos != pos:
 		t += intervale
 		
@@ -157,12 +194,13 @@ func smoothen_polygon(pol : PackedVector2Array) -> Dictionary:
 			cur_skips += 1
 			if cur_skips < max_skips:
 				continue
-			else:
-				cur_skips = 0
+		cur_skips = 0
+		#last_t = t
 		i += 1
 		last_pos = pos
 		#Get pos from the curve offset t
 		pos = sample
+		
 		#Check if there is any actual possible change to the form. 
 		#If not, skip to the next
 		if (cur_point + 1 < curve.point_count &&

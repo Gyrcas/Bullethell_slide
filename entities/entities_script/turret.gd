@@ -59,6 +59,8 @@ func _ready() -> void:
 	set_collision_layer_value(NodeLinker.auto_target_collision_level,true)
 
 func _physics_process(_delta : float) -> void:
+	if !NodeLinker.player:
+		return
 	detection.target_position = NodeLinker.player.global_position - detection.global_position
 	if detection.get_collider() == NodeLinker.player && nano >= bullet_scene.nano:
 		shoot()
