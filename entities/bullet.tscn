@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://3x4b0ya0m6qr"]
+[gd_scene load_steps=3 format=3 uid="uid://3x4b0ya0m6qr"]
 
 [ext_resource type="Script" path="res://entities/entities_script/bullet.gd" id="1_7rf7m"]
 [ext_resource type="Script" path="res://scenes/PolygonBody.gd" id="2_kl32s"]
-[ext_resource type="Script" path="res://addons/smoothpolygon/SmoothPolygon2D.gd" id="3_b5871"]
 
 [node name="bullet" type="CharacterBody2D"]
 collision_layer = 2
@@ -14,14 +13,3 @@ script = ExtResource("2_kl32s")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-9, -11, 17, 0, -8, 9, -4, 0)
-
-[node name="explo" type="Polygon2D" parent="."]
-visible = false
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(-71, 0, -1, -59, 62, -3, -1, 54)
-script = ExtResource("3_b5871")
-ignore_points = PackedInt32Array()
-angle_tolerance = 5.0
-ignore_points_outline = PackedInt32Array()
-smoothed_pol = PackedVector2Array(-36.232, -36.6893, 6.17129, -58.0566, 52.2027, -23.9871, 53.4613, 16.3492, 8.23419, 52.1233, -35.3891, 34.724, -71, 0, -71, 0)
-outlines_array = Array[PackedVector2Array]([PackedVector2Array(-36.232, -36.6893, 6.17129, -58.0566, 52.2027, -23.9871, 53.4613, 16.3492, 8.23419, 52.1233, -35.3891, 34.724, -71, 0, -71, 0)])

@@ -47,7 +47,9 @@ func set_polygon_to_operate(value : Polygon2D) -> void:
 		return
 	do_polygon_operation(value)
 
-func do_polygon_operation(value : Polygon2D, operate : String = operation, do_delete : bool = delete_other_polygon) -> void:
+const max_point_polygon : int = 500
+
+func do_polygon_operation(value : Polygon2D, operate : String = operation, do_delete : bool = delete_other_polygon, decompose : bool = false) -> void:
 	if value == self || value == null:
 		push_error("Can't combine self or null")
 		return
@@ -58,13 +60,37 @@ func do_polygon_operation(value : Polygon2D, operate : String = operation, do_de
 	match operate:
 		"merge":
 			results = Geometry2D.merge_polygons(polygon, pol2)
+			if results.size() != 1:
+				return
 		"clip":
 			results = Geometry2D.clip_polygons(polygon, pol2)
 	if results.size() == 0:
 		queue_free()
 		return
 	set("polygon",results[0])
-	print(polygon.size())
+	if polygon.size() > max_point_polygon && !Engine.is_editor_hint() && decompose:
+		print("wow")
+		var triangle = Geometry2D.decompose_polygon_in_convex(polygon)
+		for p in triangle:
+			var pol : SmoothStaticPolygon2D = SmoothStaticPolygon2D.new()
+			pol.global_position = global_position
+			get_parent().add_child(pol)
+			pol.polygon = p
+		queue_free()
+	for i in range(1,results.size()):
+		if results[i].size() > max_point_polygon && !Engine.is_editor_hint() && decompose:
+			var triangle = Geometry2D.decompose_polygon_in_convex(results[i])
+			for p in triangle:
+				var pol : SmoothStaticPolygon2D = SmoothStaticPolygon2D.new()
+				pol.global_position = global_position
+				get_parent().add_child(pol)
+				pol.polygon = p
+		else:
+			var new_pol : Variant
+			new_pol = SmoothStaticPolygon2D.new()
+			new_pol.global_position = global_position
+			get_parent().add_child(new_pol)
+			new_pol.polygon = results[i]
 	if do_delete:
 		value.queue_free()
 

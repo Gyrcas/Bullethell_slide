@@ -2,7 +2,6 @@ extends CharacterBody2D
 class_name Bullet
 
 @onready var sprite : Polygon2D = $sprite
-@onready var explo : SmoothPolygon2D = $explo
 
 var death_particles_scene : PackedScene = load(NodeLinker.death_particles)
 
@@ -87,8 +86,6 @@ func _physics_process(delta : float) -> void:
 			collider.health -= damage
 		if collider is CharacterBody2D:
 			collider.velocity += velocity
-		elif collider.get_parent() is SmoothPolygon2D:
-			collider.get_parent().do_polygon_operation(explo,"clip",true)
 		die()
 
 func on_change_target() -> void:
