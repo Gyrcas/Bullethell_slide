@@ -1,0 +1,103 @@
+[gd_scene load_steps=4 format=3 uid="uid://dqswb8ecwrxm"]
+
+[ext_resource type="Script" path="res://addons/DialogueCreator/box.gd" id="1_1quqm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cwjeb"]
+bg_color = Color(1, 0.894118, 0.768627, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0509804, 0.0509804, 0.0509804, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hgtl5"]
+resource_local_to_scene = true
+bg_color = Color(0.317647, 0.596078, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0509804, 0.0509804, 0.0509804, 1)
+
+[node name="-1" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_1quqm")
+
+[node name="background" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 242.0
+offset_bottom = 252.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_cwjeb")
+
+[node name="header" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 242.0
+offset_bottom = 71.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_hgtl5")
+
+[node name="drag" type="Button" parent="header"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 242.0
+offset_bottom = 71.0
+
+[node name="center" type="CenterContainer" parent="header"]
+layout_mode = 0
+offset_right = 242.0
+offset_bottom = 71.0
+mouse_filter = 2
+
+[node name="hbox" type="HBoxContainer" parent="header/center"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="type" type="OptionButton" parent="header/center/hbox"]
+layout_mode = 2
+item_count = 7
+selected = 0
+popup/item_0/text = "msg"
+popup/item_0/id = 0
+popup/item_1/text = "script"
+popup/item_1/id = 1
+popup/item_2/text = "choice"
+popup/item_2/id = 2
+popup/item_3/text = "condition"
+popup/item_3/id = 3
+popup/item_4/text = "move to"
+popup/item_4/id = 4
+popup/item_5/text = "placeholder"
+popup/item_5/id = 5
+popup/item_5/disabled = true
+popup/item_6/text = "choice option"
+popup/item_6/id = 6
+popup/item_6/disabled = true
+
+[node name="id_label" type="Label" parent="header/center/hbox"]
+layout_mode = 2
+text = "id:"
+
+[node name="id" type="Label" parent="header/center/hbox"]
+layout_mode = 2
+text = "0"
+
+[node name="delete" type="Button" parent="header/center/hbox"]
+layout_mode = 2
+text = "X"
+
+[node name="body" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 71.0
+offset_right = 240.0
+offset_bottom = 251.0
+
+[connection signal="button_down" from="header/drag" to="." method="_on_drag_button_down"]
+[connection signal="button_up" from="header/drag" to="." method="_on_drag_button_up"]
+[connection signal="item_selected" from="header/center/hbox/type" to="." method="_on_type_item_selected"]
+[connection signal="pressed" from="header/center/hbox/delete" to="." method="_on_delete_pressed"]

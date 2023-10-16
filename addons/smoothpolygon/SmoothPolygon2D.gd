@@ -3,6 +3,8 @@ extends Polygon2D
 class_name SmoothPolygon2D
 ## Will smoothen the transition between each points of the polygon
 
+
+
 ## How far the new smoothed polygon can be from the old polygon lines
 @export var allowed_distance : float = 5000 : set = set_allowed_distance
 
@@ -15,6 +17,12 @@ func set_allowed_distance(value : float) -> void:
 
 func set_interval(value : float) -> void:
 	intervale = value
+	queue_redraw()
+
+@export var invert_ignore_points : bool = false : set = set_invert_ignore_points
+
+func set_invert_ignore_points(value : bool) -> void:
+	invert_ignore_points = value
 	queue_redraw()
 
 ## Will ignore the segment after the point during the smoothing
@@ -38,6 +46,8 @@ func set_max_skips(value : int) -> void:
 
 @export_group("Polygon operation")
 
+@export var split_on_start : bool = false
+
 @export_enum("merge","clip") var operation : String = "merge"
 
 @export var polygon_to_operate : Polygon2D : set = set_polygon_to_operate
@@ -48,6 +58,15 @@ func set_polygon_to_operate(value : Polygon2D) -> void:
 	do_polygon_operation(value)
 
 const max_point_polygon : int = 500
+
+func split_polygon(value : PackedVector2Array, parent : Node2D = get_parent()) -> void:
+	var triangle = Geometry2D.decompose_polygon_in_convex(value)
+	for p in triangle:
+		var pol : SmoothStaticPolygon2D = SmoothStaticPolygon2D.new()
+		pol.global_position = global_position
+		parent.add_child(pol)
+		pol.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
+		pol.polygon = p
 
 func do_polygon_operation(value : Polygon2D, operate : String = operation, do_delete : bool = delete_other_polygon, decompose : bool = false) -> void:
 	if value == self || value == null:
@@ -69,22 +88,11 @@ func do_polygon_operation(value : Polygon2D, operate : String = operation, do_de
 		return
 	set("polygon",results[0])
 	if polygon.size() > max_point_polygon && !Engine.is_editor_hint() && decompose:
-		print("wow")
-		var triangle = Geometry2D.decompose_polygon_in_convex(polygon)
-		for p in triangle:
-			var pol : SmoothStaticPolygon2D = SmoothStaticPolygon2D.new()
-			pol.global_position = global_position
-			get_parent().add_child(pol)
-			pol.polygon = p
+		split_polygon(polygon)
 		queue_free()
 	for i in range(1,results.size()):
 		if results[i].size() > max_point_polygon && !Engine.is_editor_hint() && decompose:
-			var triangle = Geometry2D.decompose_polygon_in_convex(results[i])
-			for p in triangle:
-				var pol : SmoothStaticPolygon2D = SmoothStaticPolygon2D.new()
-				pol.global_position = global_position
-				get_parent().add_child(pol)
-				pol.polygon = p
+			split_polygon(results[i])
 		else:
 			var new_pol : Variant
 			new_pol = SmoothStaticPolygon2D.new()
@@ -171,6 +179,12 @@ func _ready() -> void:
 		smoothed_pol.clear()
 		outlines_array.clear()
 		color = modulate
+		if split_on_start:
+			var split_start = func():
+				split_polygon(polygon)
+				queue_free()
+			split_start.call_deferred()
+			
 	else:
 		color.a = 0
 	add_child(outline_node)
@@ -192,8 +206,8 @@ func smoothen_polygon(pol : PackedVector2Array) -> Dictionary:
 	var outlines : Array[PackedVector2Array] = []
 	var current_outline : PackedVector2Array = []
 	#Positions of t
-	var last_pos : Vector2 = pol[0]
-	var pos : Vector2 = pol[1]
+	var last_pos : Vector2
+	var pos : Vector2 = pol[0]
 	#Rectangle of Polygon
 	var top : float = pol[0].y
 	var bottom : float = pol[0].y
@@ -239,7 +253,7 @@ func smoothen_polygon(pol : PackedVector2Array) -> Dictionary:
 			t > curve.get_closest_offset(curve.get_point_position(cur_point + 1))):
 			cur_point += 1
 		#Skip point if is in ignore_points
-		if ignore_points.has(cur_point):
+		if ignore_points.has(cur_point) != invert_ignore_points:
 			if cur_point + 1 < curve.point_count - 1:
 				cur_point += 1
 				var p : Vector2 = curve.get_point_position(cur_point)

@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=3 uid="uid://cckg4auu6pwh2"]
+
+[sub_resource type="GDScript" id="GDScript_pc61c"]
+script/source = "@tool
+extends VBoxContainer
+
+@onready var file_dialog : FileDialog = $file_dialog
+@onready var script_lbl : Label = $script_lbl
+@onready var function : TextEdit = $function
+
+func _on_set_pressed() -> void:
+	file_dialog.visible = true
+
+
+func _on_file_dialog_file_selected(path : String) -> void:
+	script_lbl.text = path
+	get_node(\"../../\").content = script_lbl.text + \"?\" + function.text
+
+func _on_function_text_changed() -> void:
+	get_node(\"../../\").content = script_lbl.text + \"?\" + function.text
+
+func _process(_delta) -> void:
+	if not get_node(\"../../\") is DialogueBox || script_lbl.text + \"?\" + function.text == get_node(\"../../\").content:
+		return
+	var split : PackedStringArray = get_node(\"../../\").content.split(\"?\")
+	script_lbl.text = split[0]
+	function.text = split[1]
+"
+
+[node name="script" type="VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = SubResource("GDScript_pc61c")
+
+[node name="script_lbl" type="Label" parent="."]
+layout_mode = 2
+autowrap_mode = 1
+
+[node name="set" type="Button" parent="."]
+layout_mode = 2
+text = "Set script"
+
+[node name="function" type="TextEdit" parent="."]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+placeholder_text = "function"
+
+[node name="file_dialog" type="FileDialog" parent="."]
+title = "Open a File"
+size = Vector2i(312, 162)
+ok_button_text = "Open"
+file_mode = 0
+
+[connection signal="pressed" from="set" to="." method="_on_set_pressed"]
+[connection signal="text_changed" from="function" to="." method="_on_function_text_changed"]
+[connection signal="file_selected" from="file_dialog" to="." method="_on_file_dialog_file_selected"]

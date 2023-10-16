@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfmgsf2cblrc5"]
+
+[sub_resource type="GDScript" id="GDScript_hshgn"]
+script/source = "@tool
+extends VBoxContainer
+
+@onready var text : TextEdit = $text
+
+func _on_add_pressed() -> void:
+	var box : DialogueBox = get_node(\"../../\")
+	box.add_child_box(box.types.choice_option)
+
+func _on_text_text_changed() -> void:
+	get_node(\"../../\").content = text.text
+
+func _process(_delta) -> void:
+	if not get_node(\"../../\") is DialogueBox || text.text == get_node(\"../../\").content:
+		return
+	text.text = get_node(\"../../\").content
+"
+
+[node name="choice" type="VBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = SubResource("GDScript_hshgn")
+
+[node name="text" type="TextEdit" parent="."]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+
+[node name="add" type="Button" parent="."]
+layout_mode = 2
+text = "+"
+
+[connection signal="text_changed" from="text" to="." method="_on_text_text_changed"]
+[connection signal="pressed" from="add" to="." method="_on_add_pressed"]
