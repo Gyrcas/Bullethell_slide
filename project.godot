@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="bullethell_slide"
-run/main_scene="res://test.tscn"
+run/main_scene="res://menus/main_menu.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://icon.svg"
 

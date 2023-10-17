@@ -1,19 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://pa4b5sl2ju1n"]
+[gd_scene load_steps=6 format=3 uid="uid://pa4b5sl2ju1n"]
 
 [ext_resource type="Script" path="res://entities/entities_script/player.gd" id="1_mah8r"]
 [ext_resource type="PackedScene" uid="uid://bhrculwo037fi" path="res://menus/pause_menu.tscn" id="3_r0pq6"]
 [ext_resource type="Script" path="res://scenes/PolygonBody.gd" id="4_38lbs"]
 [ext_resource type="PackedScene" uid="uid://ctlk12wtd554v" path="res://ui/target.tscn" id="4_davdh"]
-[ext_resource type="Script" path="res://addons/DialogueCreator/DialoguePlayer.gd" id="4_y226x"]
-
-[sub_resource type="GDScript" id="GDScript_x5ioy"]
-script/source = "extends Control
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	$DialoguePlayer.play_from_file(\"res://dial.txt\")
-"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bcdmy"]
 height = 22.0
@@ -38,33 +28,6 @@ position_smoothing_speed = 10.0
 process_mode = 3
 
 [node name="pause_menu" parent="camera/ui" instance=ExtResource("3_r0pq6")]
-
-[node name="Control" type="Control" parent="camera/ui"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1280.0
-offset_bottom = 720.0
-script = SubResource("GDScript_x5ioy")
-
-[node name="Label" type="Label" parent="camera/ui/Control"]
-layout_mode = 0
-offset_right = 1280.0
-offset_bottom = 393.0
-
-[node name="ScrollContainer" type="ScrollContainer" parent="camera/ui/Control"]
-layout_mode = 0
-offset_top = 393.0
-offset_right = 1280.0
-offset_bottom = 712.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="camera/ui/Control/ScrollContainer"]
-layout_mode = 2
-
-[node name="DialoguePlayer" type="Node" parent="camera/ui/Control" node_paths=PackedStringArray("button_container", "text_node")]
-script = ExtResource("4_y226x")
-button_container = NodePath("../ScrollContainer/VBoxContainer")
-text_node = NodePath("../Label")
-typewritter_speed = 0.01
 
 [node name="shoot_timer" type="Timer" parent="."]
 

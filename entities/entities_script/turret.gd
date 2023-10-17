@@ -94,4 +94,5 @@ func _on_timer_burst_timeout():
 
 func _on_anim_player_animation_finished(anim_name : StringName) -> void:
 	if anim_name == "death":
+		bullet_scene.queue_free()
 		queue_free()
