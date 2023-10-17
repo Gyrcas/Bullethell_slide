@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgv46x3klhccg"]
+
+[ext_resource type="Script" path="res://addons/basicshape/BasicShape2D.gd" id="1_qb4nw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_st7in"]
+size = Vector2(500, 200)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="BasicShape2D" type="Node2D" parent="."]
+script = ExtResource("1_qb4nw")
+color = Color(1, 0, 0, 1)
+width = 1.0
+shape = SubResource("RectangleShape2D_st7in")
+
+[node name="BasicShape2D2" type="Node2D" parent="."]
+position = Vector2(0, 343)
+script = ExtResource("1_qb4nw")
+color = Color(1, 0, 0, 1)
+width = 1.0
+shape = SubResource("RectangleShape2D_st7in")

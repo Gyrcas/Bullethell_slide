@@ -1,11 +1,6 @@
-res://addons/DialogueCreator/box.tscn
-res://addons/DialogueCreator/box.gd
-res://addons/DialogueCreator/choice.tscn
+res://entities/bullet.tscn
+res://addons/DialogueCreator/dia_test.gd
 res://addons/DialogueCreator/DialoguePlayer.gd
-res://addons/DialogueCreator/creator_interface.tscn
-res://addons/DialogueCreator/msg.tscn
-res://addons/DialogueCreator/script.tscn
-res://addons/DialogueCreator/placeholder.tscn
-res://addons/DialogueCreator/move_to.tscn
+res://entities/player.tscn
 res://test.tscn
-res://addons/DialogueCreator/creator_interface.gd
+res://entities/turret.tscn

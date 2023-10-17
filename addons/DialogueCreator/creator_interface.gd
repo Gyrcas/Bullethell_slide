@@ -65,6 +65,9 @@ func _physics_process(_delta : float) -> void:
 	queue_redraw()
 
 func _on_new_pressed() -> void:
+	scroll.scale = Vector2(1,1)
+	scroll.scroll_horizontal = 0
+	scroll.scroll_vertical = 0
 	used_ids = []
 	for child in nodes.get_children():
 		child.queue_free()
@@ -125,6 +128,3 @@ func _on_nodes_child_exiting_tree(node : Node) -> void:
 	used_ids.erase(node.id)
 	if nodes.get_child_count() == 1:
 		nodes.add_child.call_deferred(preload("res://addons/DialogueCreator/box.tscn").instantiate())
-
-func _input(event : InputEvent) -> void:
-	pass
