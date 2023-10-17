@@ -64,6 +64,7 @@ layout_mode = 2
 script = ExtResource("4_y226x")
 button_container = NodePath("../ScrollContainer/VBoxContainer")
 text_node = NodePath("../Label")
+typewritter_speed = 0.01
 
 [node name="shoot_timer" type="Timer" parent="."]
 

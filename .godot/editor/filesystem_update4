@@ -1,6 +1,5 @@
-res://entities/bullet.tscn
-res://addons/DialogueCreator/dia_test.gd
-res://addons/DialogueCreator/DialoguePlayer.gd
 res://entities/player.tscn
+res://addons/DialogueCreator/DialoguePlayer.gd
 res://test.tscn
 res://entities/turret.tscn
+res://entities/bullet.tscn
