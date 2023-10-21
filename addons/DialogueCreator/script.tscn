@@ -8,6 +8,8 @@ extends VBoxContainer
 @onready var script_lbl : Label = $script_lbl
 @onready var function : TextEdit = $function
 
+const max_retry : int = 5
+
 func _on_set_pressed() -> void:
 	file_dialog.visible = true
 
@@ -19,12 +21,20 @@ func _on_file_dialog_file_selected(path : String) -> void:
 func _on_function_text_changed() -> void:
 	get_node(\"../../\").content = script_lbl.text + \"?\" + function.text
 
-func _process(_delta) -> void:
-	if not get_node(\"../../\") is DialogueBox || script_lbl.text + \"?\" + function.text == get_node(\"../../\").content:
-		return
-	var split : PackedStringArray = get_node(\"../../\").content.split(\"?\")
-	script_lbl.text = split[0]
-	function.text = split[1]
+
+func set_content(retry : int = 0) -> void:
+	retry += 1
+	if retry < max_retry:
+		if not get_node(\"../../\") is DialogueBox || !script_lbl || !function:
+			set_content.call_deferred(retry)
+			return
+		if script_lbl.text + \"?\" + function.text != get_node(\"../../\").content || [\"\",\"?\"].has(get_node(\"../../\").content):
+			if get_tree():
+				await get_tree().create_timer(0.1).timeout
+			var split : PackedStringArray = get_node(\"../../\").content.split(\"?\")
+			script_lbl.text = split[0]
+			function.text = split[1]
+			set_content.call_deferred(retry)
 "
 
 [node name="script" type="VBoxContainer"]

@@ -12,12 +12,14 @@ var export : bool = false
 
 var saving : bool = false
 
+var zoom : float = 1
+
 func _draw() -> void:
 	var biggest : Vector2 = global_position
 	var lines : PackedVector2Array = []
 	for child in nodes.get_children():
 		if child.parent:
-			lines.append_array([child.global_position - global_position + Vector2(125,125), child.parent.global_position - global_position + Vector2(125,125)])
+			lines.append_array([child.global_position - global_position + Vector2(125,125) * zoom, child.parent.global_position - global_position + Vector2(125,125) * zoom])
 			if child.global_position.x > biggest.x:
 				biggest.x = child.global_position.x
 			if child.global_position.y > biggest.y:
@@ -26,10 +28,11 @@ func _draw() -> void:
 		draw_multiline(lines,Color(0,0,0),2.5)
 	if biggest == Vector2.ZERO:
 		return
-	nodes.custom_minimum_size = biggest * 1000
+	nodes.scale = Vector2(zoom,zoom)
+	nodes.get_parent().custom_minimum_size = biggest * 1000 * zoom
 
 @onready var scroll : ScrollContainer = $scroll
-@onready var nodes : Control = $scroll/nodes
+@onready var nodes : Control = $scroll/nodes/nodes
 
 func get_first_available_id() -> int:
 	var i : int = 0
@@ -71,8 +74,7 @@ func _on_new_pressed() -> void:
 	used_ids = []
 	for child in nodes.get_children():
 		child.queue_free()
-	if nodes.get_child_count() == 0:
-		nodes.add_child.call_deferred(preload("res://addons/DialogueCreator/box.tscn").instantiate())
+	nodes.add_child.call_deferred(preload("res://addons/DialogueCreator/box.tscn").instantiate())
 
 func load_save(box_data : Dictionary, parent : DialogueBox = null) -> DialogueBox:
 	if !parent:
@@ -81,7 +83,11 @@ func load_save(box_data : Dictionary, parent : DialogueBox = null) -> DialogueBo
 	var box : DialogueBox = preload("res://addons/DialogueCreator/box.tscn").instantiate()
 	box.id = box_data.id
 	nodes.add_child(box)
-	box.set_content(box_data.content)
+	(func():
+		box.content = box_data.content 
+		if box_data.keys().has("zoom"):
+			box.zoom = box_data.zoom
+	).call_deferred()
 	if parent:
 		box.parent = parent
 	if box_data.keys().has("position"):
@@ -102,6 +108,7 @@ func save(box : DialogueBox, blueprint : bool = false) -> Dictionary:
 	save.content = box.content
 	if blueprint:
 		save.position = [box.global_position.x,box.global_position.y]
+		save.zoom = box.zoom
 	save.children = []
 	for child in box.children:
 		if export && child.type_select.selected == child.types.placeholder:
@@ -109,9 +116,16 @@ func save(box : DialogueBox, blueprint : bool = false) -> Dictionary:
 		save.children.append(save(child,blueprint))
 	return save
 
+func _input(event : InputEvent) -> void:
+	if not get_viewport().gui_get_focus_owner() is TextEdit && event is InputEventKey && event.is_pressed():
+		match event.as_text():
+			"Ctrl+Equal": #zoom
+				zoom += 0.05
+			"Ctrl+Minus": #unzoom
+				zoom -= 0.05
+
 func _on_file_dialog_file_selected(path : String) -> void:
 	if saving:
-		print(used_ids)
 		var save_data : Dictionary
 		for child in nodes.get_children():
 			if child.id == 0:

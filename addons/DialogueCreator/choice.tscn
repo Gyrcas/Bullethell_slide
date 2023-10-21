@@ -6,6 +6,11 @@ extends VBoxContainer
 
 @onready var text : TextEdit = $text
 
+const max_retry : int = 5
+@onready var default_size : Vector2 = text.custom_minimum_size
+var focused : bool = false
+var zoom : float = 1
+
 func _on_add_pressed() -> void:
 	var box : DialogueBox = get_node(\"../../\")
 	box.add_child_box(box.types.choice_option)
@@ -13,10 +18,43 @@ func _on_add_pressed() -> void:
 func _on_text_text_changed() -> void:
 	get_node(\"../../\").content = text.text
 
-func _process(_delta) -> void:
-	if not get_node(\"../../\") is DialogueBox || text.text == get_node(\"../../\").content:
-		return
-	text.text = get_node(\"../../\").content
+func set_content(retry : int = 0) -> void:
+	retry += 1
+	if retry < max_retry:
+		var parent : Node = get_node(\"../../\")
+		if not parent is DialogueBox || !text:
+			set_content.call_deferred(retry)
+			return
+		if parent.content == \"\" || text.text != parent.content || parent.zoom == 1 || parent.zoom != zoom:
+			if get_tree():
+				await get_tree().create_timer(0.1).timeout
+			focused = false
+			text.text = parent.content
+			zoom = parent.zoom
+			set_content.call_deferred(retry)
+
+func _input(event : InputEvent):
+	if focused && event is InputEventKey && event.is_pressed():
+		match event.as_text():
+			\"Ctrl+Equal\":
+				zoom += 0.05
+				text.custom_minimum_size = default_size * zoom
+			\"Ctrl+Minus\":
+				zoom = zoom - 0.05 if zoom > 1 else 1
+				text.custom_minimum_size = default_size * zoom
+		if get_node(\"../../\") is DialogueBox:
+			get_node(\"../../\").zoom = zoom
+
+func _on_text_focus_entered() -> void:
+	text.custom_minimum_size = default_size * zoom
+	z_index = 100
+	focused = true
+
+
+func _on_text_focus_exited() -> void:
+	text.custom_minimum_size = default_size
+	z_index = 0
+	focused = false
 "
 
 [node name="choice" type="VBoxContainer"]
@@ -32,5 +70,7 @@ layout_mode = 2
 layout_mode = 2
 text = "+"
 
+[connection signal="focus_entered" from="text" to="." method="_on_text_focus_entered"]
+[connection signal="focus_exited" from="text" to="." method="_on_text_focus_exited"]
 [connection signal="text_changed" from="text" to="." method="_on_text_text_changed"]
 [connection signal="pressed" from="add" to="." method="_on_add_pressed"]

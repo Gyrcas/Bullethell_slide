@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://3x4b0ya0m6qr"]
 
 [ext_resource type="Script" path="res://entities/entities_script/bullet.gd" id="1_7rf7m"]
-[ext_resource type="Script" path="res://scenes/PolygonBody.gd" id="2_kl32s"]
+[ext_resource type="Script" path="res://ressources/PolygonBody.gd" id="2_jqdqn"]
 
 [node name="bullet" type="CharacterBody2D"]
 collision_layer = 2
@@ -9,7 +9,7 @@ script = ExtResource("1_7rf7m")
 
 [node name="sprite" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-9, -11, 17, 0, -8, 9, -4, 0)
-script = ExtResource("2_kl32s")
+script = ExtResource("2_jqdqn")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-9, -11, 17, 0, -8, 9, -4, 0)

@@ -1,0 +1,190 @@
+[gd_scene load_steps=8 format=3 uid="uid://b2feymmx2esft"]
+
+[ext_resource type="Texture2D" uid="uid://3o2ppqrp0py7" path="res://textures/spr_stars02.png" id="1_u7dmg"]
+[ext_resource type="Script" path="res://addons/DialogueCreator/DialoguePlayer.gd" id="3_7guuq"]
+
+[sub_resource type="GDScript" id="GDScript_nqdti"]
+script/source = "extends Node2D
+
+@onready var stars : ParallaxLayer = $background/stars
+const stars_speed : float = 20
+
+@onready var anim : AnimationPlayer = $anim
+
+@onready var dialogue : DialoguePlayer = $dialogue
+
+var current_dialogue : int = 0
+
+func _ready() -> void:
+	anim.play(\"start\")
+
+func _process(delta : float) -> void:
+	stars.motion_offset.x -= delta * stars_speed
+
+
+func _on_anim_animation_finished(anim_name : String) -> void:
+	match anim_name:
+		\"start\":
+			dialogue.play_from_file(\"res://ressources/dialogues/intro_1.json\")
+		\"ship\":
+			get_tree().change_scene_to_file(\"res://test.tscn\")
+
+func _input(event : InputEvent) -> void:
+	if anim.is_playing() && event.is_action_pressed(\"ui_accept\"):
+		anim.advance(anim.current_animation_length)
+
+func _on_dialogue_finished() -> void:
+	await get_tree().create_timer(0.1).timeout
+	current_dialogue += 1
+	match current_dialogue:
+		1:
+			anim.play(\"ship\")
+"
+
+[sub_resource type="Animation" id="Animation_8y4c8"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("background/ColorRect:color:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("background/ColorRect:color:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("background/ColorRect:color:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("background/ColorRect:color:a")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_jvqxw"]
+resource_name = "ship"
+length = 10.0
+
+[sub_resource type="Animation" id="Animation_sbo40"]
+resource_name = "start"
+length = 3.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("background/ColorRect:color:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("background/ColorRect:color:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("background/ColorRect:color:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 3)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("background/ColorRect:color:a")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 3)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sb6vb"]
+_data = {
+"RESET": SubResource("Animation_8y4c8"),
+"ship": SubResource("Animation_jvqxw"),
+"start": SubResource("Animation_sbo40")
+}
+
+[node name="intro" type="Node2D"]
+script = SubResource("GDScript_nqdti")
+
+[node name="background" type="ParallaxBackground" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="background"]
+polygon = PackedVector2Array(-115, -46, 1533, -41, 1528, 911, -205, 866)
+vertex_colors = PackedColorArray(0.670588, 0.439216, 0.439216, 1, 0, 0.184314, 0.337255, 1, 0.227451, 0, 0.247059, 1, 0, 0, 0.0509804, 1)
+
+[node name="stars" type="ParallaxLayer" parent="background"]
+position = Vector2(385, 107)
+motion_mirroring = Vector2(2560, 2560)
+
+[node name="Sprite2D" type="Sprite2D" parent="background/stars"]
+position = Vector2(893, 287)
+texture = ExtResource("1_u7dmg")
+
+[node name="ColorRect" type="ColorRect" parent="background"]
+offset_left = -36.0
+offset_top = -54.0
+offset_right = 1301.0
+offset_bottom = 750.0
+color = Color(0, 0, 0, 1)
+
+[node name="anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_sb6vb")
+}
+
+[node name="dialogue" type="Node" parent="." node_paths=PackedStringArray("button_container", "text_node")]
+script = ExtResource("3_7guuq")
+button_container = NodePath("../text")
+text_node = NodePath("../text")
+typewritter_speed = 0.05
+
+[node name="text" type="Label" parent="."]
+offset_right = 1364.0
+offset_bottom = 138.0
+
+[connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]
+[connection signal="finished" from="dialogue" to="." method="_on_dialogue_finished"]

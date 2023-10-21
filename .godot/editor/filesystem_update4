@@ -1,14 +1,12 @@
-res://entities/player.tscn
-res://addons/DialogueCreator/DialoguePlayer.gd
 res://test.tscn
+res://materials/stars.gdshader
 res://entities/turret.tscn
 res://entities/bullet.tscn
+res://entities/player.tscn
 res://entities/ship.tscn
 res://menus/main_menu.tscn
-res://menus/diamond.gdshader
-res://menus/main_menu.gd
 res://menus/pause_menu_options.tscn
 res://menus/pause_menu_inputs.tscn
 res://menus/pause_main_menu.tscn
 res://menus/pause_menu.tscn
-res://entities/entities_script/turret.gd
+res://intro.tscn

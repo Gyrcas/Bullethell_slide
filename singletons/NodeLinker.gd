@@ -2,7 +2,7 @@ extends Node
 
 const bullet_scene : String = "res://entities/bullet.tscn"
 
-const death_particles : String = "res://scenes/death_particles.tscn"
+const death_particles : String = "res://ressources/death_particles.tscn"
 
 var player : Player = null
 

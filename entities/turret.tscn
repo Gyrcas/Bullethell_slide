@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://dtqgsir4gl6sa"]
+[gd_scene load_steps=8 format=3 uid="uid://crk6qe46nhlj1"]
 
 [ext_resource type="Script" path="res://entities/entities_script/turret.gd" id="1_h6hpn"]
-[ext_resource type="Script" path="res://scenes/PolygonBody.gd" id="2_0vk7u"]
+[ext_resource type="Script" path="res://ressources/PolygonBody.gd" id="2_ykwhd"]
 
 [sub_resource type="Animation" id="Animation_02q7r"]
 length = 0.001
@@ -79,7 +79,7 @@ script = ExtResource("1_h6hpn")
 
 [node name="sprite" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-88, 1, 91, 0, 23, -76, -16, -75)
-script = ExtResource("2_0vk7u")
+script = ExtResource("2_ykwhd")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-87, 0, 91, -1, 32, -66, 4, -8, -4, -8, -25, -64)

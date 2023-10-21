@@ -2,15 +2,14 @@ extends Control
 
 @onready var panel_shader : Panel = $shader
 
-const time_transition : float = 0.3
-const force_transition : float = 0.1
-
-var div_disappear : float = 2.0
+var div_disappear : float = 10.0
+const div_appear : float = 50.0
 
 var disappear : bool = false
 
 func _on_start_pressed() -> void:
 	disappear = true
+	div_disappear = (0.30 - panel_shader.material.get_shader_parameter("opacity")) * 100
 
 
 func _on_settings_pressed() -> void:
@@ -18,9 +17,10 @@ func _on_settings_pressed() -> void:
 
 
 func _process(delta):
+	var previous_opacity : float = panel_shader.material.get_shader_parameter("opacity")
 	if disappear:
-		var previous_opacity : float = panel_shader.material.get_shader_parameter("opacity")
 		panel_shader.material.set_shader_parameter("opacity",previous_opacity - delta / div_disappear)
 		if previous_opacity <= 0:
-			get_tree().change_scene_to_file("res://test.tscn")
-	
+			get_tree().change_scene_to_file("res://intro.tscn")
+	elif previous_opacity < 0.25:
+		panel_shader.material.set_shader_parameter("opacity",previous_opacity + delta / div_appear)

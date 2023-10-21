@@ -39,6 +39,7 @@ func get_dialogue_by_id(id : int, dialogue : Dictionary) -> Variant:
 			return result
 	return null
 
+var playing : bool = false
 ##Play dialogue
 
 func play(dialogue : Dictionary, current_dialogue : Dictionary = dialogue) -> void:
@@ -60,6 +61,7 @@ func play(dialogue : Dictionary, current_dialogue : Dictionary = dialogue) -> vo
 			var split : PackedStringArray = current_dialogue.content.split("?")
 			var node : Node = Node.new()
 			node.set_script(load(split[0]))
+			add_child(node)
 			node.call(split[1])
 			node.queue_free()
 			if current_dialogue.children.size() > 0:
@@ -78,12 +80,14 @@ func play(dialogue : Dictionary, current_dialogue : Dictionary = dialogue) -> vo
 			var split : PackedStringArray = current_dialogue.content.split("?")
 			var node : Node = Node.new()
 			node.set_script(load(split[0]))
+			add_child(node)
 			var result : bool = node.call(split[1])
 			node.queue_free()
 			play(dialogue,current_dialogue.children[0] if result else current_dialogue.children[1])
 		types.move_to:
 			play(dialogue,get_dialogue_by_id(int(current_dialogue.content),dialogue))
-			
+		types.placeholder:
+			finished.emit()
 
 func play_from_file(path : String) -> void:
 	if !FileAccess.file_exists(path):
@@ -95,23 +99,42 @@ func play_from_file(path : String) -> void:
 
 ##Typewritter
 
-func do_typewritter(string : String, nb_char : int = 0) -> void:
+func do_typewritter(string : String, nb_char : int = 0, bbcodes : Variant = null) -> void:
+	if !bbcodes:
+		var results : Variant = search_bbcode(string)
+		string = results.string
+		bbcodes = results.bbcodes
 	writing = true
 	if timer.is_connected("timeout",on_typewritter):
 		timer.disconnect("timeout",on_typewritter)
-	timer.connect("timeout",on_typewritter.bind(string,nb_char))
+	timer.connect("timeout",on_typewritter.bind(string,nb_char,bbcodes))
 	timer.start(typewritter_speed)
 
 var timer : Timer = Timer.new()
 
-func on_typewritter(string : String, nb_char : int) -> void:
+func search_bbcode(source : String) -> Dictionary:
+	var regex : RegEx = RegEx.new()
+	regex.compile("\\[.+?\\]")
+	var bbcodes : Array[Dictionary] = []
+	for bbcode in regex.search_all(source):
+		bbcodes.append({"idx":bbcode.get_start(),"tag":bbcode.get_string()})
+	return {"string":regex.sub(source,"",true),"bbcodes":bbcodes}
+
+func on_typewritter(string : String, nb_char : int, bbcodes : Variant = null) -> void:
+	var display_str : String = string.substr(0,nb_char) if writing else string
+	for bbcode in bbcodes:
+		if bbcode.idx <= display_str.length():
+			display_str = display_str.insert(bbcode.idx,bbcode.tag)
+		else:
+			break
 	if !writing || nb_char > string.length():
 		writing = false
 		timer.stop()
-		text_node.text = string
+		text_node.text = display_str
 		return
-	text_node.text = string.substr(0,nb_char)
-	do_typewritter(string, nb_char + 1)
+	
+	text_node.text = display_str
+	do_typewritter(string, nb_char + 1, bbcodes)
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():

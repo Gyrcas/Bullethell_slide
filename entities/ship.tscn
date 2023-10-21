@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://bgv46x3klhccg"]
 
-[ext_resource type="Script" path="res://scenes/PolygonBody.gd" id="1_g4xeu"]
+[ext_resource type="Script" path="res://ressources/PolygonBody.gd" id="1_ux8vl"]
 
 [node name="ship" type="Polygon2D"]
 polygon = PackedVector2Array(-223, -176.97, -674, -315, 713, -169, 1328, 0, 713, 169, -149.117, 259.749, -674, 315, -223, 176.97, -489, 0)
-script = ExtResource("1_g4xeu")
+script = ExtResource("1_ux8vl")

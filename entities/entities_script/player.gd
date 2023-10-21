@@ -34,7 +34,7 @@ var shoot_cooldown : float = 0.1
 # trail var
 @onready var trail : Line2D = $trail
 var trail_length : int = 50
-const trail_gradiant_presets_path : String = "res://trail_gradient_presets/"
+const trail_gradiant_presets_path : String = "res://ressources/trail_gradient_presets/"
 var trail_gradiant_presets : Dictionary = {
 	"base":preload(trail_gradiant_presets_path + "base.tres"),
 	"boost":preload(trail_gradiant_presets_path + "boost.tres")

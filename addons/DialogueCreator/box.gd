@@ -54,19 +54,10 @@ func set_id(value : int) -> void:
 
 #Used by the dialogueplayer to display text or execute file
 var content : String = ""
-
-func set_content(value : String) -> void:
-	content = value
-	if body.get_child_count() > 0:
-		var bod : Node = body.get_child(0)
-		if bod.has_method("set_content"):
-			bod.set_content(value)
+	
 
 # "Parent" of the box, not the node's parent
-var parent : DialogueBox : set = set_parent
-
-func set_parent(value : DialogueBox) -> void:
-	parent = value
+var parent : DialogueBox
 
 # "Children" of the box, not the node's children
 var children : Array[DialogueBox] = [] : set = set_children
@@ -77,7 +68,7 @@ func set_children(value : Array[DialogueBox]) -> void:
 		child.parent = self
 
 func _notification(what : int) -> void:
-	if what == NOTIFICATION_TRANSFORM_CHANGED:
+	if what == NOTIFICATION_TRANSFORM_CHANGED && interface:
 		interface.queue_redraw()
 
 func _ready() -> void:
@@ -98,13 +89,16 @@ func _ready() -> void:
 	else:
 		#If no parent, means it's first so msg
 		_on_type_item_selected(types.msg)
+		
 
 func add_child_box(type : int = types.placeholder,offset : Vector2 = Vector2.ZERO) -> void:
+	if not get_parent() is Control:
+		return
 	var placeholder : DialogueBox  = load("res://addons/DialogueCreator/box.tscn").instantiate()
 	children.append(placeholder)
 	placeholder.parent = self
 	get_parent().add_child(placeholder)
-	placeholder.global_position = global_position + Vector2(500,0) + offset
+	placeholder.global_position = global_position + Vector2(275,0) * interface.zoom + offset
 	placeholder._on_type_item_selected(type)
 
 # Remove all children except one and add a placeholder if no children
@@ -119,6 +113,8 @@ func default_children_method() -> void:
 	elif children[0].type_select.selected == types.choice_option:
 		#Transform the choice option into msg if choice option
 		children[0]._on_type_item_selected(types.msg)
+
+var zoom : float = 1
 
 func _on_type_item_selected(idx : int) -> void:
 	if !types.values().has(idx):
@@ -190,3 +186,8 @@ func _on_drag_button_down() -> void:
 
 func _on_drag_button_up() -> void:
 	follow_mouse = false
+
+
+func _on_body_child_entered_tree(node : Node) -> void:
+	if node.has_method("set_content"):
+		node.set_content()
