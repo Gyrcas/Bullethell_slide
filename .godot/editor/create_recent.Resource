@@ -1,4 +1,0 @@
-Resource
-JSON
-ShaderMaterial
-Curve
