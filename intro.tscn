@@ -1,9 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://b2feymmx2esft"]
+[gd_scene load_steps=22 format=3 uid="uid://dk6jx335yxa0o"]
 
 [ext_resource type="Texture2D" uid="uid://3o2ppqrp0py7" path="res://textures/stars.png" id="1_pe3p8"]
 [ext_resource type="Script" path="res://addons/DialogueCreator/DialoguePlayer.gd" id="3_7guuq"]
 [ext_resource type="Texture2D" uid="uid://bvqkegii4jywk" path="res://textures/ship.png" id="3_hv50j"]
-[ext_resource type="Texture2D" uid="uid://dm8gav5stwvra" path="res://spot.png" id="4_p5ahl"]
+[ext_resource type="Texture2D" uid="uid://dm8gav5stwvra" path="res://textures/spot.png" id="4_50e6b"]
 
 [sub_resource type="GDScript" id="GDScript_nqdti"]
 script/source = "extends Node2D
@@ -25,24 +25,36 @@ var current_dialogue : int = 0
 func _ready() -> void:
 	anim.play(\"start\")
 
-#var t = 0
+var turn : bool = false
+var t : float = 45
 
 func _process(delta : float) -> void:
 	stars.motion_offset.x -= delta * stars_speed
 	ship.offset.y = sin(stars.motion_offset.x / 25) * 50
 	ship.offset.x = sin(stars.motion_offset.x / 50) * 50
 	particle.position = particle_pos + Vector2(ship.offset.x, ship.offset.y)
-	#t += delta * 50
-	#while t > 60:
-	#	t -= 60
-	#ship.frame = floor(t)
+	if turn:
+		t += delta * 50
+		while t > 60:
+			t -= 60
+		ship.frame = floor(t)
+		explosion.position = particle.position + Vector2(0,-explosion_x)
+		smoke.position = explosion.position
 
+@onready var explosion : GPUParticles2D = $ship/explosion
+@onready var smoke : GPUParticles2D = $ship/smoke
+const explosion_x : int = 100
 
 func _on_anim_animation_finished(anim_name : String) -> void:
 	match anim_name:
 		\"start\":
 			dialogue.play_from_file(\"res://ressources/dialogues/intro_1.json\")
 		\"ship\":
+			turn = true
+			explosion.emitting = true
+			smoke.emitting = true
+			anim.play(\"crash\")
+		\"crash\":
 			get_tree().change_scene_to_file(\"res://test.tscn\")
 
 func _input(event : InputEvent) -> void:
@@ -201,9 +213,36 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 3)
 }
 
+[sub_resource type="Animation" id="Animation_fks1d"]
+resource_name = "crash"
+length = 5.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ship:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(617, -0.25, 0, 0.25, 0, 1541, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ship:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(392, -0.25, 0, 0.25, 0, 689, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 5)
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sb6vb"]
 _data = {
 "RESET": SubResource("Animation_8y4c8"),
+"crash": SubResource("Animation_fks1d"),
 "ship": SubResource("Animation_jvqxw"),
 "start": SubResource("Animation_sbo40")
 }
@@ -227,6 +266,48 @@ orbit_velocity_max = 0.0
 scale_min = 0.2
 scale_max = 0.3
 color_ramp = SubResource("GradientTexture1D_fx0w3")
+
+[sub_resource type="Gradient" id="Gradient_ghstx"]
+offsets = PackedFloat32Array(0, 0.0289474, 0.597368, 1)
+colors = PackedColorArray(0.247059, 0.0745098, 0, 0, 0.213491, 0.0650965, 1.18213e-06, 0.986842, 0.000314207, 5.24891e-05, 8.74775e-06, 0.902632, 0.172549, 0.172549, 0.172549, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gflsn"]
+gradient = SubResource("Gradient_ghstx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3iuqx"]
+particle_flag_disable_z = true
+direction = Vector3(-10, 0, 0)
+spread = 14.3
+gravity = Vector3(-100, 0, 0)
+initial_velocity_max = 111.38
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+color_ramp = SubResource("GradientTexture1D_gflsn")
+
+[sub_resource type="Gradient" id="Gradient_fx7b4"]
+colors = PackedColorArray(1, 0.807843, 0, 1, 0.905882, 0.141176, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5dna6"]
+gradient = SubResource("Gradient_fx7b4")
+
+[sub_resource type="Curve" id="Curve_t3t3a"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3p21i"]
+curve = SubResource("Curve_t3t3a")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aqh8y"]
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(-100, 0, 0)
+initial_velocity_min = 94.99
+initial_velocity_max = 390.71
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.01
+scale_curve = SubResource("CurveTexture_3p21i")
+color_ramp = SubResource("GradientTexture1D_5dna6")
 
 [node name="intro" type="Node2D"]
 script = SubResource("GDScript_nqdti")
@@ -269,7 +350,31 @@ position = Vector2(3, 53)
 rotation = -1.5708
 amount = 41
 process_material = SubResource("ParticleProcessMaterial_624n5")
-texture = ExtResource("4_p5ahl")
+texture = ExtResource("4_50e6b")
+visibility_rect = Rect2(-500, -500, 1000, 1000)
+
+[node name="smoke" type="GPUParticles2D" parent="ship"]
+position = Vector2(-9.00012, -33)
+emitting = false
+amount = 31
+process_material = SubResource("ParticleProcessMaterial_3iuqx")
+texture = ExtResource("4_50e6b")
+lifetime = 3.0
+visibility_rect = Rect2(-500, -500, 1000, 1000)
+
+[node name="explosion" type="GPUParticles2D" parent="ship"]
+position = Vector2(0.999878, -32)
+rotation = -1.5708
+scale = Vector2(0.3, 0.1)
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_aqh8y")
+texture = ExtResource("4_50e6b")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+visibility_rect = Rect2(-500, -500, 1000, 1000)
+trail_enabled = true
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 modulate = Color(1, 1, 1, 0.117647)
