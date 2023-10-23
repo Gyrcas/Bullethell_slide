@@ -3,7 +3,6 @@ res://materials/stars.gdshader
 res://entities/turret.tscn
 res://entities/bullet.tscn
 res://entities/player.tscn
-res://entities/ship.tscn
 res://menus/main_menu.tscn
 res://menus/pause_menu_options.tscn
 res://menus/pause_menu_inputs.tscn

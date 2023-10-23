@@ -1,1 +1,3 @@
-https://natureofcode.com/
+generateur planet https://deep-fold.itch.io/pixel-planet-generator
+generateur vaisseau https://wisedawn.itch.io/vesselforge
+sprite vaisseau https://wobblegut-studios.itch.io/sf01

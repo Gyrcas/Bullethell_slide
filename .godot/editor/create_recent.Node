@@ -1,7 +1,9 @@
+GPUParticles2D
+Sprite2D
+PointLight2D
 AudioStreamPlayer
 ColorRect
 Polygon2D
-Sprite2D
 SmoothPolygon2D
 Label
 DialoguePlayer
@@ -29,5 +31,3 @@ PanelContainer
 OptionButton
 HBoxContainer
 Scatter2D
-TileMap
-CollisionPolygon2D

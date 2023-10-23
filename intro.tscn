@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://b2feymmx2esft"]
+[gd_scene load_steps=13 format=3 uid="uid://b2feymmx2esft"]
 
-[ext_resource type="Texture2D" uid="uid://3o2ppqrp0py7" path="res://textures/spr_stars02.png" id="1_u7dmg"]
+[ext_resource type="Texture2D" uid="uid://3o2ppqrp0py7" path="res://textures/stars.png" id="1_pe3p8"]
 [ext_resource type="Script" path="res://addons/DialogueCreator/DialoguePlayer.gd" id="3_7guuq"]
+[ext_resource type="Texture2D" uid="uid://bvqkegii4jywk" path="res://textures/ship.png" id="3_hv50j"]
+[ext_resource type="Texture2D" uid="uid://dm8gav5stwvra" path="res://spot.png" id="4_p5ahl"]
 
 [sub_resource type="GDScript" id="GDScript_nqdti"]
 script/source = "extends Node2D
@@ -13,13 +15,27 @@ const stars_speed : float = 20
 
 @onready var dialogue : DialoguePlayer = $dialogue
 
+@onready var ship : Sprite2D = $ship
+@onready var particle : GPUParticles2D = $ship/booster
+
+@onready var particle_pos : Vector2 = particle.position
+
 var current_dialogue : int = 0
 
 func _ready() -> void:
 	anim.play(\"start\")
 
+#var t = 0
+
 func _process(delta : float) -> void:
 	stars.motion_offset.x -= delta * stars_speed
+	ship.offset.y = sin(stars.motion_offset.x / 25) * 50
+	ship.offset.x = sin(stars.motion_offset.x / 50) * 50
+	particle.position = particle_pos + Vector2(ship.offset.x, ship.offset.y)
+	#t += delta * 50
+	#while t > 60:
+	#	t -= 60
+	#ship.frame = floor(t)
 
 
 func _on_anim_animation_finished(anim_name : String) -> void:
@@ -36,6 +52,7 @@ func _input(event : InputEvent) -> void:
 func _on_dialogue_finished() -> void:
 	await get_tree().create_timer(0.1).timeout
 	current_dialogue += 1
+	dialogue.text_node.text = \"\"
 	match current_dialogue:
 		1:
 			anim.play(\"ship\")
@@ -46,7 +63,7 @@ length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("background/ColorRect:color:r")
+tracks/0/path = NodePath("fade:color:r")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -57,7 +74,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("background/ColorRect:color:g")
+tracks/1/path = NodePath("fade:color:g")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -68,7 +85,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("background/ColorRect:color:b")
+tracks/2/path = NodePath("fade:color:b")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -79,7 +96,7 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("background/ColorRect:color:a")
+tracks/3/path = NodePath("fade:color:a")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -87,10 +104,54 @@ tracks/3/keys = {
 "points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ship:position:x")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-285, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ship:position:y")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(411, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_jvqxw"]
 resource_name = "ship"
-length = 10.0
+length = 100.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ship:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-285, -0.25, 0, 0.25, 0, 617, -3.1, 78, 0.6, 0),
+"times": PackedFloat32Array(0, 5.8)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ship:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(411, -0.25, 0, 0.25, 0, 392, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 6.1)
+}
 
 [sub_resource type="Animation" id="Animation_sbo40"]
 resource_name = "start"
@@ -98,7 +159,7 @@ length = 3.0
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("background/ColorRect:color:r")
+tracks/0/path = NodePath("fade:color:r")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -109,7 +170,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("background/ColorRect:color:g")
+tracks/1/path = NodePath("fade:color:g")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -120,7 +181,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("background/ColorRect:color:b")
+tracks/2/path = NodePath("fade:color:b")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -131,7 +192,7 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("background/ColorRect:color:a")
+tracks/3/path = NodePath("fade:color:a")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -146,6 +207,26 @@ _data = {
 "ship": SubResource("Animation_jvqxw"),
 "start": SubResource("Animation_sbo40")
 }
+
+[sub_resource type="Gradient" id="Gradient_unjga"]
+offsets = PackedFloat32Array(0, 0.69697, 1)
+colors = PackedColorArray(0.146297, 1, 0.841901, 1, 1, 1, 0.952941, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fx0w3"]
+gradient = SubResource("Gradient_unjga")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_624n5"]
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+spread = 6.63
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 100.78
+initial_velocity_max = 186.05
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.2
+scale_max = 0.3
+color_ramp = SubResource("GradientTexture1D_fx0w3")
 
 [node name="intro" type="Node2D"]
 script = SubResource("GDScript_nqdti")
@@ -162,14 +243,7 @@ motion_mirroring = Vector2(2560, 2560)
 
 [node name="Sprite2D" type="Sprite2D" parent="background/stars"]
 position = Vector2(893, 287)
-texture = ExtResource("1_u7dmg")
-
-[node name="ColorRect" type="ColorRect" parent="background"]
-offset_left = -36.0
-offset_top = -54.0
-offset_right = 1301.0
-offset_bottom = 750.0
-color = Color(0, 0, 0, 1)
+texture = ExtResource("1_pe3p8")
 
 [node name="anim" type="AnimationPlayer" parent="."]
 libraries = {
@@ -182,9 +256,36 @@ button_container = NodePath("../text")
 text_node = NodePath("../text")
 typewritter_speed = 0.05
 
+[node name="ship" type="Sprite2D" parent="."]
+position = Vector2(-285, 411)
+rotation = 1.5708
+texture = ExtResource("3_hv50j")
+hframes = 60
+frame = 47
+
+[node name="booster" type="GPUParticles2D" parent="ship"]
+show_behind_parent = true
+position = Vector2(3, 53)
+rotation = -1.5708
+amount = 41
+process_material = SubResource("ParticleProcessMaterial_624n5")
+texture = ExtResource("4_p5ahl")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+modulate = Color(1, 1, 1, 0.117647)
+polygon = PackedVector2Array(-115, -46, 1533, -41, 1528, 911, -205, 866)
+vertex_colors = PackedColorArray(0.670588, 0.439216, 0.439216, 1, 0, 0.184314, 0.337255, 1, 0.227451, 0, 0.247059, 1, 0, 0, 0.0509804, 1)
+
 [node name="text" type="Label" parent="."]
 offset_right = 1364.0
 offset_bottom = 138.0
+
+[node name="fade" type="ColorRect" parent="."]
+offset_left = -36.0
+offset_top = -54.0
+offset_right = 1301.0
+offset_bottom = 750.0
+color = Color(0, 0, 0, 1)
 
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]
 [connection signal="finished" from="dialogue" to="." method="_on_dialogue_finished"]
