@@ -1,10 +1,10 @@
 [gd_scene load_steps=24 format=3 uid="uid://dk6jx335yxa0o"]
 
-[ext_resource type="Texture2D" uid="uid://3o2ppqrp0py7" path="res://textures/stars.png" id="1_pe3p8"]
-[ext_resource type="Script" path="res://addons/DialogueCreator/DialoguePlayer.gd" id="3_7guuq"]
-[ext_resource type="Texture2D" uid="uid://bvqkegii4jywk" path="res://textures/ship.png" id="3_hv50j"]
-[ext_resource type="Texture2D" uid="uid://dm8gav5stwvra" path="res://textures/spot.png" id="4_50e6b"]
-[ext_resource type="Texture2D" uid="uid://cp5roovi7se7x" path="res://textures/planet.png" id="5_jvo8s"]
+[ext_resource type="Texture2D" uid="uid://3o2ppqrp0py7" path="res://textures/stars.png" id="1_1f1so"]
+[ext_resource type="Texture2D" uid="uid://cp5roovi7se7x" path="res://textures/planet.png" id="2_rqexs"]
+[ext_resource type="Script" path="res://addons/DialogueCreator/DialoguePlayer.gd" id="3_0a3bu"]
+[ext_resource type="Texture2D" uid="uid://bvqkegii4jywk" path="res://textures/ship.png" id="4_two8p"]
+[ext_resource type="Texture2D" uid="uid://dm8gav5stwvra" path="res://textures/spot.png" id="5_jvjob"]
 
 [sub_resource type="GDScript" id="GDScript_nqdti"]
 script/source = "extends Node2D
@@ -53,7 +53,7 @@ const explosion_x : int = 100
 func _on_anim_animation_finished(anim_name : String) -> void:
 	match anim_name:
 		\"start\":
-			dialogue.play_from_file(\"res://ressources/dialogues/intro_1.json\")
+			dialogue.play_from_file(NodeLinker.request_resource(\"intro_1.json\",true))
 		\"ship\":
 			turn = true
 			explosion.emitting = true
@@ -68,10 +68,10 @@ func _on_anim_animation_finished(anim_name : String) -> void:
 			planet.visible = true
 			move_stars = false
 		\"crash2\":
-			get_tree().change_scene_to_file(\"res://cave_crash.tscn\")
+			get_tree().change_scene_to_file(NodeLinker.request_resource(\"cave_crash.tscn\",true))
 
 func _input(event : InputEvent) -> void:
-	if anim.is_playing() && event.is_action_pressed(\"ui_accept\"):
+	if anim.is_playing() && event.is_action_pressed(\"interact\"):
 		anim.advance(anim.current_animation_length)
 
 func _on_dialogue_finished() -> void:
@@ -82,6 +82,53 @@ func _on_dialogue_finished() -> void:
 		1:
 			anim.play(\"ship\")
 "
+
+[sub_resource type="Animation" id="Animation_txlmc"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fade:color:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("fade:color:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("fade:color:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("fade:color:a")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_fks1d"]
 resource_name = "crash"
@@ -375,53 +422,6 @@ tracks/7/keys = {
 "times": PackedFloat32Array(0)
 }
 
-[sub_resource type="Animation" id="Animation_txlmc"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("fade:color:r")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("fade:color:g")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("fade:color:b")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("fade:color:a")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sb6vb"]
 _data = {
 "RESET": SubResource("Animation_txlmc"),
@@ -508,7 +508,7 @@ motion_mirroring = Vector2(2560, 2560)
 
 [node name="Sprite2D" type="Sprite2D" parent="background/stars"]
 position = Vector2(893, 287)
-texture = ExtResource("1_pe3p8")
+texture = ExtResource("1_1f1so")
 
 [node name="anim" type="AnimationPlayer" parent="."]
 libraries = {
@@ -518,10 +518,11 @@ libraries = {
 [node name="planet" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(992, 458)
-texture = ExtResource("5_jvo8s")
+texture = ExtResource("2_rqexs")
 
 [node name="dialogue" type="Node" parent="." node_paths=PackedStringArray("button_container", "text_node")]
-script = ExtResource("3_7guuq")
+script = ExtResource("3_0a3bu")
+action_next = "interact"
 button_container = NodePath("../text")
 text_node = NodePath("../text")
 typewritter_speed = 0.05
@@ -529,7 +530,7 @@ typewritter_speed = 0.05
 [node name="ship" type="Sprite2D" parent="."]
 position = Vector2(-183, -76)
 rotation = 1.5708
-texture = ExtResource("3_hv50j")
+texture = ExtResource("4_two8p")
 hframes = 60
 frame = 47
 
@@ -539,7 +540,7 @@ position = Vector2(3, 53)
 rotation = -1.5708
 amount = 41
 process_material = SubResource("ParticleProcessMaterial_624n5")
-texture = ExtResource("4_50e6b")
+texture = ExtResource("5_jvjob")
 visibility_rect = Rect2(-500, -500, 1000, 1000)
 
 [node name="smoke" type="GPUParticles2D" parent="ship"]
@@ -547,7 +548,7 @@ position = Vector2(-9.00012, -33)
 emitting = false
 amount = 31
 process_material = SubResource("ParticleProcessMaterial_3iuqx")
-texture = ExtResource("4_50e6b")
+texture = ExtResource("5_jvjob")
 lifetime = 3.0
 visibility_rect = Rect2(-500, -500, 1000, 1000)
 
@@ -558,7 +559,7 @@ scale = Vector2(0.3, 0.1)
 emitting = false
 amount = 100
 process_material = SubResource("ParticleProcessMaterial_aqh8y")
-texture = ExtResource("4_50e6b")
+texture = ExtResource("5_jvjob")
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0

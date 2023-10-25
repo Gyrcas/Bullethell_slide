@@ -15,9 +15,9 @@ class_name Turret
 @onready var anim_player : AnimationPlayer = $anim_player
 
 @export var bullet_preset : BulletRes = BulletRes.new()
-var bullet_scene : Bullet = preload(NodeLinker.bullet_scene).instantiate()
+var bullet_scene : Bullet = NodeLinker.request_resource("bullet.tscn").instantiate()
 
-var death_particles_scene : PackedScene = preload(NodeLinker.death_particles)
+var death_particles_scene : PackedScene = NodeLinker.request_resource("death_particles.tscn")
 var bullet_color : Color = Color(5,0,0)
 
 @export var health : int = 2 : set = set_health

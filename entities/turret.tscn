@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://crk6qe46nhlj1"]
 
 [ext_resource type="Script" path="res://entities/entities_script/turret.gd" id="1_h6hpn"]
-[ext_resource type="Script" path="res://ressources/PolygonBody.gd" id="2_ykwhd"]
+[ext_resource type="Script" path="res://resources/PolygonBody.gd" id="2_ykwhd"]
 
 [sub_resource type="Animation" id="Animation_02q7r"]
 length = 0.001

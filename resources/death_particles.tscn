@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://jnmauf8sxcsu"]
 
-[ext_resource type="Script" path="res://ressources/death_particles.gd" id="1_dpkyi"]
+[ext_resource type="Script" path="res://resources/death_particles.gd" id="1_dpkyi"]
 [ext_resource type="Texture2D" uid="uid://dm8gav5stwvra" path="res://textures/spot.png" id="2_e2onb"]
 
 [sub_resource type="Gradient" id="Gradient_3bmbv"]

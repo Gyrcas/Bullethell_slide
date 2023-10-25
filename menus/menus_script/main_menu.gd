@@ -21,6 +21,6 @@ func _process(delta):
 	if disappear:
 		panel_shader.material.set_shader_parameter("opacity",previous_opacity - delta / div_disappear)
 		if previous_opacity <= 0:
-			get_tree().change_scene_to_file("res://intro.tscn")
+			get_tree().change_scene_to_file("res://levels/intro.tscn")
 	elif previous_opacity < 0.25:
 		panel_shader.material.set_shader_parameter("opacity",previous_opacity + delta / div_appear)

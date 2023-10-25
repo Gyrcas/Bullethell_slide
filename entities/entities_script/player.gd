@@ -9,15 +9,30 @@ class_name Player
 @onready var target : Node2D = $target
 @onready var camera : Camera2D = $camera
 
-var death_particles_scene : PackedScene = preload(NodeLinker.death_particles)
+@onready var health_bar : TextureProgressBar = $camera/ui/hud/health
+
+@onready var interaction_lbl : Label = $camera/ui/interaction
+
+var death_particles_scene : PackedScene = NodeLinker.request_resource("death_particles.tscn")
 
 var bullet_color : Color = Color(1,1,1)
 
 var health : float = 100 : set = set_health
 var health_max : float = 100
 
+var interaction : Node = null : set = set_interaction
+
+func set_interaction(value : Node) -> void:
+	interaction = value
+	interaction_lbl.visible = !!interaction
+	if interaction:
+		interaction_lbl.text = "Press " + InputMap.action_get_events("interact")[0].as_text() + " to interact"
+
 func set_health(value : float) -> void:
 	health = value
+	health_bar.value = health / health_max * health_bar.max_value
+	if health <= 0:
+		pass
 
 # movement var
 var max_speed : float = 15
@@ -34,10 +49,10 @@ var shoot_cooldown : float = 0.1
 # trail var
 @onready var trail : Line2D = $trail
 var trail_length : int = 50
-const trail_gradiant_presets_path : String = "res://ressources/trail_gradient_presets/"
+var trail_gradiant_presets_path : String = NodeLinker.request_resource("trail_gradient_presets",true) + "/"
 var trail_gradiant_presets : Dictionary = {
-	"base":preload(trail_gradiant_presets_path + "base.tres"),
-	"boost":preload(trail_gradiant_presets_path + "boost.tres")
+	"base":load(trail_gradiant_presets_path + "base.tres"),
+	"boost":load(trail_gradiant_presets_path + "boost.tres")
 }
 const trail_update_time : float = 0.05
 @onready var trail_timer : Timer = $trail_timer
@@ -181,6 +196,8 @@ func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("auto_target"):
 		current_target_id += 1
 		do_target()
+	if event.is_action_pressed("interact") && interaction:
+		interaction.interact()
 
 func do_target() -> void:
 	var bodies : Array[Node2D] = auto_target.get_overlapping_bodies()

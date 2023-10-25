@@ -3,7 +3,7 @@ class_name Bullet
 
 @onready var sprite : Polygon2D = $sprite
 
-var death_particles_scene : PackedScene = load(NodeLinker.death_particles)
+var death_particles_scene : PackedScene = NodeLinker.request_resource("death_particles.tscn")
 
 var nano : int = 10
 

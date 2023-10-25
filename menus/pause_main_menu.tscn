@@ -21,9 +21,14 @@ layout_mode = 2
 layout_mode = 2
 text = "Resume"
 
+[node name="load" type="Button" parent="center/vbox"]
+layout_mode = 2
+text = "Load"
+
 [node name="options" type="Button" parent="center/vbox"]
 layout_mode = 2
 text = "Options"
 
 [connection signal="pressed" from="center/vbox/resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="center/vbox/load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="center/vbox/options" to="." method="_on_options_pressed"]
