@@ -18,12 +18,15 @@ var data : Dictionary = {}
 
 func _ready() -> void:
 	data = JSON.parse_string(FS.read(save_file))
-	for file in data.values():
-		if !FS.exist(file.str):
-			file = null
+	var dup : Dictionary = data.duplicate()
+	for key in data.keys():
+		if !FS.exist(data[key].str):
+			data.erase(key)
 			continue
-		if file.keys().has("res"):
-			file.res = load(file.str)
+		if data[key].keys().has("res"):
+			data[key].res = load(data[key].str)
+	if data != dup:
+		FS.write(save_file,JSON.stringify(data))
 			
 
 func search(path : String, content : String, ignore_godot_folder : bool = true) -> Variant:

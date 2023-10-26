@@ -1,5 +1,7 @@
 extends Node
 
+const save_location : String = "res://data/saves/"
+
 var data : Dictionary = {
 	"intro" : false
 }

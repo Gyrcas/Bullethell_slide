@@ -129,6 +129,17 @@ tracks/3/keys = {
 "points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ship:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1.5708, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_fks1d"]
 resource_name = "crash"
@@ -303,10 +314,21 @@ tracks/12/keys = {
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(5, 8)
 }
+tracks/13/type = "bezier"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("ship:rotation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1.5708, -0.25, 0, 0.25, 0, 2.24449, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 5)
+}
 
 [sub_resource type="Animation" id="Animation_jvqxw"]
 resource_name = "ship"
-length = 100.0
+length = 10.0
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true

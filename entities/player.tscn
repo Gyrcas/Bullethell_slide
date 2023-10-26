@@ -1,15 +1,30 @@
-[gd_scene load_steps=9 format=3 uid="uid://pa4b5sl2ju1n"]
+[gd_scene load_steps=12 format=3 uid="uid://pa4b5sl2ju1n"]
 
 [ext_resource type="Script" path="res://entities/entities_script/player.gd" id="1_mah8r"]
 [ext_resource type="Script" path="res://resources/PolygonBody.gd" id="2_h6qts"]
+[ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="2_je2js"]
 [ext_resource type="Texture2D" uid="uid://drrlgjjdq4twp" path="res://textures/ui/bars/bg.png" id="3_8b3ji"]
 [ext_resource type="PackedScene" uid="uid://bhrculwo037fi" path="res://menus/pause_menu.tscn" id="3_r0pq6"]
 [ext_resource type="PackedScene" uid="uid://ctlk12wtd554v" path="res://ui/target.tscn" id="4_davdh"]
 [ext_resource type="Texture2D" uid="uid://ptg8tcs3a5e0" path="res://textures/ui/bars/red.png" id="4_xj7c0"]
 [ext_resource type="Texture2D" uid="uid://b041x38jby5jb" path="res://textures/ui/bars/blue.png" id="5_jdmre"]
 
+[sub_resource type="Resource" id="Resource_vpjub"]
+script = ExtResource("2_je2js")
+ignore_sender = true
+max_speed = 25.0
+move_speed = 15.0
+turn_speed = 10.0
+target_position = Vector2(0, 0)
+damage = 1.0
+maniability = 0.25
+nano = 10
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bcdmy"]
 height = 22.0
+
+[sub_resource type="Gradient" id="Gradient_2xgqr"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
 
 [node name="player" type="CharacterBody2D"]
 motion_mode = 1
@@ -17,6 +32,7 @@ wall_min_slide_angle = 3.14159
 platform_on_leave = 2
 safe_margin = 0.1
 script = ExtResource("1_mah8r")
+bullet_preset = SubResource("Resource_vpjub")
 
 [node name="body" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-14, -14, 31, 0, -14, 13, -12, 0)
@@ -81,11 +97,10 @@ shape = SubResource("CapsuleShape2D_bcdmy")
 [node name="ray_boost" type="RayCast2D" parent="."]
 target_position = Vector2(-50, 0)
 
-[node name="stun_timer" type="Timer" parent="."]
-
 [node name="trail_timer" type="Timer" parent="."]
 
 [node name="trail" type="Line2D" parent="."]
+gradient = SubResource("Gradient_2xgqr")
 
 [node name="target" parent="." instance=ExtResource("4_davdh")]
 visible = false
@@ -102,6 +117,5 @@ position = Vector2(-108, 15)
 polygon = PackedVector2Array(-2466, -1452, 2669, -1445, 2631, 1425, -2451, 1432)
 
 [connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout"]
-[connection signal="timeout" from="stun_timer" to="." method="_on_stun_timer_timeout"]
 [connection signal="timeout" from="trail_timer" to="." method="_on_trail_timer_timeout"]
 [connection signal="body_exited" from="auto_target" to="." method="_on_auto_target_body_exited"]

@@ -20,15 +20,16 @@ var bullet_scene : Bullet = NodeLinker.request_resource("bullet.tscn").instantia
 var death_particles_scene : PackedScene = NodeLinker.request_resource("death_particles.tscn")
 var bullet_color : Color = Color(5,0,0)
 
-@export var health : int = 2 : set = set_health
-
 signal died
 
+var dying : bool = false
+
+var health_max : int = 2
+@export var health : int = health_max : set = set_health
+
 func set_health(value : int) -> void:
-	if (value - health < 0 && !can_be_hurt) || health <= 0:
-		return
 	health = value
-	if health <= 0:
+	if health <= 0 && ! dying:
 		anim_player.play("death")
 		timer_bullet.stop()
 		timer_burst.stop()
@@ -38,7 +39,6 @@ func set_health(value : int) -> void:
 		particles.lifetime = 3
 		get_parent().add_child(particles)
 		died.emit()
-var can_be_hurt : bool = true
 
 var bullet_count : int = 0
 var can_shoot : bool = true

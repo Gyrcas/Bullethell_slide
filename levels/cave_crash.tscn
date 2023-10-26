@@ -35,7 +35,7 @@ func start() -> void:
 func _on_anim_animation_finished(anim_name : String) -> void:
 	match anim_name:
 		\"start\":
-			pass
+			completed.emit()
 "
 
 [sub_resource type="Animation" id="Animation_gyk8y"]
@@ -103,13 +103,14 @@ script = SubResource("GDScript_6arar")
 [node name="ColorRect" type="ColorRect" parent="background"]
 offset_left = -3729.0
 offset_top = -2512.0
-offset_right = 9227.0
-offset_bottom = 4454.0
+offset_right = 9339.0
+offset_bottom = 4574.0
 color = Color(0.141176, 0.141176, 0.141176, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="Polygon2D" type="Polygon2D" parent="background"]
 color = Color(0.0666667, 0.321569, 0.278431, 1)
-polygon = PackedVector2Array(-714, 128, 108, -180, 1181, -118, 2092, -990, 3516, -214, 7114, -470, 9271, 598, 9292, 1112, 8173, 1697, 4226, 1946, 2652, 1754, 994, 1316, -304, 1239, -1020, 422)
+polygon = PackedVector2Array(-714, 128, 108, -180, 1181, -118, 2092, -990, 3516, -214, 7114, -470, 9411, 656, 9349, 1117, 8173, 1697, 4226, 1946, 2652, 1754, 994, 1316, -304, 1239, -1020, 422)
 
 [node name="SmoothPolygon2D" type="Polygon2D" parent="background"]
 self_modulate = Color(0.0392157, 0.270588, 0.188235, 1)
@@ -211,6 +212,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="dialogue" type="Node" parent="intro"]
 script = ExtResource("5_b211j")
