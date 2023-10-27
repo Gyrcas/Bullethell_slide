@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://b041x38jby5jb" path="res://textures/ui/bars/blue.png" id="5_jdmre"]
 
 [sub_resource type="Resource" id="Resource_vpjub"]
+resource_local_to_scene = true
 script = ExtResource("2_je2js")
 ignore_sender = true
 max_speed = 25.0
@@ -19,6 +20,10 @@ target_position = Vector2(0, 0)
 damage = 1.0
 maniability = 0.25
 nano = 10
+global_position = Vector2(0, 0)
+rotation = 0.0
+velocity = Vector2(0, 0)
+type = "default"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bcdmy"]
 height = 22.0

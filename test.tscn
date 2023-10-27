@@ -1,12 +1,61 @@
-[gd_scene load_steps=7 format=3 uid="uid://cge685irhmine"]
+[gd_scene load_steps=11 format=3 uid="uid://cge685irhmine"]
 
 [ext_resource type="Texture2D" uid="uid://3o2ppqrp0py7" path="res://textures/stars.png" id="1_0x3y5"]
 [ext_resource type="Script" path="res://addons/smoothpolygon/SmoothStaticPolygon2D.gd" id="3_8ddh7"]
 [ext_resource type="Texture2D" uid="uid://bu47foj0xu6hr" path="res://pixel.png" id="3_b80uq"]
+[ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="3_h82h7"]
 [ext_resource type="PackedScene" uid="uid://pa4b5sl2ju1n" path="res://entities/player.tscn" id="4_nr1bs"]
 [ext_resource type="PackedScene" uid="uid://crk6qe46nhlj1" path="res://entities/turret.tscn" id="5_a6lmi"]
 
+[sub_resource type="Resource" id="Resource_khi4k"]
+resource_local_to_scene = true
+script = ExtResource("3_h82h7")
+ignore_sender = true
+max_speed = 25.0
+move_speed = 15.0
+turn_speed = 10.0
+target_position = Vector2(0, 0)
+damage = 1.0
+maniability = 0.25
+nano = 10
+global_position = Vector2(0, 0)
+rotation = 0.0
+velocity = Vector2(0, 0)
+type = "default"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_21qhf"]
+
+[sub_resource type="Resource" id="Resource_lovtn"]
+resource_local_to_scene = true
+script = ExtResource("3_h82h7")
+ignore_sender = false
+max_speed = 15.0
+move_speed = 2.5
+turn_speed = 10.0
+target_position = Vector2(0, 0)
+damage = 1.0
+maniability = 0.25
+nano = 10
+global_position = Vector2(0, 0)
+rotation = 0.0
+velocity = Vector2(0, 0)
+type = "default"
+
+[sub_resource type="Resource" id="Resource_ms4ag"]
+resource_local_to_scene = true
+script = ExtResource("3_h82h7")
+ignore_sender = false
+max_speed = 15.0
+move_speed = 2.5
+turn_speed = 10.0
+target_position = Vector2(0, 0)
+damage = 1.0
+maniability = 0.25
+nano = 10
+global_position = Vector2(0, 0)
+rotation = 0.0
+velocity = Vector2(0, 0)
+type = "default"
 
 [node name="test" type="Node2D"]
 position = Vector2(0, 1)
@@ -23,6 +72,7 @@ texture = ExtResource("1_0x3y5")
 
 [node name="player" parent="." instance=ExtResource("4_nr1bs")]
 position = Vector2(-331, 225)
+bullet_preset = SubResource("Resource_khi4k")
 
 [node name="pol" type="Polygon2D" parent="."]
 modulate = Color(0.223529, 0.0156863, 0.105882, 1)
@@ -49,7 +99,9 @@ outlines_array = Array[PackedVector2Array]([PackedVector2Array(943.518, -1503.75
 [node name="turret" parent="." instance=ExtResource("5_a6lmi")]
 position = Vector2(-1060, -261)
 rotation = 0.742493
+bullet_preset = SubResource("Resource_lovtn")
 
 [node name="turret2" parent="." instance=ExtResource("5_a6lmi")]
 position = Vector2(-1336, -531)
 rotation = 0.742493
+bullet_preset = SubResource("Resource_ms4ag")

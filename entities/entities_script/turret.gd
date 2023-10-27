@@ -4,7 +4,6 @@ class_name Turret
 @export var time_between_burst : float = 2.5
 @export var bullet_per_burst : int = 5
 @export var time_between_bullets : float = 0.1
-@export var bullet_speed : float = 2.5
 @export var range_angle : float = 20
 @export var max_distance : float = 5000
 
@@ -15,7 +14,6 @@ class_name Turret
 @onready var anim_player : AnimationPlayer = $anim_player
 
 @export var bullet_preset : BulletRes = BulletRes.new()
-var bullet_scene : Bullet = NodeLinker.request_resource("bullet.tscn").instantiate()
 
 var death_particles_scene : PackedScene = NodeLinker.request_resource("death_particles.tscn")
 var bullet_color : Color = Color(5,0,0)
@@ -55,26 +53,25 @@ func _ready() -> void:
 	detection.add_exception(self)
 	timer_bullet.start(time_between_bullets)
 	detection.rotation = -rotation
-	bullet_scene.assign(bullet_preset)
+	bullet_preset.rotation = rotation - randf_range(90 - range_angle, 90 + range_angle)
+	bullet_preset.global_position = bullet_spawn_point
+	bullet_preset.velocity = -global_transform.y * 2
+	bullet_preset.target_node = NodeLinker.player
 	set_collision_layer_value(NodeLinker.auto_target_collision_level,true)
 
 func _physics_process(_delta : float) -> void:
 	if !NodeLinker.player:
 		return
 	detection.target_position = NodeLinker.player.global_position - detection.global_position
-	if detection.get_collider() == NodeLinker.player && nano >= bullet_scene.nano:
+	if detection.get_collider() == NodeLinker.player && nano >= bullet_preset.nano:
 		shoot()
 
 func shoot() -> void:
 	if !can_shoot || waiting_for_burst:
 		return
 	bullet_count += 1
-	var bullet : Bullet = bullet_scene.duplicate()
-	bullet.global_position = bullet_spawn_point
-	bullet.speed = bullet_speed
-	bullet.target_node = NodeLinker.player
-	bullet.rotation = rotation - randf_range(90 - range_angle, 90 + range_angle)
-	bullet.velocity = -global_transform.y * 2
+	nano -= bullet_preset.nano
+	var bullet : Bullet = bullet_preset.instantiate()
 	bullet.sender = self
 	call_deferred("set_bullet_color",bullet_color,bullet)
 	get_parent().add_child(bullet)
@@ -94,5 +91,4 @@ func _on_timer_burst_timeout():
 
 func _on_anim_player_animation_finished(anim_name : StringName) -> void:
 	if anim_name == "death":
-		bullet_scene.queue_free()
 		queue_free()

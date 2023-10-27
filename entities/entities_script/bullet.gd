@@ -1,11 +1,14 @@
 extends SpaceMover
 class_name Bullet
 
-@onready var sprite : Polygon2D = $sprite
+@onready var sprite : Node2D = $sprite
 
 var death_particles_scene : PackedScene = NodeLinker.request_resource("death_particles.tscn")
 
 var nano : int = 10
+
+func _draw() -> void:
+	pass
 
 var sender : Node2D : set = set_sender
 @export var ignore_sender : bool = true : set = set_ignore_sender
@@ -49,21 +52,27 @@ func die() -> void:
 	get_parent().add_child(particles)
 	queue_free()
 
+func collide(collision) -> void:
+	var collider : Node2D = collision.get_collider()
+	if collider.get("sender") == sender:
+		add_collision_exception_with(collider)
+		return
+	if collider.get("health"):
+		collider.health -= damage
+	if collider is CharacterBody2D:
+		collider.velocity += velocity
+	die()
+
 func _physics_process(delta : float) -> void:
 	if !target_node:
 		target_node = null
 	target_position = target_node.global_position if target_node else global_position + global_transform.x
 	var angle_target : float = get_angle_to(target_position)
 	
-	var collision : Variant = do_move(1,angle_target / abs(angle_target),delta, velocity.x / velocity.normalized().x if velocity.x != 0 else 1)
+	var collision : Variant = do_move(1,angle_target / abs(angle_target),delta, velocity.x / velocity.normalized().x if velocity.x != 0 else 1.0)
 	
 	if collision:
-		var collider : Node2D = collision.get_collider()
-		if collider.get("health"):
-			collider.health -= damage
-		if collider is CharacterBody2D:
-			collider.velocity += velocity
-		die()
+		collide(collision)
 
 func on_change_target() -> void:
 	target_node = sender.target.current_target

@@ -17,7 +17,8 @@ func set_interaction(value : Node) -> void:
 	interaction = value
 	interaction_lbl.visible = !!interaction
 	if interaction:
-		interaction_lbl.text = "Press " + InputMap.action_get_events("interact")[0].as_text() + " to interact"
+		var events : Array[InputEvent] = InputMap.action_get_events("interact")
+		interaction_lbl.text = "Press " + (events[0].as_text() if events.size() > 0 else "nothing (no key set)") + " to interact"
 
 # trail var
 @onready var trail : Line2D = $trail
@@ -32,7 +33,10 @@ const max_speed_bouce : float = 4
 
 func set_health(value : float) -> void:
 	health = value
-	health_bar.value = health / health_max * health_bar.max_value
+	var tween : Tween = create_tween()
+	tween.tween_property(
+		health_bar,"value",health / health_max * health_bar.max_value,0.1
+	)
 	if health <= 0:
 		pass
 
@@ -97,8 +101,14 @@ func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("auto_target"):
 		current_target_id += 1
 		do_target()
-	if event.is_action_pressed("interact") && interaction:
+	elif event.is_action_pressed("interact") && interaction:
 		interaction.interact()
+	elif event.is_action_pressed("projectile 1"):
+		bullet_preset.type = "default"
+		print("def")
+	elif event.is_action_pressed("projectile 2"):
+		bullet_preset.type = "bomb"
+		print("bomb")
 
 func do_target() -> void:
 	var bodies : Array[Node2D] = auto_target.get_overlapping_bodies()

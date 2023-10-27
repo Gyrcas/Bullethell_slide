@@ -550,7 +550,7 @@ text_node = NodePath("../text")
 typewritter_speed = 0.05
 
 [node name="ship" type="Sprite2D" parent="."]
-position = Vector2(-183, -76)
+position = Vector2(-208, 333)
 rotation = 1.5708
 texture = ExtResource("4_two8p")
 hframes = 60
