@@ -7,11 +7,8 @@ var death_particles_scene : PackedScene = NodeLinker.request_resource("death_par
 
 var nano : int = 10
 
-func _draw() -> void:
-	pass
-
 var sender : Node2D : set = set_sender
-@export var ignore_sender : bool = true : set = set_ignore_sender
+var ignore_sender : bool = true : set = set_ignore_sender
 func set_ignore_sender(value : bool) -> void:
 	ignore_sender = value
 	if sender:
@@ -19,10 +16,9 @@ func set_ignore_sender(value : bool) -> void:
 			add_collision_exception_with(sender)
 		else:
 			remove_collision_exception_with(sender)
-@export var target_position : Vector2 = Vector2(0,0)
-@export var target_node : Node2D
-@export var damage : float = 1
-@export var precision : float = 0.05
+var target_position : Vector2 = Vector2(0,0)
+var target_node : Node2D
+var damage : float = 1
 
 func set_sender(value : Node2D) -> void:
 	if sender:
@@ -66,11 +62,10 @@ func collide(collision) -> void:
 func _physics_process(delta : float) -> void:
 	if !target_node:
 		target_node = null
-	target_position = target_node.global_position if target_node else global_position + global_transform.x
+	target_position = target_node.global_position if target_node else global_position + global_transform.x * 100
 	var angle_target : float = get_angle_to(target_position)
 	
 	var collision : Variant = do_move(1,angle_target / abs(angle_target),delta, velocity.x / velocity.normalized().x if velocity.x != 0 else 1.0)
-	
 	if collision:
 		collide(collision)
 

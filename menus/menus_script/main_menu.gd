@@ -13,7 +13,9 @@ func _on_start_pressed() -> void:
 
 
 func _on_settings_pressed() -> void:
-	pass # Replace with function body.
+	$pause_menu.visible = true
+	$pause_menu.current_view.visible = true
+	get_tree().paused = true
 
 
 func _process(delta):
@@ -24,3 +26,7 @@ func _process(delta):
 			get_tree().change_scene_to_file("res://levels/intro.tscn")
 	elif previous_opacity < 0.25:
 		panel_shader.material.set_shader_parameter("opacity",previous_opacity + delta / div_appear)
+
+
+func _on_load_pressed() -> void:
+	pass # Replace with function body.

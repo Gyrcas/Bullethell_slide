@@ -25,18 +25,21 @@ var dying : bool = false
 var health_max : int = 2
 @export var health : int = health_max : set = set_health
 
+func die() -> void:
+	anim_player.play("death")
+	timer_bullet.stop()
+	timer_burst.stop()
+	can_shoot = false
+	var particles : DeathParticles = death_particles_scene.instantiate()
+	particles.global_position = global_position
+	particles.lifetime = 3
+	get_parent().add_child(particles)
+	died.emit()
+
 func set_health(value : int) -> void:
 	health = value
-	if health <= 0 && ! dying:
-		anim_player.play("death")
-		timer_bullet.stop()
-		timer_burst.stop()
-		can_shoot = false
-		var particles : DeathParticles = death_particles_scene.instantiate()
-		particles.global_position = global_position
-		particles.lifetime = 3
-		get_parent().add_child(particles)
-		died.emit()
+	if health <= 0 && !dying:
+		die()
 
 var bullet_count : int = 0
 var can_shoot : bool = true
@@ -63,12 +66,10 @@ func _physics_process(_delta : float) -> void:
 	if !NodeLinker.player:
 		return
 	detection.target_position = NodeLinker.player.global_position - detection.global_position
-	if detection.get_collider() == NodeLinker.player && nano >= bullet_preset.nano:
+	if detection.get_collider() == NodeLinker.player && nano >= bullet_preset.nano && can_shoot && !waiting_for_burst:
 		shoot()
 
 func shoot() -> void:
-	if !can_shoot || waiting_for_burst:
-		return
 	bullet_count += 1
 	nano -= bullet_preset.nano
 	var bullet : Bullet = bullet_preset.instantiate()

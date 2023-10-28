@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://entities/entities_script/turret.gd" id="1_h6hpn"]
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="2_ox7x8"]
 [ext_resource type="Script" path="res://resources/PolygonBody.gd" id="2_ykwhd"]
+[ext_resource type="Animation" uid="uid://bqe02inrdvmmd" path="res://resources/animation/death_animation.res" id="4_xruvb"]
 
 [sub_resource type="Resource" id="Resource_gifhx"]
 resource_local_to_scene = true
@@ -45,35 +46,10 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0)
 }
 
-[sub_resource type="Animation" id="Animation_0a6kv"]
-resource_name = "death"
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1.2, -0.25, 0, 0.25, 0, 1e-05, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.2, 0.9)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1.2, -0.25, 0, 0.25, 0, 1e-05, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.2, 0.9)
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_l0qmg"]
 _data = {
 "RESET": SubResource("Animation_02q7r"),
-"death": SubResource("Animation_0a6kv")
+"death": ExtResource("4_xruvb")
 }
 
 [sub_resource type="Shader" id="Shader_sf3ja"]

@@ -1,1 +1,1 @@
-{"inputs":{"auto_target":["key69"],"back":["key4194305"],"down":["key83"],"interact":["key69","key4194309"],"left":["key65"],"left_click":["mouseB1"],"right":["key68"],"right_click":["mouseB2"],"up":["key87"]}}
+{"inputs":{"auto_target":["key69"],"back":["key4194305"],"down":["key83","key4194322"],"interact":["key69","key4194309"],"left":["key65","key4194319"],"left_click":["mouseB1"],"projectile_1":["key49"],"projectile_2":["key50"],"right":["key68","key4194321"],"right_click":["mouseB2"],"up":["key87","key4194320"]}}

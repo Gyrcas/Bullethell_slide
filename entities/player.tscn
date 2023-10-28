@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://pa4b5sl2ju1n"]
+[gd_scene load_steps=14 format=3 uid="uid://pa4b5sl2ju1n"]
 
 [ext_resource type="Script" path="res://entities/entities_script/player.gd" id="1_mah8r"]
 [ext_resource type="Script" path="res://resources/PolygonBody.gd" id="2_h6qts"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://ctlk12wtd554v" path="res://ui/target.tscn" id="4_davdh"]
 [ext_resource type="Texture2D" uid="uid://ptg8tcs3a5e0" path="res://textures/ui/bars/red.png" id="4_xj7c0"]
 [ext_resource type="Texture2D" uid="uid://b041x38jby5jb" path="res://textures/ui/bars/blue.png" id="5_jdmre"]
+[ext_resource type="Animation" uid="uid://bqe02inrdvmmd" path="res://resources/animation/death_animation.res" id="9_c0n7u"]
 
 [sub_resource type="Resource" id="Resource_vpjub"]
 resource_local_to_scene = true
@@ -30,6 +31,11 @@ height = 22.0
 
 [sub_resource type="Gradient" id="Gradient_2xgqr"]
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q2yjb"]
+_data = {
+"death": ExtResource("9_c0n7u")
+}
 
 [node name="player" type="CharacterBody2D"]
 motion_mode = 1
@@ -90,7 +96,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="pause_menu" parent="camera/ui" instance=ExtResource("3_r0pq6")]
-process_mode = 3
+views_array = Array[String](["game_pause.tscn", "pause_inputs.tscn", "pause_options.tscn"])
 
 [node name="shoot_timer" type="Timer" parent="."]
 
@@ -98,9 +104,6 @@ process_mode = 3
 position = Vector2(-1, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_bcdmy")
-
-[node name="ray_boost" type="RayCast2D" parent="."]
-target_position = Vector2(-50, 0)
 
 [node name="trail_timer" type="Timer" parent="."]
 
@@ -121,6 +124,12 @@ collision_mask = 0
 position = Vector2(-108, 15)
 polygon = PackedVector2Array(-2466, -1452, 2669, -1445, 2631, 1425, -2451, 1432)
 
+[node name="anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_q2yjb")
+}
+
 [connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout"]
 [connection signal="timeout" from="trail_timer" to="." method="_on_trail_timer_timeout"]
 [connection signal="body_exited" from="auto_target" to="." method="_on_auto_target_body_exited"]
+[connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]

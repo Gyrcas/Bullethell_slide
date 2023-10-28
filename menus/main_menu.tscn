@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://h632u4hd5rep"]
+[gd_scene load_steps=6 format=3 uid="uid://h632u4hd5rep"]
 
 [ext_resource type="Script" path="res://menus/menus_script/main_menu.gd" id="1_2jd54"]
+[ext_resource type="PackedScene" uid="uid://bhrculwo037fi" path="res://menus/pause_menu.tscn" id="2_t1veq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5hoos"]
 bg_color = Color(0, 0, 0, 1)
@@ -93,9 +94,19 @@ alignment = 1
 layout_mode = 2
 text = "Start"
 
+[node name="load" type="Button" parent="vbox"]
+layout_mode = 2
+text = "Load"
+
 [node name="settings" type="Button" parent="vbox"]
 layout_mode = 2
 text = "Setting"
 
+[node name="pause_menu" parent="." instance=ExtResource("2_t1veq")]
+layout_mode = 1
+views_array = Array[String](["pause_options.tscn", "pause_inputs.tscn"])
+open_with_back = false
+
 [connection signal="pressed" from="vbox/start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="vbox/load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="vbox/settings" to="." method="_on_settings_pressed"]

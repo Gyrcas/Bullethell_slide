@@ -9,8 +9,6 @@ class_name Player
 @onready var nano_bar : TextureProgressBar = $camera/ui/hud/nanos
 @onready var interaction_lbl : Label = $camera/ui/interaction
 
-var death_particles_scene : PackedScene = NodeLinker.request_resource("death_particles.tscn")
-
 var interaction : Node = null : set = set_interaction
 
 func set_interaction(value : Node) -> void:
@@ -47,6 +45,7 @@ func set_nano(value : int) -> void:
 		nano_bar,"value",float(nano) / nano_max * nano_bar.max_value,0.1)
 
 func _ready() -> void:
+	check_dependance()
 	# Create trail
 	trail.points = []
 	for i in trail_length:
@@ -103,12 +102,10 @@ func _input(event : InputEvent) -> void:
 		do_target()
 	elif event.is_action_pressed("interact") && interaction:
 		interaction.interact()
-	elif event.is_action_pressed("projectile 1"):
+	elif event.is_action_pressed("projectile_1"):
 		bullet_preset.type = "default"
-		print("def")
-	elif event.is_action_pressed("projectile 2"):
+	elif event.is_action_pressed("projectile_2"):
 		bullet_preset.type = "bomb"
-		print("bomb")
 
 func do_target() -> void:
 	var bodies : Array[Node2D] = auto_target.get_overlapping_bodies()

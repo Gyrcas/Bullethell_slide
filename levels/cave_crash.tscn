@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cb1ngswxfr1i2"]
+[gd_scene load_steps=15 format=3 uid="uid://cb1ngswxfr1i2"]
 
 [ext_resource type="Script" path="res://addons/smoothpolygon/SmoothPolygon2D.gd" id="1_wdskp"]
 [ext_resource type="Texture2D" uid="uid://bvqkegii4jywk" path="res://textures/ship.png" id="2_0sblj"]
@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cksrr1rdojrue" path="res://entities/save_pillar.tscn" id="4_x3wy6"]
 [ext_resource type="Script" path="res://addons/DialogueCreator/DialoguePlayer.gd" id="5_b211j"]
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="5_gyhp0"]
-[ext_resource type="PackedScene" uid="uid://crk6qe46nhlj1" path="res://entities/turret.tscn" id="7_oiw30"]
+[ext_resource type="PackedScene" uid="uid://docggmrtco8vd" path="res://entities/extractor.tscn" id="8_4jygs"]
 
 [sub_resource type="GDScript" id="GDScript_6arar"]
 script/source = "extends Node2D
@@ -22,7 +22,7 @@ func _ready() -> void:
 	intro.queue_free()
 "
 
-[sub_resource type="Resource" id="Resource_cyhyf"]
+[sub_resource type="Resource" id="Resource_8m81s"]
 resource_local_to_scene = true
 script = ExtResource("5_gyhp0")
 ignore_sender = true
@@ -113,24 +113,6 @@ _data = {
 "start": SubResource("Animation_gas8q")
 }
 
-[sub_resource type="Resource" id="Resource_2weah"]
-resource_local_to_scene = true
-script = ExtResource("5_gyhp0")
-ignore_sender = false
-max_speed = 15.0
-move_speed = 2.5
-turn_speed = 10.0
-target_position = Vector2(0, 0)
-damage = 1.0
-maniability = 0.25
-nano = 10
-global_position = Vector2(0, 0)
-rotation = 0.0
-sender = Object(StaticBody2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"disable_mode":0,"collision_layer":1,"collision_mask":1,"collision_priority":1.0,"input_pickable":false,"physics_material_override":null,"constant_linear_velocity":Vector2(0, 0),"constant_angular_velocity":0.0,"script":Resource("res://entities/entities_script/turret.gd"),"time_between_burst":2.5,"bullet_per_burst":5,"time_between_bullets":0.1,"range_angle":20.0,"max_distance":5000.0,"bullet_preset":null,"health":null)
-
-velocity = Vector2(0, 0)
-type = "default"
-
 [node name="cave_crash" type="Node2D"]
 script = SubResource("GDScript_6arar")
 
@@ -208,7 +190,7 @@ position = Vector2(2368, 409)
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_cyhyf")
+bullet_preset = SubResource("Resource_8m81s")
 
 [node name="ground" type="Polygon2D" parent="."]
 self_modulate = Color(0.141176, 0.141176, 0.141176, 1)
@@ -226,12 +208,12 @@ outlines_array = Array[PackedVector2Array]([PackedVector2Array(-1914.41, -942.77
 [node name="SmoothPolygon2D3" type="Polygon2D" parent="."]
 self_modulate = Color(0.0941176, 0.0941176, 0.0941176, 1)
 color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(-161, 234, -340, -14, -718, -160, -1307, -604, -1509, -1062, -1867, -1279, -2199, -1440, -2525, -1990, -3069, -1902, -3165, -1654, -2809, -1093, -2562, -377, -1907, -9, -1448, 132, -1040, 278, -702, 369, -526, 381, -371, 413)
+polygon = PackedVector2Array(-166, 237, -340, -14, -718, -160, -1307, -604, -1509, -1062, -1867, -1279, -2199, -1440, -2525, -1990, -3069, -1902, -3165, -1654, -2809, -1093, -2562, -377, -1907, -9, -1448, 132, -1040, 278, -702, 369, -526, 381, -380, 432)
 script = ExtResource("1_wdskp")
 ignore_points = PackedInt32Array()
 ignore_points_outline = PackedInt32Array()
-smoothed_pol = PackedVector2Array(-177.8, 206.502, -225.195, 121.912, -292.734, 28.4446, -371.461, -32.7426, -451.174, -61.3197, -543.056, -85.3219, -647.647, -122.784, -744.604, -176.361, -821.424, -224.941, -906.903, -281.268, -996.57, -343.221, -1085.95, -408.674, -1209.72, -508.776, -1308.05, -605.2, -1391.57, -749.115, -1435.8, -896.418, -1484.58, -1026.52, -1584.92, -1132.18, -1717.8, -1207.62, -1852.09, -1271.04, -1988.05, -1324.78, -2121.82, -1376.53, -2205.72, -1447.61, -2254.24, -1522.24, -2300.05, -1618.18, -2345.71, -1723.63, -2419.56, -1873.86, -2507.54, -1979.17, -2641.25, -2016.44, -2752.25, -2007.79, -2919.5, -1964.54, -3051.84, -1910.68, -3169.2, -1816.21, -3180.11, -1713.9, -3150.36, -1617.75, -3109.8, -1546.47, -3055.29, -1467.05, -2992.57, -1381.11, -2927.37, -1290.27, -2865.44, -1196.13, -2812.51, -1100.33, -2776.42, -1010.69, -2748.38, -913.728, -2724.39, -811.972, -2688.18, -657.956, -2640.99, -512.701, -2570.77, -387.926, -2466.4, -286.852, -2334.62, -201.857, -2189.9, -130.07, -2046.65, -68.5999, -1919.3, -14.5591, -1763.6, 46.5636, -1622.5, 85.1698, -1489.61, 119.108, -1345.51, 167.718, -1201.79, 221.062, -1065.89, 269.577, -912.521, 316.367, -766.712, 354.709, -619.35, 378.518, -483.186, 394.218, -345.196, 399.012, -258.537, 327.58, -161, 234, -161, 234)
-outlines_array = Array[PackedVector2Array]([PackedVector2Array(-177.8, 206.502, -225.195, 121.912, -292.734, 28.4446, -371.461, -32.7426, -451.174, -61.3197, -543.056, -85.3219, -647.647, -122.784, -744.604, -176.361, -821.424, -224.941, -906.903, -281.268, -996.57, -343.221, -1085.95, -408.674, -1209.72, -508.776, -1308.05, -605.2, -1391.57, -749.115, -1435.8, -896.418, -1484.58, -1026.52, -1584.92, -1132.18, -1717.8, -1207.62, -1852.09, -1271.04, -1988.05, -1324.78, -2121.82, -1376.53, -2205.72, -1447.61, -2254.24, -1522.24, -2300.05, -1618.18, -2345.71, -1723.63, -2419.56, -1873.86, -2507.54, -1979.17, -2641.25, -2016.44, -2752.25, -2007.79, -2919.5, -1964.54, -3051.84, -1910.68, -3169.2, -1816.21, -3180.11, -1713.9, -3150.36, -1617.75, -3109.8, -1546.47, -3055.29, -1467.05, -2992.57, -1381.11, -2927.37, -1290.27, -2865.44, -1196.13, -2812.51, -1100.33, -2776.42, -1010.69, -2748.38, -913.728, -2724.39, -811.972, -2688.18, -657.956, -2640.99, -512.701, -2570.77, -387.926, -2466.4, -286.852, -2334.62, -201.857, -2189.9, -130.07, -2046.65, -68.5999, -1919.3, -14.5591, -1763.6, 46.5636, -1622.5, 85.1698, -1489.61, 119.108, -1345.51, 167.718, -1201.79, 221.062, -1065.89, 269.577, -912.521, 316.367, -766.712, 354.709, -619.35, 378.518, -483.186, 394.218, -345.196, 399.012, -258.537, 327.58, -161, 234, -161, 234)])
+smoothed_pol = PackedVector2Array(-182.239, 209.101, -227.874, 123.241, -293.686, 28.5397, -371.566, -33.0348, -451.181, -61.6431, -543.249, -85.5858, -648.087, -123.033, -744.915, -176.554, -821.783, -225.172, -907.29, -281.529, -996.966, -343.501, -1086.34, -408.966, -1210.06, -509.066, -1308.39, -605.596, -1391.73, -749.551, -1435.92, -896.834, -1484.77, -1026.86, -1585.28, -1132.45, -1718.2, -1207.81, -1852.46, -1271.24, -1988.45, -1324.89, -2122.21, -1376.76, -2205.94, -1447.87, -2254.45, -1522.63, -2300.25, -1618.63, -2345.92, -1724.1, -2419.79, -1874.25, -2507.82, -1979.37, -2641.72, -2016.46, -2752.75, -2007.71, -2919.96, -1964.39, -3052.13, -1910.53, -3169.39, -1815.84, -3180.02, -1713.35, -3150.22, -1617.46, -3109.59, -1546.14, -3055.03, -1466.68, -2992.28, -1380.72, -2927.09, -1289.86, -2865.18, -1195.72, -2812.3, -1099.91, -2776.28, -1010.28, -2748.27, -913.29, -2724.29, -811.521, -2688.06, -657.513, -2640.82, -512.3, -2570.52, -387.603, -2466.05, -286.581, -2334.21, -201.63, -2189.47, -129.876, -2046.24, -68.4325, -1918.96, -14.4092, -1763.16, 46.7038, -1622.11, 85.2654, -1489.22, 119.221, -1345.08, 167.874, -1201.38, 221.214, -1065.51, 269.705, -912.065, 316.496, -766.327, 354.801, -618.496, 377.616, -484.11, 399.883, -352.54, 416.341, -268.411, 342.223, -166.006, 237.005, -166, 237, -166, 237)
+outlines_array = Array[PackedVector2Array]([PackedVector2Array(-182.239, 209.101, -227.874, 123.241, -293.686, 28.5397, -371.566, -33.0348, -451.181, -61.6431, -543.249, -85.5858, -648.087, -123.033, -744.915, -176.554, -821.783, -225.172, -907.29, -281.529, -996.966, -343.501, -1086.34, -408.966, -1210.06, -509.066, -1308.39, -605.596, -1391.73, -749.551, -1435.92, -896.834, -1484.77, -1026.86, -1585.28, -1132.45, -1718.2, -1207.81, -1852.46, -1271.24, -1988.45, -1324.89, -2122.21, -1376.76, -2205.94, -1447.87, -2254.45, -1522.63, -2300.25, -1618.63, -2345.92, -1724.1, -2419.79, -1874.25, -2507.82, -1979.37, -2641.72, -2016.46, -2752.75, -2007.71, -2919.96, -1964.39, -3052.13, -1910.53, -3169.39, -1815.84, -3180.02, -1713.35, -3150.22, -1617.46, -3109.59, -1546.14, -3055.03, -1466.68, -2992.28, -1380.72, -2927.09, -1289.86, -2865.18, -1195.72, -2812.3, -1099.91, -2776.28, -1010.28, -2748.27, -913.29, -2724.29, -811.521, -2688.06, -657.513, -2640.82, -512.3, -2570.52, -387.603, -2466.05, -286.581, -2334.21, -201.63, -2189.47, -129.876, -2046.24, -68.4325, -1918.96, -14.4092, -1763.16, 46.7038, -1622.11, 85.2654, -1489.22, 119.221, -1345.08, 167.874, -1201.38, 221.214, -1065.51, 269.705, -912.065, 316.496, -766.327, 354.801, -618.496, 377.616, -484.11, 399.883, -352.54, 416.341, -268.411, 342.223, -166.006, 237.005, -166, 237, -166, 237)])
 
 [node name="intro" type="CanvasLayer" parent="."]
 script = SubResource("GDScript_0t555")
@@ -254,9 +236,7 @@ metadata/_edit_use_anchors_ = true
 [node name="dialogue" type="Node" parent="intro"]
 script = ExtResource("5_b211j")
 
-[node name="turret" parent="." instance=ExtResource("7_oiw30")]
-position = Vector2(4804, 905)
-bullet_preset = SubResource("Resource_2weah")
-health = 2
+[node name="extractor" parent="." instance=ExtResource("8_4jygs")]
+position = Vector2(4842, 414)
 
 [connection signal="animation_finished" from="intro/anim" to="intro" method="_on_anim_animation_finished"]

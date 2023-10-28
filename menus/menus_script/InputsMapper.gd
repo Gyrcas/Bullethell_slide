@@ -111,6 +111,7 @@ func load_inputs() -> void:
 		split.add_child(input_lbl)
 		var input_btn : Button = Button.new()
 		input_btn.text = "Add"
+		input_btn.connect("pressed",add_input.bind(input))
 		split.add_child(input_btn)
 		grid.add_child(split)
 		split.name = input
@@ -127,7 +128,22 @@ func load_inputs() -> void:
 	save_btn.text = "Save"
 	save_btn.connect("pressed",on_save_btn_pressed)
 	grid.add_child(save_btn)
-			
+
+var waiting_input : bool = false
+var action_add : String = ""
+
+func add_input(action : String) -> void:
+	waiting_input = true
+	action_add = action.replace(" ","_")
+
+func _input(event : InputEvent) -> void:
+	if !waiting_input:
+		return
+	if event is InputEventKey:
+		waiting_input = false
+		InputMap.action_add_event(action_add,event)
+		load_inputs()
+
 func on_save_btn_pressed() -> void:
 	save_to_file()
 	changed = false

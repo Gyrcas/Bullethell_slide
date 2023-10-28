@@ -2,21 +2,15 @@ extends Node
 
 const bullet_scene : String = "res://entities/bullet.tscn"
 
-const death_particles : String = "res://resources/death_particles.tscn"
-
-const auto_save_file : String = "res://data/auto_save.json"
-
 var player : Player = null
 
 const auto_target_collision_level : int = 3
-
-var translations : String = OS.get_executable_path().get_base_dir() + "/data/translation"
 
 const save_file : String = "res://resources/nodelinker_data.json"
 
 var data : Dictionary = {}
 
-func _ready() -> void:
+func _init() -> void:
 	data = JSON.parse_string(FS.read(save_file))
 	var dup : Dictionary = data.duplicate()
 	for key in data.keys():
