@@ -104,7 +104,7 @@ text = "Setting"
 
 [node name="pause_menu" parent="." instance=ExtResource("2_t1veq")]
 layout_mode = 1
-views_array = Array[String](["pause_options.tscn", "pause_inputs.tscn"])
+views_array = Array[String](["pause_options.tscn", "pause_inputs.tscn", "save_manager.tscn"])
 open_with_back = false
 
 [connection signal="pressed" from="vbox/start" to="." method="_on_start_pressed"]

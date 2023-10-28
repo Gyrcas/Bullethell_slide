@@ -1,6 +1,7 @@
 extends Control
 
 @onready var panel_shader : Panel = $shader
+@onready var pause_menu : PauseMenu = $pause_menu
 
 var div_disappear : float = 10.0
 const div_appear : float = 50.0
@@ -13,8 +14,8 @@ func _on_start_pressed() -> void:
 
 
 func _on_settings_pressed() -> void:
-	$pause_menu.visible = true
-	$pause_menu.current_view.visible = true
+	pause_menu.visible = true
+	pause_menu.current_view.visible = true
 	get_tree().paused = true
 
 
@@ -29,4 +30,4 @@ func _process(delta):
 
 
 func _on_load_pressed() -> void:
-	pass # Replace with function body.
+	pause_menu.open("save_manager",{"back_to_view":"","load_save":true})

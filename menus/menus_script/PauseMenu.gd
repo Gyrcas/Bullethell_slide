@@ -19,13 +19,25 @@ func _ready() -> void:
 		views.add_child(v)
 		v.visible = false
 
-func change_view(view_name : String) -> void:
+func open(view_name : String = "", params : Dictionary = {}) -> void:
+	visible = true
+	get_tree().paused = true
+	if view_name == "":
+		current_view = views.get_child(0)
+		current_view.visible = true
+	else:
+		change_view(view_name,params)
+
+func change_view(view_name : String, params : Dictionary = {}) -> void:
 	var view : Control = views.get_node_or_null(view_name)
 	if !view:
 		push_error("View " + view_name + " does not exist")
 		return
-	view.visible = true
+	if !params.is_empty():
+		for key in params.keys():
+			view.set(key,params[key]) 
 	current_view.visible = false
+	view.visible = true
 	current_view = view
 
 func _input(event : InputEvent) -> void:
@@ -34,6 +46,4 @@ func _input(event : InputEvent) -> void:
 			if current_view.has_method("on_back_menu"):
 				current_view.on_back_menu()
 		elif open_with_back && !visible && !get_tree().paused:
-			visible = true
-			current_view.visible = true
-			get_tree().paused = true
+			open()

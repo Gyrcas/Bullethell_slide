@@ -6,7 +6,6 @@ func on_back_menu() -> void:
 @onready var input_mapper : InputsMapper = $InputsMapper
 
 func _ready() -> void:
-	super()
 	input_mapper.connect("inputs_changed",on_inputs_changed)
 
 func on_inputs_changed() -> void:

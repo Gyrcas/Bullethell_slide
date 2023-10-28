@@ -9,4 +9,5 @@ func _on_save_zone_body_exited(body : Node2D) -> void:
 		body.interaction = null
 
 func interact() -> void:
-	print(get_tree().current_scene.scene_file_path)
+	NodeLinker.player.health = NodeLinker.player.health_max
+	NodeLinker.player.pause_menu.open("save_pillar_menu",{"save_position":global_position})

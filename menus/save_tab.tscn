@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgnohcdxh4mhi"]
+
+[ext_resource type="Script" path="res://menus/menus_script/save_tab.gd" id="1_t47xd"]
+
+[node name="save_tab" type="Panel"]
+custom_minimum_size = Vector2(600, 150)
+offset_right = 660.0
+offset_bottom = 138.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_t47xd")
+
+[node name="button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="split" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+collapsed = true
+
+[node name="name_lbl" type="Label" parent="split"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="delete" type="Button" parent="split"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "X"
+
+[connection signal="pressed" from="button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="split/delete" to="." method="_on_delete_pressed"]

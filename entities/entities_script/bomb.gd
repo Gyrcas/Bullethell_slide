@@ -33,6 +33,8 @@ func die() -> void:
 	var particles : DeathParticles = death_particles_scene.instantiate()
 	particles.global_position = global_position
 	particles.lifetime = 5
-	particles.modulate = sprite.color
-	get_parent().add_child(particles)
+	if sprite:
+		particles.modulate = sprite.color
+	if get_parent():
+		get_parent().add_child(particles)
 	queue_free()

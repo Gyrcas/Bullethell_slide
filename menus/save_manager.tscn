@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://mxvk3v6r1mc7"]
+
+[ext_resource type="Script" path="res://menus/menus_script/save_manager.gd" id="1_iun1a"]
+
+[node name="save_manager" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_iun1a")
+
+[node name="vbox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="scroll" type="ScrollContainer" parent="vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="saves" type="VBoxContainer" parent="vbox/scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="bottom" type="HSplitContainer" parent="vbox"]
+visible = false
+layout_mode = 2
+
+[node name="input_savename" type="TextEdit" parent="vbox/bottom"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="save_button" type="Button" parent="vbox/bottom"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save"
+
+[connection signal="pressed" from="vbox/bottom/save_button" to="." method="_on_save_button_pressed"]

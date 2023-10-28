@@ -8,6 +8,7 @@ class_name Player
 @onready var health_bar : TextureProgressBar = $camera/ui/hud/health
 @onready var nano_bar : TextureProgressBar = $camera/ui/hud/nanos
 @onready var interaction_lbl : Label = $camera/ui/interaction
+@onready var pause_menu : PauseMenu = $camera/ui/pause_menu
 
 var interaction : Node = null : set = set_interaction
 
@@ -36,7 +37,7 @@ func set_health(value : float) -> void:
 		health_bar,"value",health / health_max * health_bar.max_value,0.1
 	)
 	if health <= 0:
-		pass
+		die()
 
 func set_nano(value : int) -> void:
 	nano = value
@@ -46,6 +47,12 @@ func set_nano(value : int) -> void:
 
 func _ready() -> void:
 	check_dependance()
+	
+	anim.play("start")
+	
+	if GS.save_loaded:
+		GS.save_loaded = false
+		global_position = str_to_var(GS.data.position)
 	# Create trail
 	trail.points = []
 	for i in trail_length:
@@ -100,11 +107,14 @@ func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("auto_target"):
 		current_target_id += 1
 		do_target()
-	elif event.is_action_pressed("interact") && interaction:
-		interaction.interact()
-	elif event.is_action_pressed("projectile_1"):
+	if event.is_action_pressed("interact"):
+		if interaction:
+			interaction.interact()
+		elif dying:
+			GS.load_save(GS.auto_save_name)
+	if event.is_action_pressed("projectile_1"):
 		bullet_preset.type = "default"
-	elif event.is_action_pressed("projectile_2"):
+	if event.is_action_pressed("projectile_2"):
 		bullet_preset.type = "bomb"
 
 func do_target() -> void:
@@ -128,3 +138,10 @@ func _on_trail_timer_timeout() -> void:
 func _on_auto_target_body_exited(node : Node2D) -> void:
 	if node.get_node_or_null("target_node") == target.current_target && !auto_target.get_overlapping_bodies().has(node):
 		target.current_target = null
+
+func _on_anim_animation_finished(anim_name : String) -> void:
+	match anim_name:
+		"death":
+			anim.play("death_message")
+		"death_message":
+			GS.load_save(GS.auto_save_name)
