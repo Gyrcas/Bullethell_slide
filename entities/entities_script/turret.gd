@@ -71,7 +71,6 @@ func _physics_process(_delta : float) -> void:
 
 func shoot() -> void:
 	bullet_count += 1
-	nano -= bullet_preset.nano
 	var bullet : Bullet = bullet_preset.instantiate()
 	bullet.sender = self
 	call_deferred("set_bullet_color",bullet_color,bullet)

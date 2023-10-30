@@ -1,7 +1,5 @@
 extends Node
 
-const bullet_scene : String = "res://entities/bullet.tscn"
-
 var player : Player = null
 
 const auto_target_collision_level : int = 3

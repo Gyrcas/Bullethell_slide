@@ -284,6 +284,9 @@ grow_vertical = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="pause_menu" parent="camera/ui" instance=ExtResource("3_r0pq6")]
+views_array = Array[String](["game_pause.tscn", "pause_inputs.tscn", "pause_options.tscn", "save_manager.tscn", "save_pillar_menu.tscn"])
+
 [node name="death_message" type="Label" parent="camera/ui"]
 self_modulate = Color(1, 1, 1, 0)
 offset_left = 602.0
@@ -304,9 +307,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
-
-[node name="pause_menu" parent="camera/ui" instance=ExtResource("3_r0pq6")]
-views_array = Array[String](["game_pause.tscn", "pause_inputs.tscn", "pause_options.tscn", "save_manager.tscn", "save_pillar_menu.tscn"])
 
 [node name="shoot_timer" type="Timer" parent="."]
 

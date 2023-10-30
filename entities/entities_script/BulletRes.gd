@@ -16,7 +16,12 @@ class_name BulletRes
 @export var velocity : Vector2 = Vector2.ZERO
 @export_enum("default","bomb") var type : String = "default"
 
-var bullet_scene : PackedScene = NodeLinker.request_resource("bullet.tscn")
+var bullet_scene : PackedScene
+
+func _init() -> void:
+	(func():
+		bullet_scene = NodeLinker.request_resource("bullet.tscn")
+	).call_deferred()
 
 func instantiate() -> Bullet:
 	var bullet : Bullet = bullet_scene.instantiate()
