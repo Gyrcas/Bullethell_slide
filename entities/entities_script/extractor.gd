@@ -26,7 +26,7 @@ func _physics_process(delta : float) -> void:
 	if collision:
 		velocity = velocity.bounce(collision.get_normal())
 	detection.target_position = NodeLinker.player.global_position - detection.global_position
-	var bullet : Variant = shoot(
+	var bullet : Bullet = shoot(
 		detection.get_collider() == NodeLinker.player && nano >= bullet_preset.nano && can_shoot
 	)
 	if bullet:

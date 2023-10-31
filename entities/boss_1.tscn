@@ -1,7 +1,134 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjprbp7eylcxt"]
+[gd_scene load_steps=9 format=3 uid="uid://cjprbp7eylcxt"]
 
 [ext_resource type="Script" path="res://entities/entities_script/boss_1.gd" id="1_4ctrh"]
 [ext_resource type="Texture2D" uid="uid://fw1j5jgje64v" path="res://textures/boss_1.png" id="1_8pkqb"]
+[ext_resource type="Texture2D" uid="uid://d0l0dqnd8dlu7" path="res://textures/laser.png" id="3_y87o1"]
+[ext_resource type="Texture2D" uid="uid://dngeiwhc0genj" path="res://textures/laser-eye.png" id="4_jybl2"]
+
+[sub_resource type="Animation" id="Animation_i0ts3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("laser:width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [100.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("laser:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("laser_eye:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_5pwco"]
+resource_name = "before_shoot"
+length = 2.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("laser:width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 2.5, 2.7, 2.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 24.0, 24.0, 0.0, 100.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("laser:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6, 2.5, 2.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 1, 0), Color(0.129882, 0.24, 1, 0.24), Color(0.129882, 0.24, 1, 0.24), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("laser_eye:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6, 2.5, 2.7, 2.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 1, 0), Color(0.129882, 0.24, 1, 0.24), Color(0.129882, 0.24, 1, 0.24), Color(0.772549, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_f6148"]
+resource_name = "cooldown"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("laser_eye:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("laser:width")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [100.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("laser:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_im2v0"]
+_data = {
+"RESET": SubResource("Animation_i0ts3"),
+"cooldown": SubResource("Animation_f6148"),
+"shoot": SubResource("Animation_5pwco")
+}
 
 [node name="boss_1" type="StaticBody2D"]
 script = ExtResource("1_4ctrh")
@@ -12,3 +139,26 @@ texture = ExtResource("1_8pkqb")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 visible = false
 polygon = PackedVector2Array(-39, 129, -134, 75, -144, 38, -159, 12, -159, -19, -139, -51, -130, -87, -46, -133)
+
+[node name="laser" type="Line2D" parent="."]
+position = Vector2(-144, 0)
+points = PackedVector2Array(0, 0, 0, 0)
+width = 100.0
+texture = ExtResource("3_y87o1")
+texture_mode = 2
+
+[node name="laser_eye" type="Sprite2D" parent="."]
+position = Vector2(-132, 0)
+texture = ExtResource("4_jybl2")
+
+[node name="laser_hit_box" type="Area2D" parent="."]
+position = Vector2(-144, 0)
+
+[node name="laser_pol" type="CollisionPolygon2D" parent="laser_hit_box"]
+
+[node name="anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_im2v0")
+}
+
+[connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]

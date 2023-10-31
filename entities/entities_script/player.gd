@@ -36,7 +36,7 @@ func set_health(value : float) -> void:
 	tween.tween_property(
 		health_bar,"value",health / health_max * health_bar.max_value,0.1
 	)
-	if health <= 0:
+	if health <= 0 && !dying:
 		die()
 
 func set_nano(value : int) -> void:
@@ -73,7 +73,8 @@ func _physics_process(delta : float) -> void:
 	var move : int = int(Input.get_axis("down","up"))
 	var turn : int = int(Input.get_axis("left","right"))
 	var speed : float = velocity.x / velocity.normalized().x
-	speed = 0.0 if is_nan(speed) else speed
+	if is_nan(speed):
+		speed = 0.0
 	
 	# Execute velocity and get collision
 	var collision : Variant = do_move(move,turn,delta, speed)

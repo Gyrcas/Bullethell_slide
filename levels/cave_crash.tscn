@@ -23,7 +23,7 @@ func _ready() -> void:
 	intro.queue_free()
 "
 
-[sub_resource type="Resource" id="Resource_0wygb"]
+[sub_resource type="Resource" id="Resource_785qy"]
 resource_local_to_scene = true
 script = ExtResource("5_gyhp0")
 ignore_sender = true
@@ -82,7 +82,7 @@ func _on_body_entered(body):
 [sub_resource type="CircleShape2D" id="CircleShape2D_b1e57"]
 radius = 1828.69
 
-[sub_resource type="Resource" id="Resource_kiegg"]
+[sub_resource type="Resource" id="Resource_ae1af"]
 resource_local_to_scene = true
 script = ExtResource("5_gyhp0")
 ignore_sender = false
@@ -178,7 +178,7 @@ position = Vector2(9104, 1094)
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_0wygb")
+bullet_preset = SubResource("Resource_785qy")
 
 [node name="ground" type="Polygon2D" parent="."]
 self_modulate = Color(0.141176, 0.141176, 0.141176, 1)
@@ -215,7 +215,7 @@ libraries = {
 script = ExtResource("5_b211j")
 
 [node name="extractor" parent="." instance=ExtResource("8_4jygs")]
-position = Vector2(9905, 2979)
+position = Vector2(5900, 653)
 
 [node name="Area2D" type="Area2D" parent="."]
 script = SubResource("GDScript_i8ysm")
@@ -227,7 +227,7 @@ shape = SubResource("CircleShape2D_b1e57")
 [node name="turret" parent="." instance=ExtResource("9_1ttyd")]
 position = Vector2(4874, 43)
 rotation = 2.76999
-bullet_preset = SubResource("Resource_kiegg")
+bullet_preset = SubResource("Resource_ae1af")
 
 [connection signal="animation_finished" from="intro/anim" to="intro" method="_on_anim_animation_finished"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
