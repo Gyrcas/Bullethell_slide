@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="3_v6esh"]
 [ext_resource type="PackedScene" uid="uid://cjprbp7eylcxt" path="res://entities/boss_1.tscn" id="4_pmhn5"]
 
-[sub_resource type="Resource" id="Resource_d7xfn"]
+[sub_resource type="Resource" id="Resource_n5djp"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = true
@@ -47,7 +47,7 @@ outlines_array = Array[PackedVector2Array]([PackedVector2Array(-83.2933, 178.879
 
 [node name="player" parent="." instance=ExtResource("2_4bhqi")]
 rotation = -1.5708
-bullet_preset = SubResource("Resource_d7xfn")
+bullet_preset = SubResource("Resource_n5djp")
 
 [node name="boss_1" parent="." instance=ExtResource("4_pmhn5")]
 position = Vector2(72, -1867)
