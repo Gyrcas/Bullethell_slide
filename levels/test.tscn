@@ -1,10 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bkye7fpi4iqw8"]
+[gd_scene load_steps=5 format=3 uid="uid://baiiogriqflbx"]
 
 [ext_resource type="PackedScene" uid="uid://pa4b5sl2ju1n" path="res://entities/player.tscn" id="1_8m03q"]
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="2_6y383"]
 [ext_resource type="PackedScene" uid="uid://cksrr1rdojrue" path="res://entities/save_pillar.tscn" id="3_fsgpo"]
 
-[sub_resource type="Resource" id="Resource_kgdct"]
+[sub_resource type="Resource" id="Resource_id0en"]
 resource_local_to_scene = true
 script = ExtResource("2_6y383")
 ignore_sender = true
@@ -26,4 +26,4 @@ type = "default"
 position = Vector2(1583, 56)
 
 [node name="player" parent="." instance=ExtResource("1_8m03q")]
-bullet_preset = SubResource("Resource_kgdct")
+bullet_preset = SubResource("Resource_id0en")

@@ -40,6 +40,7 @@ func instantiate() -> Bullet:
 	bullet.nano = nano
 	bullet.set_sender(sender)
 	bullet.global_position = global_position
+	print(global_position, " ",bullet.global_position)
 	bullet.rotation = rotation
 	bullet.velocity = velocity
 	return bullet

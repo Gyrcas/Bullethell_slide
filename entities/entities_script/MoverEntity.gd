@@ -66,7 +66,7 @@ func _ready() -> void:
 	check_dependance()
 	bullet_preset.sender = self
 
-func shoot(can : bool = can_shoot && nano >= bullet_preset.nano) -> Variant:
+func shoot(can : bool = can_shoot && nano >= bullet_preset.nano) -> Bullet:
 	if can:
 		can_shoot = false
 		shoot_timer.start(shoot_cooldown)
