@@ -9,6 +9,12 @@ class_name LaserAttack
 @export var marge_target : float = 10000
 @export var damage : float = 1
 @export var speed : float = 1 : set = set_speed
+@export var width : float = 100 : set = set_width
+
+func set_width(value : float) -> void:
+	width = value
+	if laser:
+		laser.width = width
 
 func set_speed(value : float) -> void:
 	speed = value
@@ -17,6 +23,7 @@ func set_speed(value : float) -> void:
 
 func _ready() -> void:
 	anim.speed_scale = speed
+	laser.width = width
 
 signal shot_finished
 
@@ -28,14 +35,28 @@ func shoot(target : Node2D) -> void:
 		- laser.global_position
 	)
 	var pol : PackedVector2Array = [
-		-Vector2(laser.width / 2,0),
-		Vector2(laser.width / 2,0),
-		target_pos + Vector2(laser.width / 2,0),
-		target_pos - Vector2(laser.width / 2,0)
+		-Vector2(laser.width / 4,0),
+		Vector2(laser.width / 4,0),
+		target_pos + Vector2(laser.width / 4,0),
+		target_pos - Vector2(laser.width / 4,0)
 	]
 	laser_pol.polygon = pol
 	laser.set_point_position(1,target_pos)
 	anim.play("shoot")
+
+func tween_width(end_value : float,time : float) -> Tween:
+	var tween : Tween = create_tween()
+	tween.tween_property(laser,"width",end_value, time / speed)
+	tween.play()
+	return tween
+
+func grow_width() -> void:
+	laser.width = 0
+	tween_width(width / 5, 0.6)
+
+func shrink_grow_width() -> void:
+	var tween : Tween = tween_width(0, 0.2)
+	tween.tween_callback(tween_width.bind(width,0.1))
 
 func _on_anim_animation_finished(anim_name : String) -> void:
 	match anim_name:

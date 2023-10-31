@@ -14,8 +14,23 @@ texture = ExtResource("1_8pkqb")
 visible = false
 polygon = PackedVector2Array(-39, 129, -134, 75, -144, 38, -159, 12, -159, -19, -139, -51, -130, -87, -46, -133)
 
-[node name="laser_attack" parent="." instance=ExtResource("3_70683")]
+[node name="laser" type="Node2D" parent="."]
+
+[node name="laser_attack" parent="laser" instance=ExtResource("3_70683")]
 position = Vector2(-136, 0)
 speed = 5.0
+width = 400.0
 
-[connection signal="shot_finished" from="laser_attack" to="." method="_on_laser_attack_shot_finished"]
+[node name="laser_attack2" parent="laser" instance=ExtResource("3_70683")]
+position = Vector2(-136, 0)
+speed = 5.0
+width = 400.0
+
+[node name="laser_attack3" parent="laser" instance=ExtResource("3_70683")]
+position = Vector2(-136, 0)
+speed = 5.0
+width = 400.0
+
+[connection signal="shot_finished" from="laser/laser_attack" to="." method="_on_laser_attack_shot_finished"]
+[connection signal="shot_finished" from="laser/laser_attack2" to="." method="_on_laser_attack_shot_finished"]
+[connection signal="shot_finished" from="laser/laser_attack3" to="." method="_on_laser_attack_shot_finished"]

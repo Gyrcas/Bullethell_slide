@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="2_6y383"]
 [ext_resource type="PackedScene" uid="uid://cksrr1rdojrue" path="res://entities/save_pillar.tscn" id="3_fsgpo"]
 
-[sub_resource type="Resource" id="Resource_37y0u"]
+[sub_resource type="Resource" id="Resource_bvjov"]
 resource_local_to_scene = true
 script = ExtResource("2_6y383")
 ignore_sender = true
@@ -26,4 +26,4 @@ type = "default"
 position = Vector2(1583, 56)
 
 [node name="player" parent="." instance=ExtResource("1_8m03q")]
-bullet_preset = SubResource("Resource_37y0u")
+bullet_preset = SubResource("Resource_bvjov")
