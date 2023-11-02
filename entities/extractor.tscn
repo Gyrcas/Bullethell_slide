@@ -53,6 +53,9 @@ libraries = {
 "": SubResource("AnimationLibrary_dr2qm")
 }
 
+[node name="hole_timer" type="Timer" parent="."]
+
 [connection signal="timeout" from="move_timer" to="." method="_on_move_timer_timeout"]
 [connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout"]
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]
+[connection signal="timeout" from="hole_timer" to="." method="_on_hole_timer_timeout"]

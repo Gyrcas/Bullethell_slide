@@ -1,11 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://khx2m3n15m6y"]
+[gd_scene load_steps=7 format=3 uid="uid://khx2m3n15m6y"]
 
 [ext_resource type="Script" path="res://addons/smoothpolygon/SmoothStaticPolygon2D.gd" id="1_tlwdd"]
 [ext_resource type="PackedScene" uid="uid://pa4b5sl2ju1n" path="res://entities/player.tscn" id="2_4bhqi"]
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="3_v6esh"]
 [ext_resource type="PackedScene" uid="uid://cjprbp7eylcxt" path="res://entities/boss_1.tscn" id="4_pmhn5"]
+[ext_resource type="PackedScene" uid="uid://byqgybd3bvm2y" path="res://entities/blackhole.tscn" id="5_oo1cr"]
 
-[sub_resource type="Resource" id="Resource_qgxv8"]
+[sub_resource type="Resource" id="Resource_vwe6s"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = true
@@ -47,8 +48,11 @@ outlines_array = Array[PackedVector2Array]([PackedVector2Array(-83.2933, 178.879
 
 [node name="player" parent="." instance=ExtResource("2_4bhqi")]
 rotation = -1.5708
-bullet_preset = SubResource("Resource_qgxv8")
+bullet_preset = SubResource("Resource_vwe6s")
 
 [node name="boss_1" parent="." instance=ExtResource("4_pmhn5")]
 position = Vector2(525, -12421)
 rotation = -1.57079
+
+[node name="blackhole" parent="." instance=ExtResource("5_oo1cr")]
+position = Vector2(202, -1077)

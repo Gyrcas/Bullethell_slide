@@ -75,10 +75,8 @@ func _physics_process(delta : float) -> void:
 	var speed : float = velocity.x / velocity.normalized().x
 	if is_nan(speed):
 		speed = 0.0
-	
 	# Execute velocity and get collision
 	var collision : Variant = do_move(move,turn,delta, speed)
-	
 	# If collision, manage collision
 	if collision:
 		velocity = velocity.bounce(collision.get_normal())

@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://byqgybd3bvm2y"]
+
+[ext_resource type="Texture2D" uid="uid://cuejgv1l7amy4" path="res://textures/blackhole.png" id="1_akl21"]
+[ext_resource type="Texture2D" uid="uid://bu47foj0xu6hr" path="res://textures/pixel.png" id="1_wwyr0"]
+[ext_resource type="Script" path="res://entities/entities_script/blackhole.gd" id="1_xxibl"]
+[ext_resource type="Texture2D" uid="uid://dm8gav5stwvra" path="res://textures/spot.png" id="2_nxgu1"]
+[ext_resource type="Shader" path="res://materials/blackhole.gdshader" id="2_xmjm8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rh1yp"]
+shader = ExtResource("2_xmjm8")
+shader_parameter/wave_count = 20.0
+shader_parameter/speed = 3.0
+shader_parameter/height = 0.005
+shader_parameter/r_displacement = Vector2(3, 0)
+shader_parameter/g_displacement = Vector2(0, 0)
+shader_parameter/b_displacement = Vector2(-3, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0j18p"]
+radius = 1098.29
+
+[node name="blackhole" type="Area2D"]
+z_index = 16
+scale = Vector2(0.2, 0.2)
+collision_mask = 3
+script = ExtResource("1_xxibl")
+
+[node name="background" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.490196)
+scale = Vector2(30, 30)
+texture = ExtResource("2_nxgu1")
+
+[node name="hole" type="Sprite2D" parent="."]
+texture = ExtResource("1_akl21")
+
+[node name="visual" type="BackBufferCopy" parent="."]
+scale = Vector2(13, 13)
+copy_mode = 2
+
+[node name="shader" type="Sprite2D" parent="visual"]
+material = SubResource("ShaderMaterial_rh1yp")
+position = Vector2(5.86876e-07, -9.39e-06)
+scale = Vector2(192.308, 192.308)
+texture = ExtResource("1_wwyr0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+scale = Vector2(1, 1)
+shape = SubResource("CircleShape2D_0j18p")

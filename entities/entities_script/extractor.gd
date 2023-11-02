@@ -4,9 +4,13 @@ class_name Extractor
 @export var move_range : Vector2 = Vector2(1000,1000)
 @onready var range_start : Vector2 = global_position - move_range / 2
 @onready var range_end : Vector2 = global_position + move_range / 2
+@onready var hole_timer : Timer = $hole_timer
 @export var move_cooldown : float = 5
+@export var hole_cooldown : float = 10
+var can_hole : bool = true
 @onready var move_timer : Timer = $move_timer
 var destination : Vector2 = Vector2.ZERO
+var hole_scene : PackedScene = NodeLinker.request_resource("blackhole.tscn")
 
 func _ready() -> void:
 	check_dependance()
@@ -31,7 +35,17 @@ func _physics_process(delta : float) -> void:
 	)
 	if bullet:
 		bullet.velocity = Vector2.ZERO
+	if can_hole:
+		return
+		var hole : Area2D = hole_scene.instantiate()
+		can_hole = false
+		get_parent().add_child(hole)
+		hole_timer.start(hole_cooldown)
 
 func _on_move_timer_timeout() -> void:
 	destination = Vector2(randf_range(range_start.x,range_end.x),randf_range(range_start.y,range_end.y))
 	move_timer.start(move_cooldown)
+
+
+func _on_hole_timer_timeout() -> void:
+	can_hole = true

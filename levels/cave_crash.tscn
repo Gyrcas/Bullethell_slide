@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cb1ngswxfr1i2"]
+[gd_scene load_steps=20 format=3 uid="uid://cb1ngswxfr1i2"]
 
 [ext_resource type="Script" path="res://addons/smoothpolygon/SmoothPolygon2D.gd" id="1_wdskp"]
 [ext_resource type="Texture2D" uid="uid://bvqkegii4jywk" path="res://textures/ship.png" id="2_0sblj"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="5_gyhp0"]
 [ext_resource type="PackedScene" uid="uid://docggmrtco8vd" path="res://entities/extractor.tscn" id="8_4jygs"]
 [ext_resource type="PackedScene" uid="uid://crk6qe46nhlj1" path="res://entities/turret.tscn" id="9_1ttyd"]
+[ext_resource type="PackedScene" uid="uid://byqgybd3bvm2y" path="res://entities/blackhole.tscn" id="10_e8oaf"]
 
 [sub_resource type="GDScript" id="GDScript_6arar"]
 script/source = "extends Node2D
@@ -23,7 +24,7 @@ func _ready() -> void:
 	intro.queue_free()
 "
 
-[sub_resource type="Resource" id="Resource_785qy"]
+[sub_resource type="Resource" id="Resource_t5rus"]
 resource_local_to_scene = true
 script = ExtResource("5_gyhp0")
 ignore_sender = true
@@ -82,7 +83,7 @@ func _on_body_entered(body):
 [sub_resource type="CircleShape2D" id="CircleShape2D_b1e57"]
 radius = 1828.69
 
-[sub_resource type="Resource" id="Resource_ae1af"]
+[sub_resource type="Resource" id="Resource_cy677"]
 resource_local_to_scene = true
 script = ExtResource("5_gyhp0")
 ignore_sender = false
@@ -178,7 +179,7 @@ position = Vector2(9104, 1094)
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_785qy")
+bullet_preset = SubResource("Resource_t5rus")
 
 [node name="ground" type="Polygon2D" parent="."]
 self_modulate = Color(0.141176, 0.141176, 0.141176, 1)
@@ -215,7 +216,7 @@ libraries = {
 script = ExtResource("5_b211j")
 
 [node name="extractor" parent="." instance=ExtResource("8_4jygs")]
-position = Vector2(5900, 653)
+position = Vector2(5470, 1015)
 
 [node name="Area2D" type="Area2D" parent="."]
 script = SubResource("GDScript_i8ysm")
@@ -227,7 +228,14 @@ shape = SubResource("CircleShape2D_b1e57")
 [node name="turret" parent="." instance=ExtResource("9_1ttyd")]
 position = Vector2(4874, 43)
 rotation = 2.76999
-bullet_preset = SubResource("Resource_ae1af")
+bullet_preset = SubResource("Resource_cy677")
+
+[node name="blackhole" parent="." instance=ExtResource("10_e8oaf")]
+z_index = 17
+position = Vector2(6546, 1123)
+
+[node name="blackhole2" parent="." instance=ExtResource("10_e8oaf")]
+position = Vector2(5823, 789)
 
 [connection signal="animation_finished" from="intro/anim" to="intro" method="_on_anim_animation_finished"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

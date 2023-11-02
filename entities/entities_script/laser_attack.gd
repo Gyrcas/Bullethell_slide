@@ -10,6 +10,7 @@ class_name LaserAttack
 @export var damage : float = 1
 @export var speed : float = 1 : set = set_speed
 @export var width : float = 100 : set = set_width
+@export var laser_hit_box_fraction : float = 6
 
 func set_width(value : float) -> void:
 	width = value
@@ -34,11 +35,12 @@ func shoot(target : Node2D) -> void:
 		(point.distance_to(target.global_position) + marge_target)
 		- laser.global_position
 	)
+	var width_fraction : Vector2 = Vector2(laser.width / laser_hit_box_fraction,0)
 	var pol : PackedVector2Array = [
-		-Vector2(laser.width / 4,0),
-		Vector2(laser.width / 4,0),
-		target_pos + Vector2(laser.width / 4,0),
-		target_pos - Vector2(laser.width / 4,0)
+		-width_fraction,
+		width_fraction,
+		target_pos + width_fraction,
+		target_pos - width_fraction
 	]
 	laser_pol.polygon = pol
 	laser.set_point_position(1,target_pos)
