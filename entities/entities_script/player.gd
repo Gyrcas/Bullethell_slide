@@ -72,6 +72,9 @@ func _physics_process(delta : float) -> void:
 	# Get movement inputs
 	var move : int = int(Input.get_axis("down","up"))
 	var turn : int = int(Input.get_axis("left","right"))
+	if dying:
+		move = 0
+		turn = 0
 	var speed : float = velocity.x / velocity.normalized().x
 	if is_nan(speed):
 		speed = 0.0

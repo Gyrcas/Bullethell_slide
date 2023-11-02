@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://byqgybd3bvm2y"]
+[gd_scene load_steps=12 format=3 uid="uid://byqgybd3bvm2y"]
 
 [ext_resource type="Texture2D" uid="uid://cuejgv1l7amy4" path="res://textures/blackhole.png" id="1_akl21"]
 [ext_resource type="Texture2D" uid="uid://bu47foj0xu6hr" path="res://textures/pixel.png" id="1_wwyr0"]
@@ -14,13 +14,66 @@ shader_parameter/height = 0.005
 shader_parameter/r_displacement = Vector2(3, 0)
 shader_parameter/g_displacement = Vector2(0, 0)
 shader_parameter/b_displacement = Vector2(-3, 0)
+shader_parameter/shader_time = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0j18p"]
 radius = 1098.29
 
+[sub_resource type="Animation" id="Animation_wydm1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="Animation" id="Animation_yblhh"]
+resource_name = "despawn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.2, 0.2), Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="Animation" id="Animation_c8rru"]
+resource_name = "spawn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.2, 0.2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5qr83"]
+_data = {
+"RESET": SubResource("Animation_wydm1"),
+"despawn": SubResource("Animation_yblhh"),
+"spawn": SubResource("Animation_c8rru")
+}
+
 [node name="blackhole" type="Area2D"]
 z_index = 16
-scale = Vector2(0.2, 0.2)
+scale = Vector2(1e-05, 1e-05)
 collision_mask = 3
 script = ExtResource("1_xxibl")
 
@@ -42,7 +95,16 @@ position = Vector2(5.86876e-07, -9.39e-06)
 scale = Vector2(192.308, 192.308)
 texture = ExtResource("1_wwyr0")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="col" type="CollisionShape2D" parent="."]
 visible = false
-scale = Vector2(1, 1)
 shape = SubResource("CircleShape2D_0j18p")
+disabled = true
+
+[node name="anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5qr83")
+}
+
+[node name="timer" type="Timer" parent="."]
+
+[connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]

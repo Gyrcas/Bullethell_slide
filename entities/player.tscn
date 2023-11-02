@@ -26,7 +26,7 @@ velocity = Vector2(0, 0)
 type = "default"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bcdmy"]
-height = 22.0
+height = 24.0
 
 [sub_resource type="Gradient" id="Gradient_2xgqr"]
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)

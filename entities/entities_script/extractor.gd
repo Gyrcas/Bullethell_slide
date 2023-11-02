@@ -29,17 +29,17 @@ func _physics_process(delta : float) -> void:
 	var collision = move_and_collide(velocity)
 	if collision:
 		velocity = velocity.bounce(collision.get_normal())
-	detection.target_position = NodeLinker.player.global_position - detection.global_position
+	detection.target_position = detection.global_position.direction_to(NodeLinker.player.global_position) * (detection.global_position.distance_to(NodeLinker.player.global_position) + 100)
 	var bullet : Bullet = shoot(
 		detection.get_collider() == NodeLinker.player && nano >= bullet_preset.nano && can_shoot
 	)
 	if bullet:
 		bullet.velocity = Vector2.ZERO
-	if can_hole:
-		return
+	if can_hole && detection.get_collider() == NodeLinker.player:
 		var hole : Area2D = hole_scene.instantiate()
 		can_hole = false
 		get_parent().add_child(hole)
+		hole.global_position = NodeLinker.player.global_position
 		hole_timer.start(hole_cooldown)
 
 func _on_move_timer_timeout() -> void:

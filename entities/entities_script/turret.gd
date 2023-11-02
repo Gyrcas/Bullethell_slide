@@ -31,7 +31,7 @@ func _ready() -> void:
 func _physics_process(_delta : float) -> void:
 	if !NodeLinker.player:
 		return
-	detection.target_position = NodeLinker.player.global_position - detection.global_position
+	detection.target_position = detection.global_position.direction_to(NodeLinker.player.global_position) * (detection.global_position.distance_to(NodeLinker.player.global_position) + 5)
 	var bullet : Bullet = shoot(
 		detection.get_collider() == NodeLinker.player && nano >= bullet_preset.nano && can_shoot && !waiting_for_burst
 	)
