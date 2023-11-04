@@ -6,9 +6,10 @@ extends Area2D
 @onready var anim : AnimationPlayer = $anim
 @onready var col : CollisionShape2D = $col
 @onready var timer : Timer = $timer
-@onready var shader : Sprite2D = $visual/shader
+@onready var shader : Sprite2D = $visuals/visual/shader
 
 func _ready() -> void:
+	anim.play("warning")
 	timer.start(time_before_spawn)
 	await timer.timeout
 	col.disabled = false

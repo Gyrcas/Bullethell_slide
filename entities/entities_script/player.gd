@@ -9,6 +9,7 @@ class_name Player
 @onready var nano_bar : TextureProgressBar = $camera/ui/hud/nanos
 @onready var interaction_lbl : Label = $camera/ui/interaction
 @onready var pause_menu : PauseMenu = $camera/ui/pause_menu
+@onready var bullet_type_lbl : Label = $camera/ui/hud/bullet_type
 
 var interaction : Node = null : set = set_interaction
 
@@ -115,9 +116,13 @@ func _input(event : InputEvent) -> void:
 		elif dying:
 			GS.load_save(GS.auto_save_name)
 	if event.is_action_pressed("projectile_1"):
-		bullet_preset.type = "default"
+		change_bullet_type("default")
 	if event.is_action_pressed("projectile_2"):
-		bullet_preset.type = "bomb"
+		change_bullet_type("bomb")
+
+func change_bullet_type(type : String) -> void:
+	bullet_preset.type = type
+	bullet_type_lbl.text= bullet_preset.type
 
 func do_target() -> void:
 	var bodies : Array[Node2D] = auto_target.get_overlapping_bodies()

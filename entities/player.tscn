@@ -270,6 +270,17 @@ value = 100.0
 texture_under = ExtResource("3_8b3ji")
 texture_progress = ExtResource("5_jdmre")
 
+[node name="bullet_type" type="Label" parent="camera/ui/hud"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "Bullet"
+horizontal_alignment = 2
+
 [node name="interaction" type="Label" parent="camera/ui"]
 anchors_preset = 7
 anchor_left = 0.5
@@ -297,6 +308,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="fade" type="ColorRect" parent="camera/ui"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -306,6 +318,7 @@ mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="pause_menu" parent="camera/ui" instance=ExtResource("3_r0pq6")]
+visible = false
 views_array = Array[String](["game_pause.tscn", "pause_inputs.tscn", "pause_options.tscn", "save_manager.tscn", "save_pillar_menu.tscn"])
 
 [node name="shoot_timer" type="Timer" parent="."]

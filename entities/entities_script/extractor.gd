@@ -39,7 +39,7 @@ func _physics_process(delta : float) -> void:
 		var hole : Area2D = hole_scene.instantiate()
 		can_hole = false
 		get_parent().add_child(hole)
-		hole.global_position = NodeLinker.player.global_position
+		hole.global_position = NodeLinker.player.global_position + NodeLinker.player.velocity / delta / 2
 		hole_timer.start(hole_cooldown)
 
 func _on_move_timer_timeout() -> void:
