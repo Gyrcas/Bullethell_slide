@@ -111,6 +111,8 @@ func do_polygon_operation(value : Polygon2D, operate : String = operation, do_de
 func set_outline(value : bool) -> void:
 	outline = value
 	outline_node.outline = value
+	if !outline:
+		outlines_array = []
 
 ## Color of the outline
 @export var outline_color : Color = Color(0,0,0) : set = set_outline_color
@@ -168,7 +170,10 @@ func _draw() -> void:
 	var results = smoothen_polygon(polygon)
 	smoothed_pol = results.polygon
 	draw_colored_polygon(smoothed_pol,modulate)
-	outlines_array = results.outlines
+	if outline:
+		outlines_array = results.outlines
+	else:
+		outlines_array = []
 	
 	outline_node.outlines = outlines_array
 
