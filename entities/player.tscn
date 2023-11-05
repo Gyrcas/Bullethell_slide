@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://pa4b5sl2ju1n"]
+[gd_scene load_steps=17 format=3 uid="uid://pa4b5sl2ju1n"]
 
 [ext_resource type="Script" path="res://entities/entities_script/player.gd" id="1_mah8r"]
 [ext_resource type="Script" path="res://resources/PolygonBody.gd" id="2_h6qts"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://ctlk12wtd554v" path="res://ui/target.tscn" id="4_davdh"]
 [ext_resource type="Texture2D" uid="uid://ptg8tcs3a5e0" path="res://textures/ui/bars/red.png" id="4_xj7c0"]
 [ext_resource type="Texture2D" uid="uid://b041x38jby5jb" path="res://textures/ui/bars/blue.png" id="5_jdmre"]
+[ext_resource type="Script" path="res://ui/ui_script/perks.gd" id="7_o73hs"]
 
 [sub_resource type="Resource" id="Resource_vpjub"]
 resource_local_to_scene = true
@@ -294,6 +295,16 @@ grow_horizontal = 2
 grow_vertical = 0
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="perks" type="Control" parent="camera/ui"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_o73hs")
 
 [node name="death_message" type="Label" parent="camera/ui"]
 self_modulate = Color(1, 1, 1, 0)
