@@ -11,6 +11,7 @@ class_name Player
 @onready var pause_menu : PauseMenu = $camera/ui/pause_menu
 @onready var bullet_type_lbl : Label = $camera/ui/hud/bullet_type
 @onready var perks_wheel : PerksWheel = $camera/ui/perks
+@onready var col : CollisionShape2D = $col
 
 var interaction : Node = null : set = set_interaction
 

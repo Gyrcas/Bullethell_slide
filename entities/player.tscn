@@ -236,16 +236,7 @@ wall_min_slide_angle = 3.14159
 platform_on_leave = 2
 safe_margin = 0.1
 script = ExtResource("1_mah8r")
-health_max = null
-nano_max = null
-shoot_cooldown = null
 bullet_preset = SubResource("Resource_vpjub")
-max_speed = null
-move_speed = null
-turn_speed = null
-friction = null
-gravity = null
-maniability = null
 
 [node name="body" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-14, -14, 31, 0, -14, 13, -12, 0)

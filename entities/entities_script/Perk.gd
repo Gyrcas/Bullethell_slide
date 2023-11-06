@@ -2,7 +2,7 @@ extends Resource
 class_name Perk
 
 @export var name : String = "unamed perk"
-@export var range : float = 500
+@export var range : float = 1200
 @export var nano_cost : float = 10
 @export var nano_reload_time : float = 3
 

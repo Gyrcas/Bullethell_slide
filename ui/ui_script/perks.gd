@@ -6,6 +6,7 @@ var selected_arc : int = 0
 
 var inner_radius : float = 100
 var outer_radius : float = 500
+var selecting_target : bool = false
 
 var half_screen : Vector2
 
@@ -13,7 +14,7 @@ func _ready() -> void:
 	visible = false
 	half_screen = get_viewport_rect().size / 2
 
-func _draw() -> void:
+func draw_wheel() -> void:
 	var inc : float = deg_to_rad(360) / perks.size()
 	half_screen = get_viewport_rect().size / 2
 	draw_arc(half_screen,inner_radius,0,TAU,100,Color(0,0,0))
@@ -33,6 +34,16 @@ func _draw() -> void:
 			Color(0,0,0)
 		)
 
+func _draw() -> void:
+	if selecting_target:
+		draw_circle(
+			half_screen,
+			perks[selected_arc].range * NodeLinker.player.camera.zoom.x,
+			Color(1, 0, 0, 0.1)
+		)
+	else:
+		draw_wheel()
+
 func draw_arc_between_circle(center : Vector2, radius1 : float, radius2 : float, angle_from : float, angle_to : float,nb_points : int = 32, color : Color = Color(0,0,0)) -> void:
 	var points_arc = PackedVector2Array()
 	var inc = (angle_to - angle_from) / nb_points
@@ -50,7 +61,7 @@ func draw_arc_between_circle(center : Vector2, radius1 : float, radius2 : float,
 func _process(_delta : float) -> void:
 	if !visible:
 		return
-	var angle : float = Vector2(1,0).angle_to(half_screen.direction_to(get_global_mouse_position()))
+	var angle : float = Vector2(1,0).angle_to(half_screen.direction_to(get_local_mouse_position()))
 	if angle < 0:
 		angle += deg_to_rad(360)
 	var last_selected : int = selected_arc
@@ -60,8 +71,21 @@ func _process(_delta : float) -> void:
 	
 func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("perks"):
-		visible = !visible
-		Engine.time_scale = 0.1 if visible else 1.0
+		if !selecting_target:
+			visible = !visible
+			Engine.time_scale = 0.1 if visible else 1.0
+		selecting_target = false
+		queue_redraw()
 	if event.is_action_pressed("left_click") && visible:
-		print(selected_arc)
+		if selecting_target:
+			var mouse : Vector2 = get_viewport().get_camera_2d().get_global_mouse_position()
+			if perks[selected_arc].range < NodeLinker.player.global_position.distance_to(mouse):
+				return
+			selecting_target = false
+			visible = false
+			Engine.time_scale = 1
+			perks[selected_arc].execute(NodeLinker.player,{"target":mouse})
+		else:
+			selecting_target = true
+			queue_redraw()
 		
