@@ -308,6 +308,8 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ve1pe")
 script = ExtResource("7_o73hs")
 
+[node name="shoot_timer_perk" type="Timer" parent="camera/ui/perks"]
+
 [node name="death_message" type="Label" parent="camera/ui"]
 self_modulate = Color(1, 1, 1, 0)
 offset_left = 602.0

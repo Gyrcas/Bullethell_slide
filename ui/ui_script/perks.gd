@@ -1,6 +1,8 @@
 extends Panel
 class_name PerksWheel
 
+@onready var shoot_timer : Timer = $shoot_timer_perk
+
 var perks : Array[Perk] = [DashPerk.new(),DashPerk.new(),DashPerk.new(),DashPerk.new()]
 var selected_arc : int = 0
 
@@ -38,7 +40,7 @@ func _draw() -> void:
 	if selecting_target:
 		draw_circle(
 			half_screen,
-			perks[selected_arc].range * NodeLinker.player.camera.zoom.x,
+			perks[selected_arc].perk_range * NodeLinker.player.camera.zoom.x,
 			Color(1, 0, 0, 0.1)
 		)
 	else:
@@ -79,13 +81,19 @@ func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("left_click") && visible:
 		if selecting_target:
 			var mouse : Vector2 = get_viewport().get_camera_2d().get_global_mouse_position()
-			if perks[selected_arc].range < NodeLinker.player.global_position.distance_to(mouse):
+			if perks[selected_arc].nano_cost > NodeLinker.player.nano || perks[selected_arc].perk_range < NodeLinker.player.global_position.distance_to(mouse):
 				return
 			selecting_target = false
+			if NodeLinker.player.can_shoot:
+				(func():
+					NodeLinker.player.can_shoot = false
+					shoot_timer.start(0.1)
+					await shoot_timer.timeout
+					NodeLinker.player.can_shoot = true
+				).call()
 			visible = false
 			Engine.time_scale = 1
 			perks[selected_arc].execute(NodeLinker.player,{"target":mouse})
 		else:
 			selecting_target = true
 			queue_redraw()
-		
