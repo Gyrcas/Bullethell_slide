@@ -71,6 +71,7 @@ func _physics_process(delta : float) -> void:
 	target_position = target_node.global_position if target_node else global_position + global_transform.x * 100
 	var angle_target : float = get_angle_to(target_position)
 	var turn : float = angle_target / abs(angle_target)
+	
 	for body in avoid.get_overlapping_bodies():
 		if body is Bullet && body != self:
 			angle_target = get_angle_to(body.global_position)

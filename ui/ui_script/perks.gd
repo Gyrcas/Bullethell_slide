@@ -1,7 +1,7 @@
 extends Panel
 class_name PerksWheel
 
-var perks : Array = [1,1,1,1,1]
+var perks : Array[Perk] = [DashPerk.new(),DashPerk.new(),DashPerk.new(),DashPerk.new()]
 var selected_arc : int = 0
 
 var inner_radius : float = 100
@@ -18,8 +18,12 @@ func _draw() -> void:
 	half_screen = get_viewport_rect().size / 2
 	draw_arc(half_screen,inner_radius,0,TAU,100,Color(0,0,0))
 	draw_arc(half_screen,outer_radius,0,TAU,100,Color(0,0,0))
+	var center : float = inner_radius + (outer_radius - inner_radius) / 2
+	var font : Font = Label.new().get_theme_font("")
 	for i in perks.size():
 		var rotate_angle : float = inc * i
+		var center_angle : float = (rotate_angle - inc) + (rotate_angle - (rotate_angle - inc)) / 2
+		draw_string(font,half_screen + Vector2(1,0).rotated(center_angle) * center,perks[i].name)
 		if i == selected_arc:
 			draw_arc_between_circle(half_screen,inner_radius,outer_radius,rotate_angle,rotate_angle + inc,32,Color(0.27058824896812, 0.27058824896812, 0.27058824896812, 0.50980395078659))
 		var dir : Vector2 = Vector2(1,0).rotated(rotate_angle)
