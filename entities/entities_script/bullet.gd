@@ -2,6 +2,7 @@ extends SpaceMover
 class_name Bullet
 
 @onready var sprite : Node2D = $sprite
+@onready var avoid : Area2D = $avoid
 
 var death_particles_scene : PackedScene = NodeLinker.request_resource("death_particles.tscn")
 
@@ -19,6 +20,8 @@ func set_ignore_sender(value : bool) -> void:
 var target_position : Vector2 = Vector2(0,0)
 var target_node : Node2D
 var damage : float = 1
+var avoid_div : float = 100
+
 
 func set_sender(value : Node2D) -> void:
 	if sender:
@@ -65,8 +68,14 @@ func _physics_process(delta : float) -> void:
 		target_node = null
 	target_position = target_node.global_position if target_node else global_position + global_transform.x * 100
 	var angle_target : float = get_angle_to(target_position)
+	var turn : float = angle_target / abs(angle_target)
+	for body in avoid.get_overlapping_bodies():
+		if body is Bullet && body != self:
+			angle_target = get_angle_to(body.global_position)
+			turn += -(angle_target / abs(angle_target)) / avoid_div
+	clampf(turn,-1,1)
 	
-	var collision : Variant = do_move(1,angle_target / abs(angle_target),delta, velocity.x / velocity.normalized().x if velocity.x != 0 else 1.0)
+	var collision : Variant = do_move(1,turn,delta, velocity.x / velocity.normalized().x if velocity.x != 0 else 1.0)
 	if collision:
 		collide(collision)
 
