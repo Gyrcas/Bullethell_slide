@@ -26,7 +26,7 @@ func _physics_process(delta : float) -> void:
 	velocity += global_position.direction_to(destination) * move_speed * delta
 	if velocity.x / velocity.normalized().x > max_speed:
 		velocity = velocity.normalized() * max_speed
-	var collision = move_and_collide(velocity)
+	var collision = move_and_collide(velocity * Engine.time_scale)
 	if collision:
 		velocity = velocity.bounce(collision.get_normal())
 	detection.target_position = detection.global_position.direction_to(NodeLinker.player.global_position) * (detection.global_position.distance_to(NodeLinker.player.global_position) + 100)

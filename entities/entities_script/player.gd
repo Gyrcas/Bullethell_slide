@@ -10,6 +10,7 @@ class_name Player
 @onready var interaction_lbl : Label = $camera/ui/interaction
 @onready var pause_menu : PauseMenu = $camera/ui/pause_menu
 @onready var bullet_type_lbl : Label = $camera/ui/hud/bullet_type
+@onready var perks_wheel : PerksWheel = $camera/ui/perks
 
 var interaction : Node = null : set = set_interaction
 
@@ -40,7 +41,7 @@ func set_health(value : float) -> void:
 	if health <= 0 && !dying:
 		die()
 
-func set_nano(value : int) -> void:
+func set_nano(value : float) -> void:
 	nano = value
 	var tween : Tween = create_tween()
 	tween.tween_property(
@@ -91,7 +92,7 @@ func _physics_process(delta : float) -> void:
 			velocity = velocity.normalized() * max_speed_bouce
 		
 	shoot(
-		Input.is_action_pressed("left_click") && can_shoot && nano >= bullet_preset.nano
+		Input.is_action_pressed("left_click") && can_shoot && nano >= bullet_preset.nano && !perks_wheel.visible
 	)
 	
 	trail.global_position = Vector2.ZERO

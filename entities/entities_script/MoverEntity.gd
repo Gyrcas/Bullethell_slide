@@ -30,10 +30,10 @@ func set_health(value : float) -> void:
 	if health <= 0 && !dying:
 		die()
 
-@export var nano_max : int = 100
-var nano : int = nano_max : set = set_nano
+@export var nano_max : float = 100
+var nano : float = nano_max : set = set_nano
 
-func set_nano(value : int) -> void:
+func set_nano(value : float) -> void:
 	nano = value
 
 var can_shoot : bool = true
