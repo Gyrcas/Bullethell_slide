@@ -29,6 +29,11 @@ text = "Load"
 layout_mode = 2
 text = "Options"
 
+[node name="quit" type="Button" parent="center/vbox"]
+layout_mode = 2
+text = "Quit"
+
 [connection signal="pressed" from="center/vbox/resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="center/vbox/load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="center/vbox/options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="center/vbox/quit" to="." method="_on_quit_pressed"]
