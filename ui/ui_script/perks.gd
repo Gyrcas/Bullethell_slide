@@ -94,6 +94,6 @@ func _input(event : InputEvent) -> void:
 			visible = false
 			Engine.time_scale = 1
 			perks[selected_arc].execute(NodeLinker.player,{"target":mouse})
-		else:
+		elif perks.size() != 0:
 			selecting_target = true
 			queue_redraw()
