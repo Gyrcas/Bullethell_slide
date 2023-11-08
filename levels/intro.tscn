@@ -68,7 +68,7 @@ func _on_anim_animation_finished(anim_name : String) -> void:
 			planet.visible = true
 			move_stars = false
 		\"crash2\":
-			get_tree().change_scene_to_file(NodeLinker.request_resource(\"cave_crash.tscn\",true))
+			Global.change_scene_to_file(\"cave_crash.tscn\")
 
 func _input(event : InputEvent) -> void:
 	if anim.is_playing() && event.is_action_pressed(\"interact\"):

@@ -1,4 +1,0 @@
-https://godotshaders.com/shader/goop-projectile/
-https://godotshaders.com/shader/animated-diamond-pattern/
-https://godotshaders.com/shader/diamond-based-screen-transition/
-https://godotshaders.com/shader/dynamic-2d-lights-and-soft-shadows/

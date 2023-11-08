@@ -3,7 +3,7 @@ class_name PerksWheel
 
 @onready var shoot_timer : Timer = $shoot_timer_perk
 
-var perks : Array[Perk] = [DashPerk.new(),DashPerk.new(),DashPerk.new(),DashPerk.new()]
+var perks : Array[Perk] = [DashPerk.new(),DashPerk.new(),DashPerk.new()]
 var selected_arc : int = 0
 
 var inner_radius : float = 100
@@ -60,6 +60,7 @@ func draw_arc_between_circle(center : Vector2, radius1 : float, radius2 : float,
 			center + Vector2(1,0).rotated(angle_from + inc * x) * radius2
 		)
 	draw_colored_polygon(points_arc,color)
+
 
 func _process(_delta : float) -> void:
 	if !visible:

@@ -32,6 +32,12 @@ func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("debug"):
 		visible = !visible
 
+func _ready() -> void:
+	fit_content = true
+	scroll_active = false
+	autowrap_mode = TextServer.AUTOWRAP_OFF
+	visible = false
+
 func _gui_input(event : InputEvent) -> void:
 	if event.is_action_pressed("left_click"):
 		mouse_down = true

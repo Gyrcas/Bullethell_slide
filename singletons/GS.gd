@@ -18,7 +18,7 @@ func load_save(savename : String) -> void:
 	save_loaded = true
 	data = JSON.parse_string(FS.read(save_location + savename + ".json"))
 	get_tree().paused = false
-	get_tree().change_scene_to_file(NodeLinker.request_resource(data.current_scene,true))
+	Global.change_scene_to_file(data.current_scene)
 
 func delete_save(savename : String) -> void:
 	FS.delete(save_location + savename + ".json")

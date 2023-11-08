@@ -14,9 +14,7 @@ func _on_start_pressed() -> void:
 
 
 func _on_settings_pressed() -> void:
-	pause_menu.visible = true
-	pause_menu.current_view.visible = true
-	get_tree().paused = true
+	pause_menu.open("options")
 
 
 func _process(delta):
@@ -24,7 +22,7 @@ func _process(delta):
 	if disappear:
 		panel_shader.material.set_shader_parameter("opacity",previous_opacity - delta / div_disappear)
 		if previous_opacity <= 0:
-			get_tree().change_scene_to_file("res://levels/intro.tscn")
+			Global.change_scene_to_file("intro.tscn")
 	elif previous_opacity < 0.25:
 		panel_shader.material.set_shader_parameter("opacity",previous_opacity + delta / div_appear)
 

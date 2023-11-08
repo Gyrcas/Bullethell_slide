@@ -40,7 +40,7 @@ func create_credits() -> void:
 
 func _ready() -> void:
 	create_credits.call_deferred()
-
+	
 func roll_credits() -> void:
 	var tween : Tween = create_tween()
 	tween.tween_property(credits,\"global_position\",
@@ -48,10 +48,16 @@ func roll_credits() -> void:
 	tween.tween_callback(func():anim.play(\"end\"))
 	tween.play()
 
+func _input(event : InputEvent) -> void:
+	if event.is_action_pressed(\"interact\"):
+		end()
+
+func end() -> void:
+	Global.change_scene_to_file(\"main_menu.tscn\")
 
 func _on_anim_animation_finished(anim_name : String) -> void:
 	if anim_name == \"end\":
-		get_tree().change_scene_to_file(NodeLinker.request_resource(\"main_menu.tscn\",true))
+		end()
 "
 
 [sub_resource type="Animation" id="Animation_7smbx"]
@@ -219,10 +225,10 @@ offset_bottom = 754.0
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="credits" type="GridContainer" parent="CanvasLayer"]
-offset_left = 524.0
+offset_left = 57.0
 offset_top = 337.0
-offset_right = 1280.0
-offset_bottom = 820.0
+offset_right = 921.0
+offset_bottom = 916.0
 columns = 3
 
 [node name="thanks" type="RichTextLabel" parent="CanvasLayer/credits"]
@@ -260,5 +266,32 @@ layout_mode = 2
 
 [node name="Control2" type="Control" parent="CanvasLayer/credits"]
 layout_mode = 2
+
+[node name="credits2" type="Label" parent="CanvasLayer"]
+visible = false
+offset_top = 375.0
+offset_right = 1280.0
+offset_bottom = 869.0
+text = "Thank you for playing
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"
+horizontal_alignment = 1
 
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]
