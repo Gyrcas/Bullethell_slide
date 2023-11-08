@@ -267,31 +267,4 @@ layout_mode = 2
 [node name="Control2" type="Control" parent="CanvasLayer/credits"]
 layout_mode = 2
 
-[node name="credits2" type="Label" parent="CanvasLayer"]
-visible = false
-offset_top = 375.0
-offset_right = 1280.0
-offset_bottom = 869.0
-text = "Thank you for playing
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"
-horizontal_alignment = 1
-
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]

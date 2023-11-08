@@ -14,6 +14,7 @@ class_name Player
 @onready var col : CollisionShape2D = $col
 
 var interaction : Node = null : set = set_interaction
+var controllable : bool = true
 
 func set_interaction(value : Node) -> void:
 	interaction = value
@@ -75,7 +76,7 @@ func _physics_process(delta : float) -> void:
 	# Get movement inputs
 	var move : int = int(Input.get_axis("down","up"))
 	var turn : int = int(Input.get_axis("left","right"))
-	if dying:
+	if dying || !controllable:
 		move = 0
 		turn = 0
 	var speed : float = velocity.x / velocity.normalized().x
@@ -93,7 +94,7 @@ func _physics_process(delta : float) -> void:
 			velocity = velocity.normalized() * max_speed_bouce
 		
 	shoot(
-		Input.is_action_pressed("left_click") && can_shoot && nano >= bullet_preset.nano && !perks_wheel.visible
+		Input.is_action_pressed("left_click") && can_shoot && nano >= bullet_preset.nano && !perks_wheel.visible && controllable
 	)
 	
 	trail.global_position = Vector2.ZERO

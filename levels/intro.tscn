@@ -25,8 +25,35 @@ var current_dialogue : int = 0
 var move_stars : bool = true
 
 func _ready() -> void:
+	GS.reset_data()
 	anim.play(\"start\")
-
+	await anim.animation_finished
+	#----------------------------
+	dialogue.play_from_file(NodeLinker.request_resource(\"intro_1.json\",true))
+	await dialogue.finished
+	#----------------------------
+	await get_tree().create_timer(0.1).timeout
+	dialogue.text_node.text = \"\"
+	anim.play(\"ship\")
+	await anim.animation_finished
+	#----------------------------
+	turn = true
+	explosion.emitting = true
+	smoke.emitting = true
+	anim.play(\"crash\")
+	await anim.animation_finished
+	#------------------------------
+	stars.motion_offset.y += 500
+	smoke.restart()
+	booster.restart()
+	explosion.restart()
+	planet.visible = true
+	move_stars = false
+	anim.play(\"crash2\")
+	await anim.animation_finished
+	#-----------------------------
+	Global.change_scene_to_file(\"cave_crash.tscn\")
+	
 var turn : bool = false
 var t : float = 45
 
@@ -50,37 +77,9 @@ func _process(delta : float) -> void:
 @onready var booster : GPUParticles2D = $ship/booster
 const explosion_x : int = 100
 
-func _on_anim_animation_finished(anim_name : String) -> void:
-	match anim_name:
-		\"start\":
-			dialogue.play_from_file(NodeLinker.request_resource(\"intro_1.json\",true))
-		\"ship\":
-			turn = true
-			explosion.emitting = true
-			smoke.emitting = true
-			anim.play(\"crash\")
-		\"crash\":
-			stars.motion_offset.y += 500
-			smoke.restart()
-			booster.restart()
-			explosion.restart()
-			anim.play(\"crash2\")
-			planet.visible = true
-			move_stars = false
-		\"crash2\":
-			Global.change_scene_to_file(\"cave_crash.tscn\")
-
 func _input(event : InputEvent) -> void:
 	if anim.is_playing() && event.is_action_pressed(\"interact\"):
 		anim.advance(anim.current_animation_length)
-
-func _on_dialogue_finished() -> void:
-	await get_tree().create_timer(0.1).timeout
-	current_dialogue += 1
-	dialogue.text_node.text = \"\"
-	match current_dialogue:
-		1:
-			anim.play(\"ship\")
 "
 
 [sub_resource type="Animation" id="Animation_txlmc"]
@@ -603,6 +602,3 @@ offset_top = -54.0
 offset_right = 1301.0
 offset_bottom = 750.0
 color = Color(0, 0, 0, 1)
-
-[connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]
-[connection signal="finished" from="dialogue" to="." method="_on_dialogue_finished"]
