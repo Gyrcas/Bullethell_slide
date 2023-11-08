@@ -21,8 +21,8 @@ func collide(collision) -> void:
 		add_collision_exception_with(collider)
 		return
 	for body in blast_zone.get_overlapping_bodies():
-		if body.get("health"):
-			body.health -= damage
+		if body is MoverEntity:
+			body.apply_damage(damage,damage_types)
 		if body.get("velocity") != null:
 			body.velocity += global_position.direction_to(body.global_position) * 25
 	die()

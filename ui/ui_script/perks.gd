@@ -14,6 +14,7 @@ var half_screen : Vector2
 
 func _ready() -> void:
 	visible = false
+	Engine.time_scale = 1
 	half_screen = get_viewport_rect().size / 2
 
 func draw_wheel() -> void:
@@ -40,7 +41,7 @@ func _draw() -> void:
 	if selecting_target:
 		draw_circle(
 			half_screen,
-			perks[selected_arc].perk_range * NodeLinker.player.camera.zoom.x,
+			perks[selected_arc].perk_range * Global.player.camera.zoom.x,
 			Color(1, 0, 0, 0.1)
 		)
 	else:
@@ -72,6 +73,10 @@ func _process(_delta : float) -> void:
 		queue_redraw()
 	
 func _input(event : InputEvent) -> void:
+	if Global.player.dying:
+		visible = false
+		Engine.time_scale = 1
+		return
 	if event.is_action_pressed("perks"):
 		if !selecting_target:
 			visible = !visible
@@ -81,19 +86,19 @@ func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("left_click") && visible:
 		if selecting_target:
 			var mouse : Vector2 = get_viewport().get_camera_2d().get_global_mouse_position()
-			if perks[selected_arc].nano_cost > NodeLinker.player.nano || perks[selected_arc].perk_range < NodeLinker.player.global_position.distance_to(mouse):
+			if perks[selected_arc].nano_cost > Global.player.nano || perks[selected_arc].perk_range < Global.player.global_position.distance_to(mouse):
 				return
 			selecting_target = false
-			if NodeLinker.player.can_shoot:
+			if Global.player.can_shoot:
 				(func():
-					NodeLinker.player.can_shoot = false
-					shoot_timer.start(0.1)
+					Global.player.can_shoot = false
+					shoot_timer.start(0.5)
 					await shoot_timer.timeout
-					NodeLinker.player.can_shoot = true
+					Global.player.can_shoot = true
 				).call()
 			visible = false
 			Engine.time_scale = 1
-			perks[selected_arc].execute(NodeLinker.player,{"target":mouse})
+			perks[selected_arc].execute(Global.player,{"target":mouse})
 		elif perks.size() != 0:
 			selecting_target = true
 			queue_redraw()

@@ -61,12 +61,12 @@ func _ready() -> void:
 	for i in trail_length:
 		trail.add_point(global_position,i)
 	
-	NodeLinker.player = self
+	Global.player = self
 	trail_timer.start(trail_update_time)
 	
 	target.connect("target_lost",on_target_lost)
 	
-	auto_target.set_collision_mask_value(NodeLinker.auto_target_collision_level,true)
+	auto_target.set_collision_mask_value(Global.auto_target_collision_level,true)
 	
 	bullet_preset.sender = self
 	bullet_preset.target_node = target
@@ -148,9 +148,13 @@ func _on_auto_target_body_exited(node : Node2D) -> void:
 	if node.get_node_or_null("target_node") == target.current_target && !auto_target.get_overlapping_bodies().has(node):
 		target.current_target = null
 
+signal end_anim_done
+
 func _on_anim_animation_finished(anim_name : String) -> void:
 	match anim_name:
 		"death":
 			anim.play("death_message")
 		"death_message":
 			GS.load_save(GS.auto_save_name)
+		"end":
+			end_anim_done.emit()

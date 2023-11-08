@@ -15,8 +15,8 @@ var hole_scene : PackedScene = NodeLinker.request_resource("blackhole.tscn")
 func _ready() -> void:
 	check_dependance()
 	_on_move_timer_timeout()
-	bullet_preset.target_node = NodeLinker.player
-	set_collision_layer_value(NodeLinker.auto_target_collision_level,true)
+	bullet_preset.target_node = Global.player
+	set_collision_layer_value(Global.auto_target_collision_level,true)
 
 @onready var detection : RayCast2D = $detection
 
@@ -29,17 +29,17 @@ func _physics_process(delta : float) -> void:
 	var collision = move_and_collide(velocity * Engine.time_scale)
 	if collision:
 		velocity = velocity.bounce(collision.get_normal())
-	detection.target_position = detection.global_position.direction_to(NodeLinker.player.global_position) * (detection.global_position.distance_to(NodeLinker.player.global_position) + 100)
+	detection.target_position = detection.global_position.direction_to(Global.player.global_position) * (detection.global_position.distance_to(Global.player.global_position) + 100)
 	var bullet : Bullet = shoot(
-		detection.get_collider() == NodeLinker.player && nano >= bullet_preset.nano && can_shoot
+		detection.get_collider() == Global.player && nano >= bullet_preset.nano && can_shoot
 	)
 	if bullet:
 		bullet.velocity = Vector2.ZERO
-	if can_hole && detection.get_collider() == NodeLinker.player:
+	if can_hole && detection.get_collider() == Global.player:
 		var hole : Area2D = hole_scene.instantiate()
 		can_hole = false
 		get_parent().add_child(hole)
-		hole.global_position = NodeLinker.player.global_position + NodeLinker.player.velocity / delta / 2
+		hole.global_position = Global.player.global_position + Global.player.velocity / delta / 2
 		hole_timer.start(hole_cooldown)
 
 func _on_move_timer_timeout() -> void:

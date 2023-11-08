@@ -22,7 +22,8 @@ func on_back_menu() -> void:
 
 func load_saves() -> void:
 	var files : Array = FS.read_dir(GS.save_location)
-	UT.remove_children(saves)
+	for child in saves.get_children():
+		child.queue_free()
 	for file in files:
 		create_save_tab(file)
 

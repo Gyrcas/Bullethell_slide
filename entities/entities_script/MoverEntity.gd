@@ -14,6 +14,20 @@ var death_particles_scene : PackedScene = NodeLinker.request_resource("death_par
 
 var dying : bool = false
 
+@export var imunities : Array[String] = []
+@export var vulnerabilities : Array[String] = []
+@export var restistances : Array[String] = []
+
+func apply_damage(damage : float, types:PackedStringArray = ["normal"]) -> void:
+	var not_hurt : bool = true
+	for type in types:
+		if !imunities.has(type):
+			not_hurt = false
+			break
+	if not_hurt:
+		return
+	set_health(health - damage)
+
 func die() -> void:
 	dying = true
 	can_shoot = false

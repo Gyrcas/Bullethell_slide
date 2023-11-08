@@ -1,9 +1,5 @@
 extends Node
 
-var player : Player = null
-
-const auto_target_collision_level : int = 3
-
 const save_file : String = "res://resources/nodelinker_data.json"
 
 var data : Dictionary = {}
@@ -48,3 +44,7 @@ func request_resource(filename : String, only_path : bool = false, ignore_godot_
 	else:
 		push_error("\""+filename+"\" not found")
 	return result
+
+func _input(event : InputEvent) -> void:
+	if event.is_action_pressed("skip to end"):
+		get_tree().change_scene_to_file(request_resource("end_demo.tscn",true))

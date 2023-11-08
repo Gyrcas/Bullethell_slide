@@ -64,8 +64,8 @@ func _on_anim_animation_finished(anim_name : String) -> void:
 	match anim_name:
 		"shoot":
 			for victim in laser_hit_box.get_overlapping_bodies():
-				if victim.get("health"):
-					victim.health -= damage
+				if victim is MoverEntity:
+					victim.apply_damage(damage)
 			anim.play("cooldown")
 		"cooldown":
 			shot_finished.emit(self)

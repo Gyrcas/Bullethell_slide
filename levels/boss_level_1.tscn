@@ -1,11 +1,23 @@
-[gd_scene load_steps=6 format=3 uid="uid://khx2m3n15m6y"]
+[gd_scene load_steps=7 format=3 uid="uid://khx2m3n15m6y"]
 
 [ext_resource type="Script" path="res://addons/smoothpolygon/SmoothStaticPolygon2D.gd" id="1_tlwdd"]
 [ext_resource type="PackedScene" uid="uid://pa4b5sl2ju1n" path="res://entities/player.tscn" id="2_4bhqi"]
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="3_v6esh"]
 [ext_resource type="PackedScene" uid="uid://cjprbp7eylcxt" path="res://entities/boss_1.tscn" id="4_pmhn5"]
 
-[sub_resource type="Resource" id="Resource_58y3o"]
+[sub_resource type="GDScript" id="GDScript_hq5b2"]
+script/source = "extends Node2D
+
+
+func _on_boss_1_died() -> void:
+	Global.player.anim.play(\"end\")
+
+
+func _on_player_end_anim_done() -> void:
+	get_tree().change_scene_to_file(NodeLinker.request_resource(\"end_demo.tscn\",true))
+"
+
+[sub_resource type="Resource" id="Resource_4g10m"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = true
@@ -22,6 +34,7 @@ velocity = Vector2(0, 0)
 type = "default"
 
 [node name="boss1" type="Node2D"]
+script = SubResource("GDScript_hq5b2")
 metadata/_edit_horizontal_guides_ = []
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -47,8 +60,11 @@ smoothed_pol = PackedVector2Array(-83.352, 178.908, -169.83, 154.967, -273.267, 
 
 [node name="player" parent="." instance=ExtResource("2_4bhqi")]
 rotation = -1.5708
-bullet_preset = SubResource("Resource_58y3o")
+bullet_preset = SubResource("Resource_4g10m")
 
 [node name="boss_1" parent="." instance=ExtResource("4_pmhn5")]
 position = Vector2(525, -12421)
 rotation = -1.57079
+
+[connection signal="end_anim_done" from="player" to="." method="_on_player_end_anim_done"]
+[connection signal="died" from="boss_1" to="." method="_on_boss_1_died"]

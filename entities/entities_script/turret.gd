@@ -25,15 +25,15 @@ func _ready() -> void:
 	bullet_preset.rotation = rotation - randf_range(90 - range_angle, 90 + range_angle)
 	bullet_preset.global_position = bullet_spawn_point
 	bullet_preset.velocity = -global_transform.y * 2
-	bullet_preset.target_node = NodeLinker.player
-	set_collision_layer_value(NodeLinker.auto_target_collision_level,true)
+	bullet_preset.target_node = Global.player
+	set_collision_layer_value(Global.auto_target_collision_level,true)
 
 func _physics_process(_delta : float) -> void:
-	if !NodeLinker.player:
+	if !Global.player:
 		return
-	detection.target_position = detection.global_position.direction_to(NodeLinker.player.global_position) * (detection.global_position.distance_to(NodeLinker.player.global_position) + 5)
+	detection.target_position = detection.global_position.direction_to(Global.player.global_position) * (detection.global_position.distance_to(Global.player.global_position) + 5)
 	var bullet : Bullet = shoot(
-		detection.get_collider() == NodeLinker.player && nano >= bullet_preset.nano && can_shoot && !waiting_for_burst
+		detection.get_collider() == Global.player && nano >= bullet_preset.nano && can_shoot && !waiting_for_burst
 	)
 	if bullet:
 		bullet.global_position = bullet_preset.global_position

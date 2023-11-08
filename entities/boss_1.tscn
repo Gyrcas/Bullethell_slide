@@ -1,10 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjprbp7eylcxt"]
+[gd_scene load_steps=6 format=3 uid="uid://cjprbp7eylcxt"]
 
 [ext_resource type="Script" path="res://entities/entities_script/boss_1.gd" id="1_4ctrh"]
 [ext_resource type="Texture2D" uid="uid://fw1j5jgje64v" path="res://textures/boss_1.png" id="1_8pkqb"]
 [ext_resource type="PackedScene" uid="uid://mmny8lgv5eim" path="res://entities/laser_attack.tscn" id="3_70683"]
 
-[node name="boss_1" type="StaticBody2D"]
+[sub_resource type="Animation" id="Animation_cuhyy"]
+resource_name = "death"
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ckjum"]
+_data = {
+"death": SubResource("Animation_cuhyy")
+}
+
+[node name="boss_1" type="CharacterBody2D"]
 script = ExtResource("1_4ctrh")
 
 [node name="sprite" type="Sprite2D" parent="."]
@@ -31,6 +40,15 @@ position = Vector2(-136, 0)
 speed = 5.0
 width = 400.0
 
+[node name="shoot_timer" type="Timer" parent="."]
+
+[node name="anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ckjum")
+}
+
 [connection signal="shot_finished" from="laser/laser_attack" to="." method="_on_laser_attack_shot_finished"]
 [connection signal="shot_finished" from="laser/laser_attack2" to="." method="_on_laser_attack_shot_finished"]
 [connection signal="shot_finished" from="laser/laser_attack3" to="." method="_on_laser_attack_shot_finished"]
+[connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]

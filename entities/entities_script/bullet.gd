@@ -22,6 +22,8 @@ var target_node : Node2D
 var damage : float = 1
 var avoid_div : float = 100
 
+var damage_types : PackedStringArray = ["normal"]
+
 
 func set_sender(value : Node2D) -> void:
 	if sender:
@@ -50,7 +52,8 @@ func die() -> void:
 	#Added if because would sometime crash because sprite was null
 	if sprite:
 		particles.modulate = sprite.color
-	get_parent().add_child(particles)
+	if get_parent():
+		get_parent().add_child(particles)
 	
 	queue_free()
 
@@ -59,8 +62,8 @@ func collide(collision) -> void:
 	if collider.get("sender") == sender:
 		add_collision_exception_with(collider)
 		return
-	if collider.get("health"):
-		collider.health -= damage
+	if collider is MoverEntity:
+		collider.apply_damage(damage,damage_types)
 	if collider is CharacterBody2D:
 		collider.velocity += velocity
 	die()

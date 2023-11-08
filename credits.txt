@@ -1,0 +1,17 @@
+Made by Dylan Ducas
+
+
+Assets
+
+	planet:						Deep-Fold			itch.io
+	space shipe intro:			Wobblegut Studios	itch.io
+	HUD bars:					Sweenus				itch.io
+	Boss 1:						Ismartal			itch.io
+
+
+Shaders
+
+	Main menu:					kcfresh53			Godot shaders
+	Blackhole:
+		ripple effect:			Nevoski				Godot shaders
+		chromatic aberration:	jecovier			Godot shaders

@@ -87,7 +87,8 @@ func get_actions() -> PackedStringArray:
 	return new_actions
 
 func load_inputs() -> void:
-	UT.remove_children(grid)
+	for child in grid.get_children():
+		child.queue_free()
 	var actions : PackedStringArray = get_actions()
 	var inputs : Dictionary = {}
 	grid.columns = 1

@@ -2,6 +2,7 @@ extends Perk
 class_name DashPerk
 
 @export var damage : float = 10
+var damage_types : PackedStringArray = ["perforating"]
 
 func _init() -> void:
 	name = "Dash"
@@ -19,7 +20,7 @@ func move(sender : MoverEntity,params : Dictionary, ray : RayCast2D) -> void:
 	while ray.is_colliding():
 		var collider : Node = ray.get_collider()
 		if collider is MoverEntity:
-			collider.health -= damage
+			collider.apply_damage(damage,damage_types)
 		elif collider is StaticBody2D:
 			params.target = ray.get_collision_point()
 			break
