@@ -7,6 +7,7 @@ Assets
 	space shipe intro:			Wobblegut Studios	itch.io
 	HUD bars:					Sweenus				itch.io
 	Boss 1:						Ismartal			itch.io
+	ui panel:					Wenrexa				itch.io
 
 
 Shaders

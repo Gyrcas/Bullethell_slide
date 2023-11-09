@@ -19,5 +19,5 @@ func change_scene_to_file(filename : String) -> void:
 	add_debug.call_deferred()
 
 func _input(event : InputEvent) -> void:
-	if event.is_action_pressed("skip to end"):
+	if event.is_action_pressed("skip_to_end"):
 		change_scene_to_file("end_demo.tscn")

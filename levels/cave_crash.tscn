@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cb1ngswxfr1i2"]
+[gd_scene load_steps=17 format=3 uid="uid://cb1ngswxfr1i2"]
 
 [ext_resource type="Script" path="res://addons/smoothpolygon/SmoothPolygon2D.gd" id="1_wdskp"]
 [ext_resource type="Texture2D" uid="uid://bvqkegii4jywk" path="res://textures/ship.png" id="2_0sblj"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://pa4b5sl2ju1n" path="res://entities/player.tscn" id="4_mqsbn"]
 [ext_resource type="PackedScene" uid="uid://cksrr1rdojrue" path="res://entities/save_pillar.tscn" id="4_x3wy6"]
 [ext_resource type="Texture2D" uid="uid://bu47foj0xu6hr" path="res://textures/pixel.png" id="5_2upfm"]
-[ext_resource type="Script" path="res://addons/DialogueCreator/DialoguePlayer.gd" id="5_b211j"]
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="5_gyhp0"]
 [ext_resource type="PackedScene" uid="uid://docggmrtco8vd" path="res://entities/extractor.tscn" id="8_4jygs"]
 [ext_resource type="PackedScene" uid="uid://crk6qe46nhlj1" path="res://entities/turret.tscn" id="9_1ttyd"]
@@ -15,7 +14,7 @@
 [sub_resource type="GDScript" id="GDScript_6arar"]
 script/source = "extends Node2D
 
-@onready var intro : CanvasLayer = $intro
+@onready var intro : Node = $intro
 @onready var door : Door = $door
 
 func _ready() -> void:
@@ -34,7 +33,7 @@ func _on_save_pillar_interacted() -> void:
 		GS.data.first_save = true
 "
 
-[sub_resource type="Resource" id="Resource_mlceh"]
+[sub_resource type="Resource" id="Resource_duev1"]
 resource_local_to_scene = true
 script = ExtResource("5_gyhp0")
 ignore_sender = true
@@ -51,46 +50,30 @@ velocity = Vector2(0, 0)
 type = "default"
 
 [sub_resource type="GDScript" id="GDScript_0t555"]
-script/source = "extends CanvasLayer
+script/source = "extends Node
 
 signal completed
 
-@onready var anim : AnimationPlayer = $anim
-@onready var dialogue : DialoguePlayer = $dialogue
-
 func start() -> void:
 	Global.player.controllable = false
-	dialogue.play_from_file(NodeLinker.request_resource(\"intro_2.json\",true))
-	await dialogue.finished
+	Global.player.dialogue.play(NodeLinker.request_resource(\"intro_2.json\",true))
+	await Global.player.dialogue.finished
 	Global.player.controllable = true
 	completed.emit()
 "
-
-[sub_resource type="Animation" id="Animation_gyk8y"]
-length = 0.001
-
-[sub_resource type="Animation" id="Animation_gas8q"]
-resource_name = "start"
-length = 4.0
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_1p60h"]
-_data = {
-"RESET": SubResource("Animation_gyk8y"),
-"start": SubResource("Animation_gas8q")
-}
 
 [sub_resource type="GDScript" id="GDScript_i8ysm"]
 script/source = "extends Area2D
 
 func _on_body_entered(body):
 	if body is Player:
-		get_tree().change_scene_to_file(NodeLinker.request_resource(\"boss_level_1.tscn\",true))
+		Global.change_scene_to_file(\"boss_level_1.tscn\")
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b1e57"]
 radius = 1828.69
 
-[sub_resource type="Resource" id="Resource_tf86r"]
+[sub_resource type="Resource" id="Resource_vb3fo"]
 resource_local_to_scene = true
 script = ExtResource("5_gyhp0")
 ignore_sender = false
@@ -191,7 +174,7 @@ dimensions = Vector2(50, 450)
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_mlceh")
+bullet_preset = SubResource("Resource_duev1")
 
 [node name="ground" type="Polygon2D" parent="."]
 self_modulate = Color(0.141176, 0.141176, 0.141176, 1)
@@ -215,32 +198,8 @@ ignore_points = PackedInt32Array()
 ignore_points_outline = PackedInt32Array()
 smoothed_pol = PackedVector2Array(-182.239, 209.101, -227.874, 123.241, -293.686, 28.5397, -371.566, -33.0348, -451.181, -61.6431, -543.249, -85.5858, -648.087, -123.033, -744.915, -176.554, -821.783, -225.172, -907.29, -281.529, -996.966, -343.501, -1086.34, -408.966, -1210.06, -509.066, -1308.39, -605.596, -1391.73, -749.551, -1435.92, -896.834, -1484.77, -1026.86, -1585.28, -1132.45, -1718.2, -1207.81, -1852.46, -1271.24, -1988.45, -1324.89, -2122.21, -1376.76, -2205.94, -1447.87, -2254.45, -1522.63, -2300.25, -1618.63, -2345.92, -1724.1, -2419.79, -1874.25, -2507.82, -1979.37, -2641.72, -2016.46, -2752.75, -2007.71, -2919.96, -1964.39, -3052.13, -1910.53, -3169.39, -1815.84, -3180.02, -1713.35, -3150.22, -1617.46, -3109.59, -1546.14, -3055.03, -1466.68, -2992.28, -1380.72, -2927.09, -1289.86, -2865.18, -1195.72, -2812.3, -1099.91, -2776.28, -1010.28, -2748.27, -913.29, -2724.29, -811.521, -2688.06, -657.513, -2640.82, -512.3, -2570.52, -387.603, -2466.05, -286.581, -2334.21, -201.63, -2189.47, -129.876, -2046.24, -68.4325, -1918.96, -14.4092, -1763.16, 46.7038, -1622.11, 85.2654, -1489.22, 119.221, -1345.08, 167.874, -1201.38, 221.214, -1065.51, 269.705, -912.065, 316.496, -766.327, 354.801, -618.016, 380.496, -473.908, 378.61, -376.633, 379.094, -284.461, 317.46, -190.253, 253.419, -166, 237, -166, 237)
 
-[node name="intro" type="CanvasLayer" parent="."]
+[node name="intro" type="Node" parent="."]
 script = SubResource("GDScript_0t555")
-
-[node name="anim" type="AnimationPlayer" parent="intro"]
-libraries = {
-"": SubResource("AnimationLibrary_1p60h")
-}
-
-[node name="dialogue" type="Node" parent="intro" node_paths=PackedStringArray("button_container", "text_node")]
-script = ExtResource("5_b211j")
-action_next = "interact"
-button_container = NodePath("../button")
-text_node = NodePath("../text")
-typewritter_speed = 0.05
-
-[node name="text" type="Label" parent="intro"]
-offset_left = 102.0
-offset_top = 554.0
-offset_right = 1175.0
-offset_bottom = 623.0
-
-[node name="button" type="HBoxContainer" parent="intro"]
-offset_left = 105.0
-offset_top = 634.0
-offset_right = 1123.0
-offset_bottom = 704.0
 
 [node name="extractor" parent="." instance=ExtResource("8_4jygs")]
 position = Vector2(5470, 1015)
@@ -255,7 +214,7 @@ shape = SubResource("CircleShape2D_b1e57")
 [node name="turret" parent="." instance=ExtResource("9_1ttyd")]
 position = Vector2(4874, 43)
 rotation = 2.76999
-bullet_preset = SubResource("Resource_tf86r")
+bullet_preset = SubResource("Resource_vb3fo")
 
 [connection signal="interacted" from="save_pillar" to="." method="_on_save_pillar_interacted"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

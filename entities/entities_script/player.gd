@@ -12,6 +12,7 @@ class_name Player
 @onready var bullet_type_lbl : Label = $camera/ui/hud/bullet_type
 @onready var perks_wheel : PerksWheel = $camera/ui/perks
 @onready var col : CollisionShape2D = $col
+@onready var dialogue : CanvasLayer = $camera/ui/hud/dialogue
 
 var interaction : Node = null : set = set_interaction
 var controllable : bool = true
