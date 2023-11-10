@@ -19,6 +19,8 @@ func set_action_next(value : String) -> void:
 
 @export var typewritter_speed : float = 0.1
 
+@export var variables : Dictionary = {}
+
 ##Used by script to detect when user as pressed the action key to continue dialogue
 signal confirm
 ##Emitted when dialogue is finished
@@ -51,6 +53,8 @@ func play(dialogue : Dictionary, current_dialogue : Dictionary = dialogue) -> vo
 			child.queue_free()
 	match int(current_dialogue.type):
 		types.msg:
+			for key in variables.keys():
+				current_dialogue.content = current_dialogue.content.replace(key,variables[key])
 			if use_typewritter:
 				do_typewritter(current_dialogue.content)
 			else:
@@ -67,12 +71,16 @@ func play(dialogue : Dictionary, current_dialogue : Dictionary = dialogue) -> vo
 			if current_dialogue.children.size() > 0:
 				play(dialogue,current_dialogue.children[0])
 		types.choice:
+			for key in variables.keys():
+				current_dialogue.content = current_dialogue.content.replace(key,variables[key])
 			if use_typewritter:
 				do_typewritter(current_dialogue.content)
 			else:
 				text_node.text = current_dialogue.content
 			for child in current_dialogue.children:
 				var button : Button = Button.new()
+				for key in variables.keys():
+					child.content = child.content.replace(key,variables[key])
 				button.text = child.content
 				button.connect("pressed",play.bind(dialogue,child.children[0] if child.children.size() > 0 else {}))
 				button_container.add_child(button)

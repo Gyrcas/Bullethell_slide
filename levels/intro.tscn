@@ -547,6 +547,7 @@ action_next = "interact"
 button_container = NodePath("../text")
 text_node = NodePath("../text")
 typewritter_speed = 0.05
+variables = null
 
 [node name="ship" type="Sprite2D" parent="."]
 position = Vector2(-208, 333)

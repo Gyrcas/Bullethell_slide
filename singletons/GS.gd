@@ -7,8 +7,7 @@ var save_loaded : bool = false
 const base_data : Dictionary = {
 	"current_scene" : "cave_crash.tscn",
 	"position":"(0,0)",
-	"intro" : false,
-	"first_save": false
+	"intro" : false
 }
 
 var data : Dictionary = base_data

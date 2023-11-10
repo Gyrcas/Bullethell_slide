@@ -8,5 +8,4 @@ offset_right = 8.0
 offset_bottom = 8.0
 script = ExtResource("1_uv610")
 
-[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
 [connection signal="focus_exited" from="." to="." method="_on_focus_exited"]

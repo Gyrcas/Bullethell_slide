@@ -102,5 +102,4 @@ offset_bottom = 251.0
 [connection signal="item_selected" from="header/center/hbox/type" to="." method="_on_type_item_selected"]
 [connection signal="pressed" from="header/center/hbox/delete" to="." method="_on_delete_pressed"]
 [connection signal="child_entered_tree" from="body" to="." method="_on_body_child_entered_tree"]
-[connection signal="focus_entered" from="body/msg" to="body/msg" method="_on_focus_entered" flags=18]
 [connection signal="focus_exited" from="body/msg" to="body/msg" method="_on_focus_exited" flags=18]

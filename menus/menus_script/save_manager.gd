@@ -46,3 +46,4 @@ func _on_save_button_pressed() -> void:
 		GS.save(input_savename.text)
 		create_save_tab(input_savename.text,false)
 		input_savename.text = ""
+		load_saves()

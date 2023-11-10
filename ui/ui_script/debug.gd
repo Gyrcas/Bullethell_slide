@@ -37,6 +37,7 @@ func _ready() -> void:
 	scroll_active = false
 	autowrap_mode = TextServer.AUTOWRAP_OFF
 	visible = false
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _gui_input(event : InputEvent) -> void:
 	if event.is_action_pressed("left_click"):

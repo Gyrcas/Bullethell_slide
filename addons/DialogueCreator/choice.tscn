@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://dfmgsf2cblrc5"]
+[gd_scene load_steps=3 format=3 uid="uid://dfmgsf2cblrc5"]
 
 [sub_resource type="GDScript" id="GDScript_hshgn"]
 script/source = "@tool
@@ -45,16 +45,23 @@ func _input(event : InputEvent):
 		if get_node(\"../../\") is DialogueBox:
 			get_node(\"../../\").zoom = zoom
 
-func _on_text_focus_entered() -> void:
-	text.custom_minimum_size = default_size * zoom
-	z_index = 100
-	focused = true
-
 
 func _on_text_focus_exited() -> void:
 	text.custom_minimum_size = default_size
+	text.size = default_size
 	z_index = 0
 	focused = false
+"
+
+[sub_resource type="GDScript" id="GDScript_c51j2"]
+script/source = "@tool
+extends TextEdit
+
+func _gui_input(event : InputEvent) -> void:
+	if event.as_text() == \"Left Mouse Button\":
+		size = get_parent().default_size * get_parent().zoom
+		z_index = 100
+		get_parent().focused = true
 "
 
 [node name="choice" type="VBoxContainer"]
@@ -65,12 +72,12 @@ script = SubResource("GDScript_hshgn")
 [node name="text" type="TextEdit" parent="."]
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
+script = SubResource("GDScript_c51j2")
 
 [node name="add" type="Button" parent="."]
 layout_mode = 2
 text = "+"
 
-[connection signal="focus_entered" from="text" to="." method="_on_text_focus_entered"]
 [connection signal="focus_exited" from="text" to="." method="_on_text_focus_exited"]
 [connection signal="text_changed" from="text" to="." method="_on_text_text_changed"]
 [connection signal="pressed" from="add" to="." method="_on_add_pressed"]

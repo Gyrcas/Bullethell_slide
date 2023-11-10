@@ -57,7 +57,8 @@ func _ready() -> void:
 	
 	if GS.save_loaded:
 		GS.save_loaded = false
-		global_position = str_to_var(GS.data.position)
+		if str_to_var(GS.data.position):
+			global_position = str_to_var(GS.data.position)
 	# Create trail
 	trail.points = []
 	for i in trail_length:

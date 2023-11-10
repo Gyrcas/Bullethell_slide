@@ -40,10 +40,11 @@ func _input(event : InputEvent):
 		if get_node("../../") is DialogueBox:
 			get_node("../../").zoom = zoom
 
-func _on_focus_entered() -> void:
-	size = default_size * zoom
-	z_index = 100
-	focused = true
+func _gui_input(event : InputEvent) -> void:
+	if event.as_text() == "Left Mouse Button":
+		size = default_size * zoom
+		z_index = 100
+		focused = true
 
 
 func _on_focus_exited() -> void:

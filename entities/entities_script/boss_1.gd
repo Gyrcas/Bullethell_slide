@@ -12,12 +12,14 @@ func _ready() -> void:
 		child.shoot(Global.player)
 
 func _physics_process(_delta : float) -> void:
-	if use_slow_mo && Engine.time_scale > 0.1 && !dying:
+	if use_slow_mo && Engine.time_scale > 0.1 && !dying && !Global.player.dying:
 		Engine.time_scale = clampf(
 			global_position.distance_to(
 				Global.player.global_position
 			) / distant_slow_mo, 0.2, 1
 		)
+	elif Global.player.dying:
+		Engine.time_scale = 1
 	
 
 func _on_laser_attack_shot_finished(laser : LaserAttack):
