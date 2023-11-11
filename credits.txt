@@ -16,3 +16,13 @@ Shaders
 	Blackhole:
 		ripple effect:			Nevoski				Godot shaders
 		chromatic aberration:	jecovier			Godot shaders
+
+
+Musics
+
+	Main menu:					yd					OpenGameArt.org
+
+
+Sounds
+
+	

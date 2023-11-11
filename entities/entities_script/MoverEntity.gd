@@ -36,6 +36,10 @@ func die() -> void:
 	particles.global_position = global_position
 	particles.lifetime = 3
 	get_parent().add_child(particles)
+	AudioPlayer.play(
+		"sounds/Misc_DissolveSweep.wav",
+		false,global_position
+	)
 	anim.play("death")
 	died.emit()
 

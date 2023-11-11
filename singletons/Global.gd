@@ -5,6 +5,7 @@ var player : Player
 
 const auto_target_collision_level : int = 3
 
+
 func add_debug() -> void:
 	var debug : Debug = Debug.new()
 	var canvas : CanvasLayer = CanvasLayer.new()

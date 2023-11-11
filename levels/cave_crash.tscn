@@ -31,7 +31,6 @@ func _ready() -> void:
 	else:
 		door.open(false)
 
-
 func _on_save_pillar_interacted() -> void:
 	if !GS.data.intro:
 		door.open()
@@ -39,7 +38,7 @@ func _on_save_pillar_interacted() -> void:
 		GS.save.call_deferred(GS.auto_save_name)
 "
 
-[sub_resource type="Resource" id="Resource_qpqu0"]
+[sub_resource type="Resource" id="Resource_x1q11"]
 resource_local_to_scene = true
 script = ExtResource("5_gyhp0")
 ignore_sender = true
@@ -66,7 +65,7 @@ func _on_body_entered(body):
 [sub_resource type="CircleShape2D" id="CircleShape2D_b1e57"]
 radius = 1828.69
 
-[sub_resource type="Resource" id="Resource_p0jmn"]
+[sub_resource type="Resource" id="Resource_lyakq"]
 resource_local_to_scene = true
 script = ExtResource("5_gyhp0")
 ignore_sender = false
@@ -167,7 +166,7 @@ dimensions = Vector2(50, 450)
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_qpqu0")
+bullet_preset = SubResource("Resource_x1q11")
 
 [node name="ground" type="Polygon2D" parent="."]
 self_modulate = Color(0.141176, 0.141176, 0.141176, 1)
@@ -204,7 +203,9 @@ shape = SubResource("CircleShape2D_b1e57")
 [node name="turret" parent="." instance=ExtResource("9_1ttyd")]
 position = Vector2(4874, 43)
 rotation = 2.76999
-bullet_preset = SubResource("Resource_p0jmn")
+bullet_preset = SubResource("Resource_lyakq")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="interacted" from="save_pillar" to="." method="_on_save_pillar_interacted"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

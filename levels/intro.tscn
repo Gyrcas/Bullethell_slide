@@ -24,8 +24,22 @@ const stars_speed : float = 20
 var current_dialogue : int = 0
 var move_stars : bool = true
 
+var audio_player : AudioStreamPlayer
+
+func play_music() -> void:
+	AudioPlayer.play(
+		\"musics/Drifting Beyond the Stars.ogg\",
+		true,Vector2.ZERO,get_music,play_music
+	)
+
+func get_music(audio) -> void:
+	audio_player = audio
+	audio_player.volume_db = -50
+	AudioPlayer.tween_volume(audio_player,0,5)
+
 func _ready() -> void:
 	GS.reset_data()
+	play_music()
 	anim.play(\"start\")
 	await anim.animation_finished
 	#----------------------------
@@ -547,7 +561,6 @@ action_next = "interact"
 button_container = NodePath("../text")
 text_node = NodePath("../text")
 typewritter_speed = 0.05
-variables = null
 
 [node name="ship" type="Sprite2D" parent="."]
 position = Vector2(-208, 333)

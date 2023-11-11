@@ -21,6 +21,7 @@ FS="*res://singletons/FS.gd"
 NodeLinker="*res://singletons/NodeLinker.gd"
 GS="*res://singletons/GS.gd"
 Global="*res://singletons/Global.gd"
+AudioPlayer="*res://singletons/AudioPlayer.gd"
 
 [display]
 

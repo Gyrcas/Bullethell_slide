@@ -29,6 +29,7 @@ func set_texture(value : Texture2D) -> void:
 
 @export var time : float = 1.0
 @export var dimensions : Vector2 = Vector2(50,100) : set = set_dimensions
+var opened : bool = false
 
 func set_dimensions(value : Vector2) -> void:
 	dimensions = value
@@ -40,6 +41,7 @@ func set_dimensions(value : Vector2) -> void:
 		set_dimensions.call_deferred(dimensions)
 
 func open(anim : bool = true) -> void:
+	opened = true
 	move_door(start_position - global_transform.y * dimensions.y,anim)
 
 func move_door(pos : Vector2, anim : bool = true) -> void:
@@ -51,4 +53,5 @@ func move_door(pos : Vector2, anim : bool = true) -> void:
 		global_position = pos
 
 func close(anim : bool = true) -> void:
+	opened = false
 	move_door(start_position,anim)

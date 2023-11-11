@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cgqw5b3qsq86j"
+path="res://.godot/imported/Drifting Beyond the Stars.ogg-7067057a1b61a594e1c486467e229a10.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/musics/Drifting Beyond the Stars.ogg"
+dest_files=["res://.godot/imported/Drifting Beyond the Stars.ogg-7067057a1b61a594e1c486467e229a10.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

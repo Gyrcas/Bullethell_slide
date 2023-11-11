@@ -56,7 +56,6 @@ action_next = "interact"
 button_container = NodePath("../buttons")
 text_node = NodePath("../text")
 typewritter_speed = 0.01
-variables = null
 
 [node name="buttons" type="GridContainer" parent="."]
 offset_left = 744.0
