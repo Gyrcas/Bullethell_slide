@@ -31,8 +31,11 @@ var music_id : String
 func play_music() -> void:
 	music_id = AudioPlayer.play(\"musics/Drifting Beyond the Stars.ogg\",true)
 	AudioPlayer.set_volume(music_id,-50)
-	AudioPlayer.tween_volume(music_id,0,5)
-	AudioPlayer.add_callback(music_id, play_music)
+
+func get_music(audio) -> void:
+	audio_player = audio
+	audio_player.volume_db = -50
+	AudioPlayer.tween_volume(audio_player,0,5)
 
 func _ready() -> void:
 	GS.reset_data()

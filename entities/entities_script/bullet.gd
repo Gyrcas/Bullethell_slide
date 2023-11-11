@@ -54,7 +54,6 @@ func die() -> void:
 		particles.modulate = sprite.color
 	if get_parent():
 		get_parent().add_child(particles)
-	
 	queue_free()
 
 func collide(collision) -> void:

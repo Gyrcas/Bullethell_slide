@@ -33,10 +33,15 @@ func _input(event : InputEvent) -> void:
 		visible = !visible
 
 func _ready() -> void:
+	connect("tree_exiting",func():
+		Global.debug_open = visible
+		Global.debug_pos = global_position
+	)
 	fit_content = true
 	scroll_active = false
+	global_position = Global.debug_pos
+	visible = Global.debug_open
 	autowrap_mode = TextServer.AUTOWRAP_OFF
-	visible = false
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _gui_input(event : InputEvent) -> void:

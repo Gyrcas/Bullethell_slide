@@ -113,10 +113,24 @@ func do_typewritter(string : String, nb_char : int = 0, bbcodes : Variant = null
 		string = results.string
 		bbcodes = results.bbcodes
 	writing = true
-	if timer.is_connected("timeout",on_typewritter):
-		timer.disconnect("timeout",on_typewritter)
-	timer.connect("timeout",on_typewritter.bind(string,nb_char,bbcodes))
 	timer.start(typewritter_speed)
+	await timer.timeout
+	var display_str : String = string.substr(0,nb_char) if writing else string
+	for bbcode in bbcodes:
+		if bbcode.idx <= display_str.length():
+			display_str = display_str.insert(bbcode.idx,bbcode.tag)
+		else:
+			break
+	if !writing || nb_char > string.length():
+		writing = false
+		timer.stop()
+		text_node.text = display_str
+		return
+	
+	text_node.text = display_str
+	var sound_id : String = AudioPlayer.play("sounds/Misc_Beep1.wav",true)
+	AudioPlayer.set_volume(sound_id, -30)
+	do_typewritter(string, nb_char + 1, bbcodes)
 
 var timer : Timer = Timer.new()
 

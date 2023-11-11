@@ -9,7 +9,7 @@ const div_appear : float = 50.0
 var disappear : bool = false
 
 func _on_start_pressed() -> void:
-	AudioPlayer.tween_volume(audio_player,-50,2)
+	AudioPlayer.tween_volume(music_id,-50,2)
 	disappear = true
 	div_disappear = (0.30 - panel_shader.material.get_shader_parameter("opacity")) * 100
 
@@ -22,15 +22,13 @@ var audio_player : AudioStreamPlayer
 func _ready() -> void:
 	play_music()
 
+var music_id : String
+
 func play_music() -> void:
-	AudioPlayer.play(
-		"musics/ObservingTheStar.ogg",
-		true,Vector2.ZERO,get_music,play_music)
-
-func get_music(audio) -> void:
-	audio_player = audio
-
-
+	music_id = AudioPlayer.play("musics/ObservingTheStar.ogg",true)
+	AudioPlayer.set_volume(music_id,-50)
+	AudioPlayer.tween_volume(music_id,0,15)
+	AudioPlayer.add_callback(music_id, play_music)
 
 func _process(delta):
 	var previous_opacity : float = panel_shader.material.get_shader_parameter("opacity")
