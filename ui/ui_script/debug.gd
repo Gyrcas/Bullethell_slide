@@ -19,8 +19,8 @@ func _physics_process(_delta) -> void:
 		return
 	text = (
 		"FPS:			"+str(Engine.get_frames_per_second())+"\n"+ 
-		"Static Memory:	"+str(OS.get_static_memory_usage()/1000000)+"mb\n"+
-		"Peak Memory:	"+str(OS.get_static_memory_peak_usage()/1000000)+"mb\n"+
+		"Static Memory:	"+str(int(OS.get_static_memory_usage()/1000000.0))+"mb\n"+
+		"Peak Memory:	"+str(int(OS.get_static_memory_peak_usage()/1000000.0))+"mb\n"+
 		"Memory infos:	"+memory_info_mb()+"\n"+
 		"Nodes count:	"+str(get_tree().get_node_count())+"\n"+
 		"tweens count:	"+str(get_tree().get_processed_tweens().size())

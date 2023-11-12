@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dlfrvmg2jiyoh"]
+[gd_scene load_steps=3 format=3 uid="uid://dlfrvmg2jiyoh"]
 
 [ext_resource type="Script" path="res://menus/menus_script/pause_options.gd" id="1_agj35"]
+[ext_resource type="Script" path="res://menus/menus_script/AudioBusSlider.gd" id="2_3e664"]
 
 [node name="options" type="Control"]
 layout_mode = 3
@@ -10,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_agj35")
+settings_file = "res://data/settings.json"
 
 [node name="center" type="CenterContainer" parent="."]
 layout_mode = 0
@@ -22,5 +24,10 @@ layout_mode = 2
 [node name="inputs" type="Button" parent="center/vbox"]
 layout_mode = 2
 text = "map inputs"
+
+[node name="AudioBusSlider" type="VSplitContainer" parent="center/vbox"]
+layout_mode = 2
+script = ExtResource("2_3e664")
+settings_file = "res://data/settings.json"
 
 [connection signal="pressed" from="center/vbox/inputs" to="." method="_on_inputs_pressed"]

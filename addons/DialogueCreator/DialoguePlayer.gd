@@ -128,8 +128,9 @@ func do_typewritter(string : String, nb_char : int = 0, bbcodes : Variant = null
 		return
 	
 	text_node.text = display_str
-	var sound_id : String = AudioPlayer.play("sounds/Misc_Beep1.wav",true)
-	AudioPlayer.set_volume(sound_id, -30)
+	var sound_id : String = AudioPlayer.play("sounds/Misc_Beep1.wav",true,false)
+	AudioPlayer.set_volume(sound_id, -15)
+	AudioPlayer.set_play(sound_id,true)
 	do_typewritter(string, nb_char + 1, bbcodes)
 
 var timer : Timer = Timer.new()

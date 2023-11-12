@@ -1,5 +1,7 @@
 extends PauseMenuView
 
+@export_file("*.json") var settings_file : String
+
 func on_back_menu() -> void:
 	if pause_menu.views.get_node_or_null("main"):
 		pause_menu.change_view("main")

@@ -5,10 +5,6 @@ const audio_folder : String = "res://audio/"
 
 var cache : Dictionary = {}
 
-var group_volume : Dictionary = {
-	"default":0
-}
-
 var active_audio : Dictionary = {}
 
 func tween_volume(id : String,final_value : float,time : float, callback = null) -> void:
@@ -22,26 +18,23 @@ func add_callback(id : String, callback : Callable) -> void:
 	var audio : Dictionary = active_audio[id]
 	audio.player.connect("finished",callback.bind(audio.file))
 
-func change_group(id : String, group : String) -> void:
-	var audio_player : Node = active_audio[id].player
-	audio_player.remove_from_group(audio_player.get_groups()[0])
-	add_to_group(group)
-
 func set_volume(id : String, volume_db : float) -> void:
-	var audio_player : Node = active_audio[id].player
-	audio_player.volume_db = volume_db + group_volume[audio_player.get_groups()[0]]
-
-func set_volume_group(group : String, volume_db : float) -> void:
-	for player in get_tree().get_nodes_in_group(group):
-		player.volume_db += volume_db - group_volume[group]
-	group_volume[group] = volume_db
+	active_audio[id].player.volume_db = volume_db
+	
 
 func set_position(id : String, pos : Vector2) -> void:
 	var player : Node = active_audio[id].player
 	if player is AudioStreamPlayer2D:
 		player.global_position = pos
 
-func play(file : String,everywhere : bool = true) -> String:
+var muted : bool = false : set = set_muted
+
+func set_muted(mute : bool) -> void:
+	muted = mute
+	for i in AudioServer.bus_count:
+		AudioServer.set_bus_mute(i,mute)
+
+func play(file : String,everywhere : bool = true, autoplay : bool = true) -> String:
 	var current_id : int = 0
 	while active_audio.has(str(current_id)):
 		current_id += 1
@@ -50,15 +43,33 @@ func play(file : String,everywhere : bool = true) -> String:
 		audio_player = AudioStreamPlayer.new()
 	else:
 		audio_player = AudioStreamPlayer2D.new()
-	audio_player.autoplay = true
+	audio_player.autoplay = autoplay
 	audio_player.stream = load(audio_folder + file)
-	audio_player.volume_db = group_volume.default
-	audio_player.add_to_group("default")
 	active_audio[str(current_id)] = {"player":audio_player,"file":file}
 	get_tree().current_scene.add_child(audio_player)
 	audio_player.connect("finished",delete.bind(str(current_id)))
 	audio_player.connect("tree_exiting",delete.bind(str(current_id)))
 	return str(current_id)
+
+func set_playing_from(id : String, time : float) -> void:
+	active_audio[id].player.play(time)
+
+func set_play(id : String, playing : bool) -> void:
+	if playing:
+		active_audio[id].player.play()
+	else:
+		active_audio[id].player.stop()
+
+func set_bus_by_name(id : String, bus_name : StringName) -> void:
+	if AudioServer.get_bus_index(bus_name):
+		active_audio[id].player.bus = bus_name
+
+func set_bus_by_id(id : String, bus_id : int) -> void:
+	if bus_id < AudioServer.bus_count:
+		active_audio[id].player.bus = AudioServer.get_bus_name(bus_id)
+
+func set_audio_process_mode(id : String, audio_process_mode : ProcessMode) -> void:
+	active_audio[id].player.process_mode = audio_process_mode
 
 func delete(id : String) -> void:
 	if !active_audio.has(id):
@@ -66,3 +77,13 @@ func delete(id : String) -> void:
 	var audio_player : Variant = active_audio[id].player
 	active_audio.erase(id)
 	audio_player.queue_free()
+
+func _ready() -> void:
+	var settings : Dictionary = JSON.parse_string(FS.read("res://data/settings.json"))
+	if !settings.has("volume"):
+		return
+	for key in settings.volume.keys():
+		var bus_id : Variant = AudioServer.get_bus_index(key)
+		if bus_id == null:
+			continue
+		AudioServer.set_bus_volume_db(bus_id,settings.volume[key])

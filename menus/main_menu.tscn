@@ -107,8 +107,6 @@ layout_mode = 1
 views_array = Array[String](["pause_options.tscn", "pause_inputs.tscn", "save_manager.tscn"])
 open_with_back = false
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-
 [connection signal="pressed" from="vbox/start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="vbox/load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="vbox/settings" to="." method="_on_settings_pressed"]

@@ -80,7 +80,7 @@ func _physics_process(delta : float) -> void:
 			turn += -(angle_target / abs(angle_target)) / avoid_div
 	clampf(turn,-1,1)
 	
-	var collision : Variant = do_move(1,turn,delta, velocity.x / velocity.normalized().x if velocity.x != 0 else 1.0)
+	var collision : Variant = do_move(1,int(turn),delta, velocity.x / velocity.normalized().x if velocity.x != 0 else 1.0)
 	if collision:
 		collide(collision)
 
