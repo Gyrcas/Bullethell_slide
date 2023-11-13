@@ -5,6 +5,11 @@ var player : Player
 
 const auto_target_collision_level : int = 3
 
+var bullet_script : Dictionary = {
+	"default":Bullet.new().get_script(),
+	"bomb":Bomb.new().get_script()
+}
+
 var debug_open : bool = false
 var debug_pos : Vector2 = Vector2.ZERO
 

@@ -43,6 +43,7 @@ func _ready() -> void:
 
 func _on_save_button_pressed() -> void:
 	if GS.auto_save_name != input_savename.text:
+		print(input_savename.text)
 		GS.save(input_savename.text)
 		create_save_tab(input_savename.text,false)
 		input_savename.text = ""

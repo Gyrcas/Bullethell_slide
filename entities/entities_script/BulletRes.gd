@@ -25,11 +25,7 @@ func _init() -> void:
 
 func instantiate() -> Bullet:
 	var bullet : Bullet = bullet_scene.instantiate()
-	var script : String = "bullet.gd"
-	match type:
-		"bomb":
-			script = "bomb.gd"
-	bullet.set_script(NodeLinker.request_resource(script))
+	bullet.set_script(Global.bullet_script[type])
 	bullet.max_speed = max_speed
 	bullet.turn_speed = turn_speed
 	bullet.target_position = target_position

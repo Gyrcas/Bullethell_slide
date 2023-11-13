@@ -28,7 +28,7 @@ var audio_player : AudioStreamPlayer
 
 var music_id : String
 
-func play_music() -> void:
+func play_music(_file : String = \"\") -> void:
 	music_id = AudioPlayer.play(\"musics/Drifting Beyond the Stars.ogg\",true)
 	AudioPlayer.set_volume(music_id,-50)
 	AudioPlayer.tween_volume(music_id,0,5)

@@ -1,6 +1,6 @@
 extends Node
 
-const save_file : String = "res://resources/nodelinker_data.json"
+var save_file : String = "res://resources/nodelinker_data.json"
 
 var data : Dictionary = {}
 
@@ -33,7 +33,7 @@ func search(path : String, content : String, ignore_godot_folder : bool = true) 
 func request_resource(filename : String, only_path : bool = false, ignore_godot_folder : bool = true) -> Variant:
 	if data.keys().has(filename) && FS.exist(data[filename].str):
 		return data[filename].res if data[filename].keys().has("res") && !only_path else data[filename].str
-	var result : Variant = search("res://",filename, ignore_godot_folder)
+	var result : Variant = search(OS.get_executable_path().get_base_dir() + "/",filename, ignore_godot_folder)
 	if result:
 		if only_path:
 			data[filename] = {"str":result}

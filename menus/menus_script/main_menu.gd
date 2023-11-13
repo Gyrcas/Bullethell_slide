@@ -24,7 +24,7 @@ func _ready() -> void:
 
 var music_id : String
 
-func play_music() -> void:
+func play_music(_file : String = "") -> void:
 	music_id = AudioPlayer.play("musics/ObservingTheStar.ogg",true)
 	AudioPlayer.set_audio_process_mode(music_id, PROCESS_MODE_ALWAYS)
 	AudioPlayer.set_volume(music_id,-50)
