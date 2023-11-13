@@ -19,18 +19,24 @@ layout_mode = 2
 
 [node name="resume" type="Button" parent="center/vbox"]
 layout_mode = 2
+focus_neighbor_bottom = NodePath("../load")
 text = "Resume"
 
 [node name="load" type="Button" parent="center/vbox"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../resume")
+focus_neighbor_bottom = NodePath("../options")
 text = "Load"
 
 [node name="options" type="Button" parent="center/vbox"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../load")
+focus_neighbor_bottom = NodePath("../quit")
 text = "Options"
 
 [node name="quit" type="Button" parent="center/vbox"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../options")
 text = "Quit"
 
 [connection signal="pressed" from="center/vbox/resume" to="." method="_on_resume_pressed"]

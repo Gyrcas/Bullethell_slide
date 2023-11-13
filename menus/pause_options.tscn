@@ -23,10 +23,14 @@ layout_mode = 2
 
 [node name="inputs" type="Button" parent="center/vbox"]
 layout_mode = 2
+focus_neighbor_bottom = NodePath("../volume")
 text = "map inputs"
 
-[node name="AudioBusSlider" type="VSplitContainer" parent="center/vbox"]
+[node name="volume" type="VSplitContainer" parent="center/vbox"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../inputs")
+focus_mode = 2
+dragger_visibility = 2
 script = ExtResource("2_3e664")
 settings_file = "res://data/settings.json"
 

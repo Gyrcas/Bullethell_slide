@@ -47,3 +47,10 @@ func _input(event : InputEvent) -> void:
 				current_view.on_back_menu()
 		elif open_with_back && !visible && !get_tree().paused:
 			open()
+
+signal closed
+
+func _set(property : StringName, value : Variant) -> bool:
+	if property == "visible" && !value:
+		closed.emit()
+	return false

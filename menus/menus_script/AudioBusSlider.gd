@@ -10,6 +10,9 @@ class_name AudioBusSlider
 var bus_id : int = -1
 var slider : HSlider
 
+func grab_focus_slider() -> void:
+	slider.grab_focus()
+
 func set_bus_name(value : String) -> void:
 	bus_name = value
 	bus_id = -1
@@ -24,6 +27,9 @@ func _get_configuration_warnings() -> PackedStringArray:
 		warnings.append("Bus \""+bus_name+"\" does not exist")
 	return warnings
 
+func on_focus() -> void:
+	slider.grab_focus()
+
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
@@ -33,7 +39,10 @@ func _ready() -> void:
 	var lbl : Label = Label.new()
 	lbl.text = text
 	add_child(lbl)
+	connect("focus_entered",on_focus)
 	slider = HSlider.new()
+	slider.focus_neighbor_bottom = "../" + str(focus_neighbor_bottom)
+	slider.focus_neighbor_top = "../" + str(focus_neighbor_top)
 	slider.min_value = min_range
 	slider.max_value = max_range
 	slider.value = AudioServer.get_bus_volume_db(bus_id)

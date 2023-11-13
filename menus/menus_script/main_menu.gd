@@ -2,9 +2,12 @@ extends Control
 
 @onready var panel_shader : Panel = $shader
 @onready var pause_menu : PauseMenu = $pause_menu
+@onready var start : Button = $vbox/start
 
 var div_disappear : float = 10.0
 const div_appear : float = 50.0
+
+var last_focus : Control
 
 var disappear : bool = false
 
@@ -14,12 +17,15 @@ func _on_start_pressed() -> void:
 	div_disappear = (0.30 - panel_shader.material.get_shader_parameter("opacity")) * 100
 
 
+
 func _on_settings_pressed() -> void:
+	last_focus = get_viewport().gui_get_focus_owner()
 	pause_menu.open("options")
 
 var audio_player : AudioStreamPlayer
 
 func _ready() -> void:
+	start.grab_focus()
 	play_music()
 
 var music_id : String
@@ -40,6 +46,10 @@ func _process(delta):
 	elif previous_opacity < 0.25:
 		panel_shader.material.set_shader_parameter("opacity",previous_opacity + delta / div_appear)
 
-
 func _on_load_pressed() -> void:
+	last_focus = get_viewport().gui_get_focus_owner()
 	pause_menu.open("save_manager",{"back_to_view":"","load_save":true})
+
+
+func _on_pause_menu_closed() -> void:
+	last_focus.grab_focus()

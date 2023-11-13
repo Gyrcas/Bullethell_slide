@@ -8,6 +8,14 @@ const joypad_btn_id : String = "jpbtn"
 @export_file("*.json") var settings_file : String
 var grid : GridContainer = GridContainer.new()
 
+const event_pairing : Dictionary = {
+	"down":"ui_down",
+	"up":"ui_up",
+	"left":"ui_left",
+	"right":"ui_right",
+	"interact":"ui_accept"
+}
+
 var changed : bool = false : set = set_changed
 signal inputs_changed
 
@@ -71,6 +79,9 @@ func load_file() -> void:
 		if !InputMap.has_action(input):
 			InputMap.add_action(input)
 		InputMap.action_erase_events(input)
+		if event_pairing.has(input):
+			InputMap.action_erase_events(event_pairing[input])
+			
 		for key in settings.inputs[input]:
 			var input_event : InputEvent
 			if key_id in key:
@@ -82,8 +93,9 @@ func load_file() -> void:
 			elif joypad_btn_id in key:
 				input_event = InputEventJoypadButton.new()
 				input_event.button_index = int(key.split(joypad_btn_id)[1])
-			if !InputMap.action_has_event(input,input_event):
-				InputMap.action_add_event(input,input_event)
+			InputMap.action_add_event(input,input_event)
+			if event_pairing.has(input):
+				InputMap.action_add_event(event_pairing[input],input_event)
 	load_inputs()
 
 func get_actions() -> PackedStringArray:
@@ -151,6 +163,8 @@ func _input(event : InputEvent) -> void:
 	if event is InputEventKey || event is InputEventJoypadButton:
 		waiting_input = false
 		InputMap.action_add_event(action_add,event)
+		if event_pairing.has(action_add):
+			InputMap.action_add_event(event_pairing[action_add],event)
 		load_inputs()
 	else:
 		print(event.as_text())
@@ -165,6 +179,8 @@ func on_reset_btn_pressed() -> void:
 
 func remove_input(action : String,input : InputEvent) -> void:
 	InputMap.action_erase_event(action,input)
+	if event_pairing.has(action):
+		InputMap.action_erase_event(event_pairing[action],input)
 	changed = true
 	load_inputs()
 

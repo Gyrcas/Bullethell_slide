@@ -18,7 +18,7 @@ func _on_player_end_anim_done() -> void:
 	Global.change_scene_to_file(\"end_demo.tscn\")
 "
 
-[sub_resource type="Resource" id="Resource_vm4vs"]
+[sub_resource type="Resource" id="Resource_4k2wd"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = true
@@ -61,7 +61,7 @@ smoothed_pol = PackedVector2Array(-83.352, 178.908, -169.83, 154.967, -273.267, 
 
 [node name="player" parent="." instance=ExtResource("2_4bhqi")]
 rotation = -1.5708
-bullet_preset = SubResource("Resource_vm4vs")
+bullet_preset = SubResource("Resource_4k2wd")
 
 [node name="boss_1" parent="." instance=ExtResource("4_pmhn5")]
 position = Vector2(525, -12421)

@@ -38,7 +38,7 @@ func _on_save_pillar_interacted() -> void:
 		GS.save.call_deferred(GS.auto_save_name)
 "
 
-[sub_resource type="Resource" id="Resource_7fv63"]
+[sub_resource type="Resource" id="Resource_bbmey"]
 resource_local_to_scene = true
 script = ExtResource("5_gyhp0")
 ignore_sender = true
@@ -65,7 +65,7 @@ func _on_body_entered(body):
 [sub_resource type="CircleShape2D" id="CircleShape2D_b1e57"]
 radius = 1828.69
 
-[sub_resource type="Resource" id="Resource_6eeb4"]
+[sub_resource type="Resource" id="Resource_opt8h"]
 resource_local_to_scene = true
 script = ExtResource("5_gyhp0")
 ignore_sender = false
@@ -166,7 +166,7 @@ dimensions = Vector2(50, 450)
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_7fv63")
+bullet_preset = SubResource("Resource_bbmey")
 
 [node name="ground" type="Polygon2D" parent="."]
 self_modulate = Color(0.141176, 0.141176, 0.141176, 1)
@@ -203,7 +203,7 @@ shape = SubResource("CircleShape2D_b1e57")
 [node name="turret" parent="." instance=ExtResource("9_1ttyd")]
 position = Vector2(4874, 43)
 rotation = 2.76999
-bullet_preset = SubResource("Resource_6eeb4")
+bullet_preset = SubResource("Resource_opt8h")
 
 [connection signal="interacted" from="save_pillar" to="." method="_on_save_pillar_interacted"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

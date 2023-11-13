@@ -92,14 +92,18 @@ alignment = 1
 
 [node name="start" type="Button" parent="vbox"]
 layout_mode = 2
+focus_neighbor_bottom = NodePath("../load")
 text = "Start"
 
 [node name="load" type="Button" parent="vbox"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../start")
+focus_neighbor_bottom = NodePath("../settings")
 text = "Load"
 
 [node name="settings" type="Button" parent="vbox"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../load")
 text = "Setting"
 
 [node name="pause_menu" parent="." instance=ExtResource("2_t1veq")]
@@ -110,3 +114,4 @@ open_with_back = false
 [connection signal="pressed" from="vbox/start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="vbox/load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="vbox/settings" to="." method="_on_settings_pressed"]
+[connection signal="closed" from="pause_menu" to="." method="_on_pause_menu_closed"]
