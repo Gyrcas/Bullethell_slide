@@ -3,6 +3,7 @@ class_name InputsMapper
 
 const mouse_button_id : String = "mouseB"
 const key_id : String = "key"
+const joypad_btn_id : String = "jpbtn"
 
 @export_file("*.json") var settings_file : String
 var grid : GridContainer = GridContainer.new()
@@ -33,6 +34,8 @@ func create_key(key : InputEvent, input : String) -> HSplitContainer:
 				key_lbl.text = "left click mouse"
 			MOUSE_BUTTON_RIGHT:
 				key_lbl.text = "right click mouse"
+	elif key is InputEventJoypadButton:
+		key_lbl.text = key.as_text()
 	return split
 
 func save_to_file() -> void:
@@ -51,6 +54,8 @@ func save_to_file() -> void:
 				settings["inputs"][action].append(key_id + str(input.keycode))
 			elif input is InputEventMouseButton:
 				settings["inputs"][action].append(mouse_button_id + str(input.button_index))
+			elif input is InputEventJoypadButton:
+				settings["inputs"][action].append(joypad_btn_id + str(input.button_index))
 	FS.write(settings_file,JSON.stringify(settings))
 	
 func load_file() -> void:
@@ -74,6 +79,9 @@ func load_file() -> void:
 			elif mouse_button_id in key:
 				input_event = InputEventMouseButton.new()
 				input_event.button_index = int(key.split(mouse_button_id)[1])
+			elif joypad_btn_id in key:
+				input_event = InputEventJoypadButton.new()
+				input_event.button_index = int(key.split(joypad_btn_id)[1])
 			if !InputMap.action_has_event(input,input_event):
 				InputMap.action_add_event(input,input_event)
 	load_inputs()
@@ -140,10 +148,12 @@ func add_input(action : String) -> void:
 func _input(event : InputEvent) -> void:
 	if !waiting_input:
 		return
-	if event is InputEventKey:
+	if event is InputEventKey || event is InputEventJoypadButton:
 		waiting_input = false
 		InputMap.action_add_event(action_add,event)
 		load_inputs()
+	else:
+		print(event.as_text())
 
 func on_save_btn_pressed() -> void:
 	save_to_file()
