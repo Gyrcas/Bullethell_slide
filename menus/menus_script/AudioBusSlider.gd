@@ -39,6 +39,7 @@ func _ready() -> void:
 		return
 	var lbl : Label = Label.new()
 	lbl.text = text
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(lbl)
 	connect("focus_entered",on_focus)
 	slider = HSlider.new()
@@ -63,6 +64,7 @@ func on_slider_started() -> void:
 func on_slider_ended(_same : bool) -> void:
 	changing_volume = false
 	AudioServer.set_bus_volume_db(bus_id,slider.value)
+	print(AudioServer.get_bus_volume_db(0)," ",AudioServer.get_bus_volume_db(1))
 	if settings_file:
 		var settings : Dictionary = JSON.parse_string(FS.read(settings_file))
 		if !settings.has("volume"):

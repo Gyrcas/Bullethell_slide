@@ -29,9 +29,17 @@ text = "map inputs"
 [node name="volume" type="VSplitContainer" parent="center/vbox"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../inputs")
+focus_neighbor_bottom = NodePath("../dialogue")
 focus_mode = 2
 dragger_visibility = 2
 script = ExtResource("2_3e664")
 settings_file = "res://data/settings.json"
+
+[node name="dialogue" type="VSplitContainer" parent="center/vbox"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../volume")
+script = ExtResource("2_3e664")
+text = "Dialogue"
+bus_name = "Dialogue"
 
 [connection signal="pressed" from="center/vbox/inputs" to="." method="_on_inputs_pressed"]

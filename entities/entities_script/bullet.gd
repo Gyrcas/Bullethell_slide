@@ -53,6 +53,7 @@ func die() -> void:
 	var sound_id : String = AudioPlayer.play("sounds/bullet.wav",false)
 	AudioPlayer.set_position(sound_id,global_position)
 	AudioPlayer.set_pitch(sound_id,randf_range(0.5,1.5))
+	AudioPlayer.set_volume(sound_id,-10)
 	#Added if because would sometime crash because sprite was null
 	if sprite:
 		particles.modulate = sprite.color

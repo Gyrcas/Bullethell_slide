@@ -319,6 +319,7 @@ shape = SubResource("CapsuleShape2D_bcdmy")
 [node name="trail_timer" type="Timer" parent="."]
 
 [node name="trail" type="Line2D" parent="."]
+top_level = true
 gradient = SubResource("Gradient_2xgqr")
 
 [node name="target" parent="." instance=ExtResource("4_davdh")]

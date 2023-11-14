@@ -57,7 +57,6 @@ func _ready() -> void:
 	
 	anim.play("start")
 	
-	
 	if GS.save_loaded:
 		GS.save_loaded = false
 		if str_to_var(GS.data.position):
@@ -103,7 +102,6 @@ func _physics_process(delta : float) -> void:
 	)
 	
 	trail.global_position = Vector2.ZERO
-	trail.rotation = -rotation
 	trail.points[trail.points.size() - 1] = global_position
 	
 	auto_target.global_position = camera.get_screen_center_position()
