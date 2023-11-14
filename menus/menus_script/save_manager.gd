@@ -20,20 +20,29 @@ func on_back_menu() -> void:
 	else:
 		pause_menu.change_view(back_to_view)
 
+var previous_save : SaveTab
+
 func load_saves() -> void:
 	var files : Array = FS.read_dir(GS.save_location)
 	for child in saves.get_children():
 		child.queue_free()
 	for file in files:
-		create_save_tab(file)
+		previous_save = create_save_tab(file)
+	previous_save.button.focus_neighbor_bottom = previous_save.button.get_path_to(input_savename)
+	input_savename.focus_neighbor_top = input_savename.get_path_to(previous_save.button)
+	previous_save = null
 
-func create_save_tab(file : String, base_file : bool = true) -> void:
-	var save : Panel = save_scene.instantiate()
+func create_save_tab(file : String, base_file : bool = true) -> SaveTab:
+	var save : SaveTab = save_scene.instantiate()
 	save.save_manager = self
 	saves.add_child(save)
 	save.save_lbl.text = file.get_file().replace("."+file.get_extension(),"") if base_file else file
+	if previous_save:
+		save.button.focus_neighbor_top = save.button.get_path_to(previous_save.button)
+		previous_save.button.focus_neighbor_bottom = previous_save.button.get_path_to(save.button)
 	if save.save_lbl.text == GS.auto_save_name:
 		save.delete.queue_free()
+	return save
 
 func _ready() -> void:
 	load_saves()
@@ -43,8 +52,13 @@ func _ready() -> void:
 
 func _on_save_button_pressed() -> void:
 	if GS.auto_save_name != input_savename.text:
-		print(input_savename.text)
 		GS.save(input_savename.text)
 		create_save_tab(input_savename.text,false)
 		input_savename.text = ""
 		load_saves()
+
+func open_close(opening : bool) -> void:
+	if opening && saves.get_child_count() > 0:
+		saves.get_child(0).button.grab_focus()
+	else:
+		input_savename.grab_focus()

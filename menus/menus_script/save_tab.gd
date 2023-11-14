@@ -1,7 +1,9 @@
 extends Panel  
+class_name SaveTab
 
 @onready var save_lbl : Label = $split/name_lbl
 @onready var delete : Button = $split/delete
+@onready var button : Button = $button
 var save_manager : Control
 
 func _on_delete_pressed() -> void:

@@ -17,6 +17,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_neighbor_right = NodePath("../split/delete")
 
 [node name="split" type="HSplitContainer" parent="."]
 layout_mode = 1
@@ -37,6 +38,9 @@ custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_neighbor_left = NodePath("../../button")
+focus_neighbor_top = NodePath("../../button")
+focus_neighbor_bottom = NodePath("../../button")
 text = "X"
 
 [connection signal="pressed" from="button" to="." method="_on_button_pressed"]
