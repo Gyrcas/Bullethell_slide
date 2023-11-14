@@ -4,6 +4,8 @@ class_name Bullet
 @onready var sprite : Node2D = $sprite
 @onready var avoid : Area2D = $avoid
 
+var color : Color = Color(1,1,1)
+
 var death_particles_scene : PackedScene = NodeLinker.request_resource("death_particles.tscn")
 
 var nano : int = 10
@@ -23,7 +25,6 @@ var damage : float = 1
 var avoid_div : float = 100
 
 var damage_types : PackedStringArray = ["normal"]
-
 
 func set_sender(value : Node2D) -> void:
 	if sender:
@@ -49,6 +50,9 @@ func die() -> void:
 	var particles : DeathParticles = death_particles_scene.instantiate()
 	particles.global_position = global_position
 	particles.lifetime = 0.5
+	var sound_id : String = AudioPlayer.play("sounds/bullet.wav",false)
+	AudioPlayer.set_position(sound_id,global_position)
+	AudioPlayer.set_pitch(sound_id,randf_range(0.5,1.5))
 	#Added if because would sometime crash because sprite was null
 	if sprite:
 		particles.modulate = sprite.color
@@ -66,6 +70,9 @@ func collide(collision) -> void:
 	if collider is CharacterBody2D:
 		collider.velocity += velocity
 	die()
+
+func _ready() -> void:
+	sprite.color = color
 
 func _physics_process(delta : float) -> void:
 	if !target_node:

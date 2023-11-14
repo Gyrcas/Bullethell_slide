@@ -7,9 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://pa4b5sl2ju1n" path="res://entities/player.tscn" id="4_mqsbn"]
 [ext_resource type="PackedScene" uid="uid://cksrr1rdojrue" path="res://entities/save_pillar.tscn" id="4_x3wy6"]
 [ext_resource type="Texture2D" uid="uid://bu47foj0xu6hr" path="res://textures/pixel.png" id="5_2upfm"]
-[ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="5_gyhp0"]
+[ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="7_4ea8p"]
 [ext_resource type="PackedScene" uid="uid://docggmrtco8vd" path="res://entities/extractor.tscn" id="8_4jygs"]
-[ext_resource type="PackedScene" uid="uid://crk6qe46nhlj1" path="res://entities/turret.tscn" id="9_1ttyd"]
+[ext_resource type="PackedScene" uid="uid://crk6qe46nhlj1" path="res://entities/turret.tscn" id="10_iaj3i"]
 
 [sub_resource type="GDScript" id="GDScript_6arar"]
 script/source = "extends Node2D
@@ -30,6 +30,7 @@ func _ready() -> void:
 		Global.player.controllable = true
 	else:
 		door.open(false)
+	AudioPlayer.play(\"musics/Drifting Beyond the Stars.ogg\")
 
 func _on_save_pillar_interacted() -> void:
 	if !GS.data.intro:
@@ -38,9 +39,9 @@ func _on_save_pillar_interacted() -> void:
 		GS.save.call_deferred(GS.auto_save_name)
 "
 
-[sub_resource type="Resource" id="Resource_bbmey"]
+[sub_resource type="Resource" id="Resource_0rgn8"]
 resource_local_to_scene = true
-script = ExtResource("5_gyhp0")
+script = ExtResource("7_4ea8p")
 ignore_sender = true
 max_speed = 25.0
 move_speed = 15.0
@@ -52,7 +53,25 @@ nano = 10
 global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
+color = Color(1, 1, 1, 1)
 type = "default"
+
+[sub_resource type="Resource" id="Resource_3kxbs"]
+resource_local_to_scene = true
+script = ExtResource("7_4ea8p")
+ignore_sender = false
+max_speed = 15.0
+move_speed = 2.5
+turn_speed = 5.0
+target_position = Vector2(0, 0)
+damage = 1.0
+maniability = 0.01
+nano = 10
+global_position = Vector2(0, 0)
+rotation = 0.0
+velocity = Vector2(0, 0)
+color = Color(0.717647, 0, 0, 1)
+type = "bomb"
 
 [sub_resource type="GDScript" id="GDScript_i8ysm"]
 script/source = "extends Area2D
@@ -64,22 +83,6 @@ func _on_body_entered(body):
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b1e57"]
 radius = 1828.69
-
-[sub_resource type="Resource" id="Resource_opt8h"]
-resource_local_to_scene = true
-script = ExtResource("5_gyhp0")
-ignore_sender = false
-max_speed = 15.0
-move_speed = 2.5
-turn_speed = 10.0
-target_position = Vector2(0, 0)
-damage = 1.0
-maniability = 0.25
-nano = 10
-global_position = Vector2(0, 0)
-rotation = 0.0
-velocity = Vector2(0, 0)
-type = "default"
 
 [node name="cave_crash" type="Node2D"]
 script = SubResource("GDScript_6arar")
@@ -166,7 +169,7 @@ dimensions = Vector2(50, 450)
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_bbmey")
+bullet_preset = SubResource("Resource_0rgn8")
 
 [node name="ground" type="Polygon2D" parent="."]
 self_modulate = Color(0.141176, 0.141176, 0.141176, 1)
@@ -192,6 +195,7 @@ smoothed_pol = PackedVector2Array(-182.239, 209.101, -227.874, 123.241, -293.686
 
 [node name="extractor" parent="." instance=ExtResource("8_4jygs")]
 position = Vector2(5470, 1015)
+bullet_preset = SubResource("Resource_3kxbs")
 
 [node name="Area2D" type="Area2D" parent="."]
 script = SubResource("GDScript_i8ysm")
@@ -200,10 +204,9 @@ script = SubResource("GDScript_i8ysm")
 position = Vector2(11236, 1010)
 shape = SubResource("CircleShape2D_b1e57")
 
-[node name="turret" parent="." instance=ExtResource("9_1ttyd")]
-position = Vector2(4874, 43)
-rotation = 2.76999
-bullet_preset = SubResource("Resource_opt8h")
+[node name="turret" parent="." instance=ExtResource("10_iaj3i")]
+position = Vector2(4177, 355)
+rotation = 2.72246
 
 [connection signal="interacted" from="save_pillar" to="." method="_on_save_pillar_interacted"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

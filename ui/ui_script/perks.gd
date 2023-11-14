@@ -72,16 +72,18 @@ func _process(_delta : float) -> void:
 	selected_arc = floor(angle / (deg_to_rad(360) / perks.size()))
 	if last_selected != selected_arc:
 		queue_redraw()
-	
+
+const time_trans_speed : float = 0.02
+
 func _input(event : InputEvent) -> void:
 	if Global.player.dying:
 		visible = false
-		Engine.time_scale = 1
+		Global.tween_time_scale(1,time_trans_speed)
 		return
 	if event.is_action_pressed("perks"):
 		if !selecting_target:
 			visible = !visible
-			Engine.time_scale = 0.1 if visible else 1.0
+			Global.tween_time_scale(0.1 if visible else 1.0,time_trans_speed)
 		selecting_target = false
 		queue_redraw()
 	if event.is_action_pressed("left_click") && visible:
@@ -98,7 +100,7 @@ func _input(event : InputEvent) -> void:
 					Global.player.can_shoot = true
 				).call()
 			visible = false
-			Engine.time_scale = 1
+			Global.tween_time_scale(1,time_trans_speed)
 			perks[selected_arc].execute(Global.player,{"target":mouse})
 		elif perks.size() != 0:
 			selecting_target = true

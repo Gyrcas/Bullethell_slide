@@ -25,6 +25,7 @@ nano = 10
 global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
+color = Color(1, 1, 1, 1)
 type = "default"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ve1pe"]

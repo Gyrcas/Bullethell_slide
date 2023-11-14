@@ -84,6 +84,11 @@ func play(dialogue : Dictionary, current_dialogue : Dictionary = dialogue) -> vo
 				button.text = child.content
 				button.connect("pressed",play.bind(dialogue,child.children[0] if child.children.size() > 0 else {}))
 				button_container.add_child(button)
+			if button_container.get_child_count() > 0:
+				if use_typewritter:
+					await typewritter_finished
+				await get_tree().create_timer(0.1).timeout
+				button_container.get_child(0).grab_focus()
 		types.condition:
 			var split : PackedStringArray = current_dialogue.content.split("?")
 			var node : Node = Node.new()
@@ -107,6 +112,8 @@ func play_from_file(path : String) -> void:
 
 ##Typewritter
 
+signal typewritter_finished
+
 func do_typewritter(string : String, nb_char : int = 0, bbcodes : Variant = null) -> void:
 	if !bbcodes:
 		var results : Variant = search_bbcode(string)
@@ -125,11 +132,13 @@ func do_typewritter(string : String, nb_char : int = 0, bbcodes : Variant = null
 		writing = false
 		timer.stop()
 		text_node.text = display_str
+		typewritter_finished.emit()
 		return
 	
 	text_node.text = display_str
-	var sound_id : String = AudioPlayer.play("sounds/Misc_Beep1.wav",true,false)
+	var sound_id : String = AudioPlayer.play("sounds/FUI Button Beep Clean.wav",true,false)
 	AudioPlayer.set_volume(sound_id, -15)
+	AudioPlayer.set_pitch(sound_id,randf_range(0.95,1))
 	AudioPlayer.set_play(sound_id,true)
 	do_typewritter(string, nb_char + 1, bbcodes)
 

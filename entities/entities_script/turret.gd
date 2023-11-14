@@ -10,14 +10,9 @@ class_name Turret
 @onready var bullet_spawn_point : Vector2 = $bullet_spawn_point.global_position
 @onready var detection : RayCast2D = $detection
 
-var bullet_color : Color = Color(5,0,0)
-
 var bullet_count : int = 0
 
 var waiting_for_burst : bool = false
-
-func set_bullet_color(value : Color = bullet_color, bullet : Bullet = Bullet.new()) -> void:
-	bullet.sprite.color = value
 
 func _ready() -> void:
 	detection.add_exception(self)

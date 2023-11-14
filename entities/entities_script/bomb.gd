@@ -4,7 +4,7 @@ class_name Bomb
 func _draw() -> void:
 	sprite.polygon = []
 	draw_circle(Vector2.ZERO,12,Color(0,0,0))
-	draw_circle(Vector2.ZERO,10,sprite.color)
+	draw_circle(Vector2.ZERO,10,color)
 
 var blast_zone : Area2D = Area2D.new()
 
@@ -33,6 +33,9 @@ func die() -> void:
 	var particles : DeathParticles = death_particles_scene.instantiate()
 	particles.global_position = global_position
 	particles.lifetime = 5
+	var sound_id : String = AudioPlayer.play("sounds/explosion1.wav",false)
+	AudioPlayer.set_position(sound_id,global_position)
+	AudioPlayer.set_pitch(sound_id, randf_range(0.5,1.5))
 	if sprite:
 		particles.modulate = sprite.color
 	if get_parent():

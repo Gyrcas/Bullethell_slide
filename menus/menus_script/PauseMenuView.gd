@@ -17,5 +17,5 @@ func _set(property : StringName, value : Variant) -> bool:
 		open_close(value)
 	return false
 
-func open_close(opening : bool) -> void:
+func open_close(_opening : bool) -> void:
 	pass

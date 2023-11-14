@@ -3,7 +3,8 @@ extends PauseMenuView
 var save_scene : PackedScene = NodeLinker.request_resource("save_tab.tscn")
 @onready var saves : VBoxContainer = $vbox/scroll/saves
 @onready var bottom : HSplitContainer = $vbox/bottom
-@onready var input_savename : TextEdit = $vbox/bottom/input_savename
+@onready var input_savename : LineEdit = $vbox/bottom/input_savename
+@onready var save_button : Button = $vbox/bottom/save_button
 
 var load_save : bool = true : set = set_load_save
 var back_to_view : String = "main"
@@ -14,7 +15,9 @@ func set_load_save(value : bool) -> void:
 	bottom.visible = !value
 
 func on_back_menu() -> void:
-	if back_to_view == "":
+	if get_viewport().gui_get_focus_owner() != save_button && bottom.visible:
+		save_button.grab_focus()
+	elif back_to_view == "":
 		pause_menu.visible = false
 		get_tree().paused = false
 	else:
@@ -28,15 +31,31 @@ func load_saves() -> void:
 		child.queue_free()
 	for file in files:
 		previous_save = create_save_tab(file)
-	previous_save.button.focus_neighbor_bottom = previous_save.button.get_path_to(input_savename)
-	input_savename.focus_neighbor_top = input_savename.get_path_to(previous_save.button)
+	previous_save.button.focus_neighbor_bottom = previous_save.button.get_path_to(save_button)
+	save_button.focus_neighbor_top = save_button.get_path_to(previous_save.button)
 	previous_save = null
+
+func on_save_deleted(previous_tab : SaveTab) -> void:
+	if previous_tab:
+		previous_tab.button.grab_focus()
+		if previous_tab.get_index() == saves.get_child_count() - 2:
+			previous_tab.button.focus_neighbor_bottom = previous_tab.button.get_path_to(save_button)
+			save_button.focus_neighbor_top = save_button.get_path_to(previous_tab.button)
+		else:
+			var other_tab : SaveTab = saves.get_child(previous_tab.get_index() + 1)
+			previous_tab.button.focus_neighbor_bottom = previous_tab.button.get_path_to(other_tab)
+			other_tab.button.focus_neighbor_top = other_tab.button.get_path_to(previous_tab.button)
+	elif saves.get_child_count() > 0:
+		saves.get_child(0).button.grab_focus()
+	else:
+		save_button.grab_focus()
 
 func create_save_tab(file : String, base_file : bool = true) -> SaveTab:
 	var save : SaveTab = save_scene.instantiate()
 	save.save_manager = self
 	saves.add_child(save)
 	save.save_lbl.text = file.get_file().replace("."+file.get_extension(),"") if base_file else file
+	save.delete.connect("pressed",on_save_deleted.bind(previous_save))
 	if previous_save:
 		save.button.focus_neighbor_top = save.button.get_path_to(previous_save.button)
 		previous_save.button.focus_neighbor_bottom = previous_save.button.get_path_to(save.button)
@@ -61,4 +80,4 @@ func open_close(opening : bool) -> void:
 	if opening && saves.get_child_count() > 0:
 		saves.get_child(0).button.grab_focus()
 	else:
-		input_savename.grab_focus()
+		save_button.grab_focus()

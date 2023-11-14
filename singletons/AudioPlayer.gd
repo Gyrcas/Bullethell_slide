@@ -34,6 +34,22 @@ func set_muted(mute : bool) -> void:
 	for i in AudioServer.bus_count:
 		AudioServer.set_bus_mute(i,mute)
 
+func set_pitch(id : String, pitch : float) -> void:
+	active_audio[id].player.pitch_scale = pitch
+
+func move_play(id : String,time : float) -> void:
+	active_audio[id].player.play(time)
+
+func set_loop(id : String, loop : bool) -> void:
+	if loop:
+		if active_audio[id].player.is_connected("finished",delete):
+			active_audio[id].player.disconnect("finished",delete)
+		active_audio[id].player.connect("finished",move_play.bind(id,0))
+	else:
+		if active_audio[id].player.is_connected("finished",move_play):
+			active_audio[id].player.disconnect("finished",move_play)
+		active_audio[id].player.connect("finished",delete.bind(id))
+
 func play(file : String,everywhere : bool = true, autoplay : bool = true) -> String:
 	var current_id : int = 0
 	while active_audio.has(str(current_id)):
@@ -46,7 +62,7 @@ func play(file : String,everywhere : bool = true, autoplay : bool = true) -> Str
 	audio_player.autoplay = autoplay
 	audio_player.stream = load(audio_folder + file)
 	active_audio[str(current_id)] = {"player":audio_player,"file":file}
-	get_tree().current_scene.add_child(audio_player)
+	get_tree().current_scene.add_child.call_deferred(audio_player)
 	audio_player.connect("finished",delete.bind(str(current_id)))
 	audio_player.connect("tree_exiting",delete.bind(str(current_id)))
 	return str(current_id)
@@ -55,6 +71,8 @@ func set_playing_from(id : String, time : float) -> void:
 	active_audio[id].player.play(time)
 
 func set_play(id : String, playing : bool) -> void:
+	if !active_audio[id].player.is_inside_tree():
+		await active_audio[id].player.ready
 	if playing:
 		active_audio[id].player.play()
 	else:
@@ -78,10 +96,23 @@ func delete(id : String) -> void:
 	active_audio.erase(id)
 	audio_player.queue_free()
 
+const pitch_effect_id : int = 0
+
+func set_bus_pitch(pitch : float) -> void:
+	AudioServer.get_bus_effect(0,pitch_effect_id).pitch_scale = pitch
+
+func get_bus_pitchs() -> Array[AudioEffectPitchShift]:
+	var pitchs : Array[AudioEffectPitchShift] = []
+	for bus in AudioServer.bus_count:
+		pitchs.append(AudioServer.get_bus_effect(bus,pitch_effect_id))
+	return pitchs
+
 func _ready() -> void:
 	var settings : Dictionary = JSON.parse_string(FS.read("res://data/settings.json"))
 	if !settings.has("volume"):
 		return
+	for bus in AudioServer.bus_count:
+		AudioServer.add_bus_effect(bus,AudioEffectPitchShift.new(),pitch_effect_id)
 	for key in settings.volume.keys():
 		var bus_id : Variant = AudioServer.get_bus_index(key)
 		if bus_id == null:

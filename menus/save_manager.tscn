@@ -32,7 +32,7 @@ size_flags_vertical = 3
 [node name="bottom" type="HSplitContainer" parent="vbox"]
 layout_mode = 2
 
-[node name="input_savename" type="TextEdit" parent="vbox/bottom"]
+[node name="input_savename" type="LineEdit" parent="vbox/bottom"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_neighbor_right = NodePath("../save_button")

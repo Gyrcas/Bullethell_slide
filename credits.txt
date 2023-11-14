@@ -25,4 +25,7 @@ Musics
 
 Sounds
 
-	
+	Dash:						LabChirp
+	Bomb explosion:				LabChirp
+	Dialogue beeps:				Shapeforms			Itch.io
+	Death sound:				Chris Logsdon		Itch.io

@@ -14,6 +14,7 @@ class_name BulletRes
 @export var rotation : float = 0
 @export var sender : Node2D
 @export var velocity : Vector2 = Vector2.ZERO
+@export var color : Color = Color(1,1,1)
 @export_enum("default","bomb") var type : String = "default"
 
 var bullet_scene : PackedScene
@@ -38,4 +39,5 @@ func instantiate() -> Bullet:
 	bullet.global_position = global_position
 	bullet.rotation = rotation
 	bullet.velocity = velocity
+	bullet.color = color
 	return bullet

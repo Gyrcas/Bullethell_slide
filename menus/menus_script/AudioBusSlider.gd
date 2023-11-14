@@ -33,6 +33,7 @@ func on_focus() -> void:
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
+	focus_mode = Control.FOCUS_ALL
 	bus_id = AudioServer.get_bus_index(bus_name)
 	if bus_id == null:
 		return
