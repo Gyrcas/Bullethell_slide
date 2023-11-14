@@ -23,14 +23,14 @@ func set_time_scale(time_scale : float, change_sound : bool = true) -> void:
 
 func tween_time_scale(final_scale : float,time : float, tween_sound : bool = true) -> void:
 	var tween : Tween = create_tween()
-	tween.tween_property(Engine,"time_scale",final_scale,time)
+	tween.parallel().tween_property(Engine,"time_scale",final_scale,time)
 	if !tween_sound:
 		return
 	var pitchs : Array[AudioEffectPitchShift] = AudioPlayer.get_bus_pitchs()
 	var pitch_value : float = 1 - (1 - final_scale) / time_pitch_div
 	time *= time_tween_mult
 	for pitch in pitchs:
-		tween.tween_property(pitch,"pitch_scale",pitch_value,time)
+		tween.parallel().tween_property(pitch,"pitch_scale",pitch_value,time)
 	tween.play()
 
 func add_debug() -> void:
