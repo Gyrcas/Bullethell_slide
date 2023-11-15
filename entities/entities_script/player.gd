@@ -101,7 +101,6 @@ func _physics_process(delta : float) -> void:
 		Input.is_action_pressed("left_click") && can_shoot && nano >= bullet_preset.nano && !perks_wheel.visible && controllable
 	)
 	
-	trail.global_position = Vector2.ZERO
 	trail.points[trail.points.size() - 1] = global_position
 	
 	auto_target.global_position = camera.get_screen_center_position()

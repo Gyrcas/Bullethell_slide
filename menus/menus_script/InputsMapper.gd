@@ -5,7 +5,7 @@ const mouse_button_id : String = "mouseB"
 const key_id : String = "key"
 const joypad_btn_id : String = "jpbtn"
 
-@export_file("*.json") var settings_file : String
+var settings_file : String = NodeLinker.request_resource("settings.json",true)
 var grid : GridContainer = GridContainer.new()
 
 const event_pairing : Dictionary = {
@@ -47,9 +47,6 @@ func create_key(key : InputEvent, input : String) -> HSplitContainer:
 	return split
 
 func save_to_file() -> void:
-	if !settings_file:
-		push_error("No setting file")
-		return
 	var settings : Dictionary = JSON.parse_string(FS.read(settings_file))
 	if !settings.has("inputs"):
 		settings["inputs"] = {}

@@ -6,7 +6,7 @@ class_name AudioBusSlider
 @export var bus_name : String = "Master" : set = set_bus_name
 @export var min_range : float = -40
 @export var max_range : float = 10
-@export_file("*.json") var settings_file : String
+var settings_file : String = NodeLinker.request_resource("settings.json",true)
 var bus_id : int = -1
 var slider : HSlider
 
@@ -64,10 +64,8 @@ func on_slider_started() -> void:
 func on_slider_ended(_same : bool) -> void:
 	changing_volume = false
 	AudioServer.set_bus_volume_db(bus_id,slider.value)
-	print(AudioServer.get_bus_volume_db(0)," ",AudioServer.get_bus_volume_db(1))
-	if settings_file:
-		var settings : Dictionary = JSON.parse_string(FS.read(settings_file))
-		if !settings.has("volume"):
-			settings["volume"] = {}
-		settings.volume[bus_name] = slider.value
-		FS.write(settings_file,JSON.stringify(settings))
+	var settings : Dictionary = JSON.parse_string(FS.read(settings_file))
+	if !settings.has("volume"):
+		settings["volume"] = {}
+	settings.volume[bus_name] = slider.value
+	FS.write(settings_file,JSON.stringify(settings))

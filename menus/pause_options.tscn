@@ -11,7 +11,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_agj35")
-settings_file = "res://data/settings.json"
 
 [node name="center" type="CenterContainer" parent="."]
 layout_mode = 0
@@ -33,7 +32,6 @@ focus_neighbor_bottom = NodePath("../dialogue")
 focus_mode = 2
 dragger_visibility = 2
 script = ExtResource("2_3e664")
-settings_file = "res://data/settings.json"
 
 [node name="dialogue" type="VSplitContainer" parent="center/vbox"]
 layout_mode = 2
@@ -42,4 +40,18 @@ script = ExtResource("2_3e664")
 text = "Dialogue"
 bus_name = "Dialogue"
 
+[node name="window_type_lbl" type="Label" parent="center/vbox"]
+layout_mode = 2
+text = "Window type
+"
+
+[node name="window_type" type="OptionButton" parent="center/vbox"]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "windowed"
+popup/item_0/id = 0
+popup/item_1/text = "Fullscreen"
+popup/item_1/id = 1
+
 [connection signal="pressed" from="center/vbox/inputs" to="." method="_on_inputs_pressed"]
+[connection signal="item_selected" from="center/vbox/window_type" to="." method="_on_window_type_item_selected"]
