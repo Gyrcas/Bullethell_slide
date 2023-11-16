@@ -53,3 +53,7 @@ func _on_load_pressed() -> void:
 
 func _on_pause_menu_closed() -> void:
 	last_focus.grab_focus()
+
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()

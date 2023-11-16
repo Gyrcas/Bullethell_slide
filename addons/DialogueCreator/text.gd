@@ -13,6 +13,8 @@ func _ready() -> void:
 func _on_text_changed() -> void:
 	get_node("../../").content = text
 
+#Function to try and set content. Will retry until it get the right value or as reached max 
+#number of try
 func set_content(retry : int = 0) -> void:
 	retry += 1
 	if retry < max_retry:

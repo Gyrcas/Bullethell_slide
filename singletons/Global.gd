@@ -52,7 +52,7 @@ func _ready() -> void:
 		0:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		1:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 
 func change_scene_to_file(filename : String) -> void:
 	get_tree().change_scene_to_file(NodeLinker.request_resource(filename,true))
