@@ -8,7 +8,7 @@ class_name Player
 @onready var health_bar : TextureProgressBar = $camera/ui/hud/health
 @onready var nano_bar : TextureProgressBar = $camera/ui/hud/nanos
 @onready var interaction_lbl : Label = $camera/ui/interaction
-@onready var pause_menu : PauseMenu = $camera/ui/pause_menu
+@onready var pause_menu : PauseMenu = $camera/ui/pause_layer/pause_menu
 @onready var bullet_type_lbl : Label = $camera/ui/hud/bullet_type
 @onready var perks_wheel : PerksWheel = $camera/ui/perks
 @onready var col : CollisionShape2D = $col

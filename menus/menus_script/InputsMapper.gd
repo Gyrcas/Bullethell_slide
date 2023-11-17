@@ -32,6 +32,7 @@ func create_key(key : InputEvent, input : String) -> HSplitContainer:
 	key_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	split.add_child(key_lbl)
 	var sup_btn : Button = Button.new()
+	sup_btn.name = "del"
 	sup_btn.text = "x"
 	sup_btn.connect("pressed",remove_input.bind(input,key))
 	split.add_child(sup_btn)
@@ -117,11 +118,6 @@ func load_inputs() -> void:
 	grid.columns += 1
 	for input in inputs.keys():
 		var input_size : int = 0
-		var input_keys : Array[Control] = []
-		for key in inputs[input]:
-			if not (key is InputEventKey && "(Unset)" in key.as_text_keycode()):
-				input_keys.append(create_key(key,input))
-				input_size += 1
 		var split : HSplitContainer = HSplitContainer.new()
 		split.dragger_visibility = SplitContainer.DRAGGER_HIDDEN
 		split.split_offset = 10000
@@ -134,8 +130,20 @@ func load_inputs() -> void:
 		split.add_child(input_btn)
 		grid.add_child(split)
 		split.name = input
-		for input_key in input_keys:
-			grid.add_child(input_key)
+		var previous_del : Button
+		for key in inputs[input]:
+			if not (key is InputEventKey && "(Unset)" in key.as_text_keycode()):
+				var new_key : HSplitContainer = create_key(key,input)
+				grid.add_child(new_key)
+				var del_btn : Button = new_key.get_node("del")
+				input_size += 1
+				if previous_del:
+					del_btn.focus_neighbor_left = del_btn.get_path_to(previous_del)
+					previous_del.focus_neighbor_right = previous_del.get_path_to(del_btn)
+				else:
+					del_btn.focus_neighbor_left = del_btn.get_path_to(input_btn)
+					input_btn.focus_neighbor_right = input_btn.get_path_to(del_btn)
+				previous_del = del_btn
 		while input_size < grid.columns - 1:
 			grid.add_child(Control.new())
 			input_size += 1
@@ -165,8 +173,6 @@ func _input(event : InputEvent) -> void:
 		if event_pairing.has(action_add):
 			InputMap.action_add_event(event_pairing[action_add],event)
 		load_inputs()
-	else:
-		print(event.as_text())
 
 func on_save_btn_pressed() -> void:
 	save_to_file()

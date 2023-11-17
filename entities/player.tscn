@@ -305,7 +305,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="pause_menu" parent="camera/ui" instance=ExtResource("3_r0pq6")]
+[node name="pause_layer" type="CanvasLayer" parent="camera/ui"]
+
+[node name="pause_menu" parent="camera/ui/pause_layer" instance=ExtResource("3_r0pq6")]
 visible = false
 views_array = Array[String](["game_pause.tscn", "pause_inputs.tscn", "pause_options.tscn", "save_manager.tscn", "save_pillar_menu.tscn"])
 

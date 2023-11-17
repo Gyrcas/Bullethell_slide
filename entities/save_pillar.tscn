@@ -6,18 +6,15 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_o2wqq"]
 radius = 295.015
 
-[node name="save_pillar" type="Node2D"]
-position = Vector2(-3, 3)
+[node name="save_zone" type="Area2D"]
 script = ExtResource("2_lixqf")
 
-[node name="save_zone" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="save_zone"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_o2wqq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(28, -42)
 texture = ExtResource("1_lnr1u")
 
-[connection signal="body_entered" from="save_zone" to="." method="_on_save_zone_body_entered"]
-[connection signal="body_exited" from="save_zone" to="." method="_on_save_zone_body_exited"]
+[node name="save_pillar" type="Node2D" parent="."]
+position = Vector2(-3, 3)

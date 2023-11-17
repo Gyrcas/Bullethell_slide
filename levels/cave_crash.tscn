@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cb1ngswxfr1i2"]
+[gd_scene load_steps=17 format=3 uid="uid://cb1ngswxfr1i2"]
 
 [ext_resource type="Script" path="res://addons/smoothpolygon/SmoothPolygon2D.gd" id="1_wdskp"]
 [ext_resource type="Texture2D" uid="uid://bvqkegii4jywk" path="res://textures/ship.png" id="2_0sblj"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://pa4b5sl2ju1n" path="res://entities/player.tscn" id="4_mqsbn"]
 [ext_resource type="PackedScene" uid="uid://cksrr1rdojrue" path="res://entities/save_pillar.tscn" id="4_x3wy6"]
 [ext_resource type="Texture2D" uid="uid://bu47foj0xu6hr" path="res://textures/pixel.png" id="5_2upfm"]
+[ext_resource type="PackedScene" uid="uid://c4b0c0h1gmwi3" path="res://entities/scientist_pod.tscn" id="6_jdkdk"]
 [ext_resource type="Texture2D" uid="uid://dm8gav5stwvra" path="res://textures/spot.png" id="6_trcpa"]
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="7_4ea8p"]
 
@@ -40,7 +41,7 @@ func _on_save_pillar_interacted() -> void:
 		GS.save.call_deferred(GS.auto_save_name)
 "
 
-[sub_resource type="Resource" id="Resource_40qvb"]
+[sub_resource type="Resource" id="Resource_rahew"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -200,6 +201,15 @@ texture = ExtResource("5_2upfm")
 color = Color(0.235294, 0.376471, 0, 1)
 dimensions = Vector2(50, 450)
 
+[node name="save_pillar" parent="." instance=ExtResource("4_x3wy6")]
+position = Vector2(2368, 409)
+
+[node name="save_pillar2" parent="." instance=ExtResource("4_x3wy6")]
+position = Vector2(13542, 607)
+
+[node name="scientist_pod" parent="." instance=ExtResource("6_jdkdk")]
+position = Vector2(14465, 324)
+
 [node name="ground" type="Node2D" parent="."]
 
 [node name="ground" type="Polygon2D" parent="ground"]
@@ -251,12 +261,9 @@ energy = 2.0
 texture = ExtResource("6_trcpa")
 texture_scale = 50.0
 
-[node name="save_pillar" parent="." instance=ExtResource("4_x3wy6")]
-position = Vector2(2368, 409)
-
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_40qvb")
+bullet_preset = SubResource("Resource_rahew")
 
 [node name="boss_zone" type="Area2D" parent="."]
 script = SubResource("GDScript_i8ysm")
