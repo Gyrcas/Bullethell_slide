@@ -3,6 +3,7 @@ extends Control
 @onready var panel_shader : Panel = $shader
 @onready var pause_menu : PauseMenu = $pause_menu
 @onready var start : Button = $vbox/start
+@onready var vbox : VBoxContainer = $vbox
 
 var div_disappear : float = 10.0
 const div_appear : float = 50.0
@@ -20,6 +21,8 @@ func _on_start_pressed() -> void:
 
 func _on_settings_pressed() -> void:
 	last_focus = get_viewport().gui_get_focus_owner()
+	for child in vbox.get_children():
+		child.focus_mode = FOCUS_NONE
 	pause_menu.open("options")
 
 var audio_player : AudioStreamPlayer
@@ -48,10 +51,14 @@ func _process(delta):
 
 func _on_load_pressed() -> void:
 	last_focus = get_viewport().gui_get_focus_owner()
+	for child in vbox.get_children():
+		child.focus_mode = FOCUS_NONE
 	pause_menu.open("save_manager",{"back_to_view":"","load_save":true})
 
 
 func _on_pause_menu_closed() -> void:
+	for child in vbox.get_children():
+		child.focus_mode = FOCUS_ALL
 	last_focus.grab_focus()
 
 

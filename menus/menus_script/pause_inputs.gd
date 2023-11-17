@@ -10,3 +10,7 @@ func _ready() -> void:
 
 func on_inputs_changed() -> void:
 	override_inputs = input_mapper.changed
+
+func open_close(opening : bool) -> void:
+	if opening:
+		input_mapper.save_btn.grab_focus()

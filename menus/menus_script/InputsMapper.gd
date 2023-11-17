@@ -7,6 +7,7 @@ const joypad_btn_id : String = "jpbtn"
 
 var settings_file : String = NodeLinker.request_resource("settings.json",true)
 var grid : GridContainer = GridContainer.new()
+var save_btn : Button
 
 const event_pairing : Dictionary = {
 	"down":"ui_down",
@@ -142,10 +143,11 @@ func load_inputs() -> void:
 	reset_btn.text = "Reset"
 	reset_btn.connect("pressed",on_reset_btn_pressed)
 	grid.add_child(reset_btn)
-	var save_btn : Button = Button.new()
+	save_btn = Button.new()
 	save_btn.text = "Save"
 	save_btn.connect("pressed",on_save_btn_pressed)
 	grid.add_child(save_btn)
+	save_btn.grab_focus()
 
 var waiting_input : bool = false
 var action_add : String = ""
