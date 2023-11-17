@@ -112,6 +112,8 @@ var target_zone_width : float = 300
 var current_target_id : int = -1
 
 func _input(event : InputEvent) -> void:
+	if !controllable:
+		return
 	if event.is_action_pressed("auto_target"):
 		current_target_id += 1
 		do_target()

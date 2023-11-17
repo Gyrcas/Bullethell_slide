@@ -63,3 +63,11 @@ func _input(event : InputEvent) -> void:
 		change_scene_to_file("end_demo.tscn")
 	elif event.is_action_pressed("mute"):
 		AudioPlayer.muted = !AudioPlayer.muted
+
+func play_dialogue_player(filename : String, variables : Dictionary = {}) -> void:
+	player.controllable = false
+	player.dialogue.variables = variables
+	player.dialogue.play(NodeLinker.request_resource(filename,true))
+	await player.dialogue.finished
+	await get_tree().create_timer(0.1).timeout
+	player.controllable = true

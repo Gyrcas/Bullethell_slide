@@ -3,7 +3,7 @@ class_name PerksWheel
 
 @onready var shoot_timer : Timer = $shoot_timer_perk
 
-var perks : Array[Perk] = [DashPerk.new(),DashPerk.new(),DashPerk.new()]
+var perks : Array[Perk] = []
 var selected_arc : int = 0
 
 var inner_radius : float = 100

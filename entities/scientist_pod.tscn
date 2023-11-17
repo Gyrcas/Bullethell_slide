@@ -9,7 +9,6 @@ radius = 28.2843
 [node name="scientist_pod" type="Area2D"]
 scale = Vector2(5, 5)
 script = ExtResource("1_0kmpm")
-skin = 3
 
 [node name="sprite" type="Sprite2D" parent="."]
 rotation = -1.5708

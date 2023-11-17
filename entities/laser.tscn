@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://droptbsmlp3fe"]
+
+[ext_resource type="Script" path="res://entities/entities_script/laser.gd" id="1_b7kch"]
+[ext_resource type="Texture2D" uid="uid://d0l0dqnd8dlu7" path="res://textures/laser.png" id="2_gxv42"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e3slq"]
+size = Vector2(50, 20)
+
+[node name="laser" type="Area2D"]
+script = ExtResource("1_b7kch")
+
+[node name="line" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 229)
+width = 100.0
+texture = ExtResource("2_gxv42")
+texture_mode = 2
+
+[node name="col" type="CollisionShape2D" parent="."]
+position = Vector2(0, 10)
+shape = SubResource("RectangleShape2D_e3slq")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

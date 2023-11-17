@@ -8,6 +8,8 @@ Assets
 	HUD bars:					Sweenus				itch.io
 	Boss 1:						Ismartal			itch.io
 	ui panel:					Wenrexa				itch.io
+https://mattwalkden.itch.io/lunar-battle-pack
+https://pipoya.itch.io/pipoya-free-vfx-mysterious-object
 
 
 Shaders
