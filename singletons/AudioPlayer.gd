@@ -12,7 +12,6 @@ func tween_volume(id : String,final_value : float,time : float, callback = null)
 	tween.tween_property(active_audio[id].player,"volume_db",final_value,time)
 	if callback:
 		tween.tween_callback(callback)
-	tween.play()
 
 func add_callback(id : String, callback : Callable) -> void:
 	var audio : Dictionary = active_audio[id]

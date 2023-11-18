@@ -36,6 +36,8 @@ const col_speed_reduct : float = 0.5
 const max_speed_bouce : float = 4
 
 func set_health(value : float) -> void:
+	if value < health:
+		Global.shake_camera(camera,Vector2(100,100),25,0.01)
 	health = value
 	var tween : Tween = create_tween()
 	tween.tween_property(

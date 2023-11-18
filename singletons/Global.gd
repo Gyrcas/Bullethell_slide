@@ -31,7 +31,6 @@ func tween_time_scale(final_scale : float,time : float, tween_sound : bool = tru
 	time *= time_tween_mult
 	for pitch in pitchs:
 		tween.parallel().tween_property(pitch,"pitch_scale",pitch_value,time)
-	tween.play()
 
 func add_debug() -> void:
 	var debug : Debug = Debug.new()
@@ -75,7 +74,7 @@ func play_dialogue_player(filename : String, variables : Dictionary = {}, give_c
 
 func shake_camera(
 		camera : Camera2D,
-		range : Vector2, 
+		cam_range : Vector2, 
 		nb_shake : int, 
 		speed : float, 
 		base_pos : Vector2 = Vector2.ZERO,
@@ -90,12 +89,11 @@ func shake_camera(
 			camera,
 			"position",
 			base_pos + Vector2(
-				randf_range(-range.x,range.x),
-				randf_range(-range.y,range.y)
+				randf_range(-cam_range.x,cam_range.x),
+				randf_range(-cam_range.y,cam_range.y)
 			),
 			speed
 		)
 		tween.tween_callback(
-			shake_camera.bind(camera,range,nb_shake-1,speed,base_pos,callback)
+			shake_camera.bind(camera,cam_range,nb_shake-1,speed,base_pos,callback)
 		)
-	tween.play()

@@ -49,7 +49,6 @@ func shoot(target : Node2D) -> void:
 func tween_width(end_value : float,time : float) -> Tween:
 	var tween : Tween = create_tween()
 	tween.tween_property(laser,"width",end_value, time / speed)
-	tween.play()
 	return tween
 
 func grow_width() -> void:

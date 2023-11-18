@@ -13,6 +13,8 @@ var selecting_target : bool = false
 var half_screen : Vector2
 
 func _ready() -> void:
+	if GS.data.get("dash_aquired"):
+		perks.append(DashPerk.new())
 	visible = false
 	Engine.time_scale = 1
 	half_screen = get_viewport_rect().size / 2

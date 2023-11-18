@@ -48,7 +48,6 @@ func close(skip_anim : bool = false) -> void:
 	tween.tween_callback(func():
 		col.disabled = true
 	)
-	tween.play()
 
 func open(skip_anim : bool = false) -> void:
 	col.set_deferred("disabled",false)
@@ -57,7 +56,6 @@ func open(skip_anim : bool = false) -> void:
 	tween.parallel().tween_property(self,"target",Vector2(0,dimensions.y),speed)
 	tween.parallel().tween_property(col.shape,"size",dimensions * dim_col_scale,speed)
 	tween.parallel().tween_property(col,"position",Vector2(0,dimensions.y / 2 * dim_col_scale.y),speed)
-	tween.play()
 
 func _on_body_entered(body : Node2D) -> void:
 	if body is MoverEntity:

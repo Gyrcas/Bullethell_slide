@@ -33,5 +33,4 @@ func move(sender : MoverEntity,params : Dictionary, ray : RayCast2D) -> void:
 	var tween : Tween = sender.create_tween()
 	tween.tween_property(sender,"global_position",params.target,0.1)
 	tween.tween_callback((func():sender.col.disabled = false))
-	tween.play()
 	ray.queue_free()

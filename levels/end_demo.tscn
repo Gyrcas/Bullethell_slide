@@ -46,7 +46,6 @@ func roll_credits() -> void:
 	tween.tween_property(credits,\"global_position\",
 		Vector2(credits.global_position.x,-credits.size.y),10)
 	tween.tween_callback(func():anim.play(\"end\"))
-	tween.play()
 
 func _input(event : InputEvent) -> void:
 	if event.is_action_pressed(\"interact\"):
