@@ -64,10 +64,38 @@ func _input(event : InputEvent) -> void:
 	elif event.is_action_pressed("mute"):
 		AudioPlayer.muted = !AudioPlayer.muted
 
-func play_dialogue_player(filename : String, variables : Dictionary = {}) -> void:
+func play_dialogue_player(filename : String, variables : Dictionary = {}, give_control_back : bool = true) -> void:
 	player.controllable = false
 	player.dialogue.variables = variables
 	player.dialogue.play(NodeLinker.request_resource(filename,true))
 	await player.dialogue.finished
 	await get_tree().create_timer(0.1).timeout
-	player.controllable = true
+	if give_control_back:
+		player.controllable = true
+
+func shake_camera(
+		camera : Camera2D,
+		range : Vector2, 
+		nb_shake : int, 
+		speed : float, 
+		base_pos : Vector2 = Vector2.ZERO,
+		callback : Callable = func():pass
+		) -> void:
+	var tween : Tween = create_tween()
+	if nb_shake == 0:
+		tween.tween_property(camera,"position",base_pos,speed)
+		tween.tween_callback(callback)
+	else:
+		tween.tween_property(
+			camera,
+			"position",
+			base_pos + Vector2(
+				randf_range(-range.x,range.x),
+				randf_range(-range.y,range.y)
+			),
+			speed
+		)
+		tween.tween_callback(
+			shake_camera.bind(camera,range,nb_shake-1,speed,base_pos,callback)
+		)
+	tween.play()

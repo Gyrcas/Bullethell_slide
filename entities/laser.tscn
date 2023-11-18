@@ -4,10 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://d0l0dqnd8dlu7" path="res://textures/laser.png" id="2_gxv42"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e3slq"]
-size = Vector2(50, 20)
+resource_local_to_scene = true
+size = Vector2(100, 500)
 
 [node name="laser" type="Area2D"]
 script = ExtResource("1_b7kch")
+damage = 5.0
 
 [node name="line" type="Line2D" parent="."]
 points = PackedVector2Array(0, 0, 0, 229)
@@ -20,4 +22,3 @@ position = Vector2(0, 10)
 shape = SubResource("RectangleShape2D_e3slq")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="body_exited" from="." to="." method="_on_body_exited"]

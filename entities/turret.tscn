@@ -6,6 +6,7 @@
 [ext_resource type="Animation" uid="uid://bqe02inrdvmmd" path="res://resources/animation/death_animation.res" id="4_xruvb"]
 
 [sub_resource type="Resource" id="Resource_gifhx"]
+resource_local_to_scene = true
 script = ExtResource("2_ox7x8")
 ignore_sender = true
 max_speed = 15.0

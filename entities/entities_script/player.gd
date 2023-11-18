@@ -105,7 +105,6 @@ func _physics_process(delta : float) -> void:
 	
 	auto_target.global_position = camera.get_screen_center_position()
 
-
 #Auto Target----------------------------------------------
 var target_zone_width : float = 300
 @onready var auto_target : Area2D = $auto_target

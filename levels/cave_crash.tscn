@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://cb1ngswxfr1i2"]
+[gd_scene load_steps=57 format=3 uid="uid://cb1ngswxfr1i2"]
 
 [ext_resource type="Script" path="res://addons/smoothpolygon/SmoothPolygon2D.gd" id="1_wdskp"]
 [ext_resource type="Texture2D" uid="uid://bvqkegii4jywk" path="res://textures/ship.png" id="2_0sblj"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="7_4ea8p"]
 [ext_resource type="PackedScene" uid="uid://crk6qe46nhlj1" path="res://entities/turret.tscn" id="7_tj60k"]
 [ext_resource type="Texture2D" uid="uid://djlc7eem47xeb" path="res://textures/pipo-nazoobj01a_192.png" id="11_uow0h"]
+[ext_resource type="PackedScene" uid="uid://droptbsmlp3fe" path="res://entities/laser.tscn" id="13_xknin"]
+[ext_resource type="Script" path="res://entities/entities_script/laser_trap.gd" id="14_fvlcm"]
 
 [sub_resource type="GDScript" id="GDScript_6arar"]
 script/source = "extends Node2D
@@ -43,14 +45,63 @@ func _on_save_pillar_interacted() -> void:
 
 
 func _on_scientist_pod_interacted() -> void:
-	if !GS.data.get(\"cave_crash_sc_dial1\"):
+	var boss_time : bool = false
+	# Didn't talk to the scientist and got the dash
+	if !GS.data.get(\"cave_crash_sc_dial1\") && GS.data.get(\"dash_aquired\"):
+		GS.data[\"cave_crash_sc_dial1\"] = true
+		boss_time = true
+		await Global.play_dialogue_player(\"cave_crash_sc_3.json\",{},false)
+	# Didn't talk to the scientist
+	elif !GS.data.get(\"cave_crash_sc_dial1\"):
 		await Global.play_dialogue_player(\"cave_crash_sc_1.json\")
 		GS.data[\"cave_crash_sc_dial1\"] = true
-	elif !GS.data.get(\"cave_crash_found_dash\"):
+	# Talked to the scientist and do not have the dash
+	elif !GS.data.get(\"dash_aquired\"):
 		await Global.play_dialogue_player(\"cave_crash_sc_2.json\")
+	# Talked to the scientist and got the dash
+	elif GS.data.get(\"dash_aquired\") && !GS.data.get(\"boss_1_cave_crash\"):
+		boss_time = true
+		GS.data[\"boss_1_cave_crash\"] = true
+		await Global.play_dialogue_player(\"cave_crash_sc_4.json\",{},false)
+	if boss_time:
+		Global.shake_camera(Global.player.camera,Vector2(100,100),1000,0.01)
 "
 
-[sub_resource type="Resource" id="Resource_eoitw"]
+[sub_resource type="Resource" id="Resource_t4ysp"]
+resource_local_to_scene = true
+script = ExtResource("7_4ea8p")
+ignore_sender = true
+max_speed = 15.0
+move_speed = 2.5
+turn_speed = 10.0
+target_position = Vector2(0, 0)
+damage = 1.0
+maniability = 0.25
+nano = 10
+global_position = Vector2(0, 0)
+rotation = 0.0
+velocity = Vector2(0, 0)
+color = Color(0.717647, 0, 0, 1)
+type = "default"
+
+[sub_resource type="Resource" id="Resource_amjcr"]
+resource_local_to_scene = true
+script = ExtResource("7_4ea8p")
+ignore_sender = true
+max_speed = 15.0
+move_speed = 2.5
+turn_speed = 10.0
+target_position = Vector2(0, 0)
+damage = 1.0
+maniability = 0.25
+nano = 10
+global_position = Vector2(0, 0)
+rotation = 0.0
+velocity = Vector2(0, 0)
+color = Color(0.717647, 0, 0, 1)
+type = "default"
+
+[sub_resource type="Resource" id="Resource_fwf3e"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -124,8 +175,11 @@ script/source = "extends Interactable
 
 func _ready() -> void:
 	sprite.play(\"default\",5)
+	connect(\"body_entered\",_on_zone_body_entered)
+	connect(\"body_exited\",_on_zone_body_exited)
 
 func interact() -> void:
+	GS.data[\"dash_aquired\"] = true
 	Global.player.perks_wheel.perks.append(DashPerk.new())
 	interacted.emit()
 	queue_free()
@@ -352,6 +406,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e61c6"]
+size = Vector2(298.443, 699.373)
+
 [node name="cave_crash" type="Node2D"]
 script = SubResource("GDScript_6arar")
 
@@ -469,14 +526,32 @@ position = Vector2(14465, 324)
 [node name="turret" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(23472, 4966)
 rotation = -0.418446
+bullet_preset = SubResource("Resource_t4ysp")
 
 [node name="turret2" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(22219, 4772)
 rotation = 0.0724223
+bullet_preset = SubResource("Resource_amjcr")
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_eoitw")
+bullet_preset = SubResource("Resource_fwf3e")
+
+[node name="laser" parent="." instance=ExtResource("13_xknin")]
+position = Vector2(21169, 3710)
+rotation = 0.548645
+damage = 1.0
+dimensions = Vector2(200, 700)
+dim_col_scale = Vector2(0.3, 0.9)
+open_speed = 0.5
+
+[node name="laser2" parent="." instance=ExtResource("13_xknin")]
+position = Vector2(19736, 7654)
+rotation = 2.5027
+damage = 1.0
+dimensions = Vector2(200, 700)
+dim_col_scale = Vector2(0.3, 0.9)
+open_speed = 0.5
 
 [node name="ground" type="Node2D" parent="."]
 
@@ -567,7 +642,28 @@ shape = SubResource("CircleShape2D_28akp")
 [node name="sprite" type="AnimatedSprite2D" parent="device"]
 sprite_frames = SubResource("SpriteFrames_cib8o")
 frame_progress = 0.0437598
-speed_scale = 5.0
+speed_scale = 2.5
+
+[node name="laser_trap" type="Area2D" parent="." node_paths=PackedStringArray("laser")]
+position = Vector2(21631, 4576)
+script = ExtResource("14_fvlcm")
+laser = NodePath("../laser")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="laser_trap"]
+position = Vector2(-149.533, -414.122)
+rotation = 0.328218
+shape = SubResource("RectangleShape2D_e61c6")
+
+[node name="laser_trap2" type="Area2D" parent="." node_paths=PackedStringArray("laser")]
+position = Vector2(19791, 7669)
+rotation = -0.949569
+script = ExtResource("14_fvlcm")
+laser = NodePath("../laser2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="laser_trap2"]
+position = Vector2(-149.533, -414.122)
+rotation = 0.328218
+shape = SubResource("RectangleShape2D_e61c6")
 
 [connection signal="interacted" from="save_pillar" to="." method="_on_save_pillar_interacted"]
 [connection signal="interacted" from="scientist_pod" to="." method="_on_scientist_pod_interacted"]
