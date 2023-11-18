@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://cb1ngswxfr1i2"]
+[gd_scene load_steps=63 format=3 uid="uid://cb1ngswxfr1i2"]
 
 [ext_resource type="Script" path="res://addons/smoothpolygon/SmoothPolygon2D.gd" id="1_wdskp"]
 [ext_resource type="Texture2D" uid="uid://bvqkegii4jywk" path="res://textures/ship.png" id="2_0sblj"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://djlc7eem47xeb" path="res://textures/pipo-nazoobj01a_192.png" id="11_uow0h"]
 [ext_resource type="PackedScene" uid="uid://droptbsmlp3fe" path="res://entities/laser.tscn" id="13_xknin"]
 [ext_resource type="Script" path="res://entities/entities_script/laser_trap.gd" id="14_fvlcm"]
+[ext_resource type="Texture2D" uid="uid://fw1j5jgje64v" path="res://textures/boss_1.png" id="15_oh4oy"]
 
 [sub_resource type="GDScript" id="GDScript_6arar"]
 script/source = "extends Node2D
@@ -22,6 +23,7 @@ script/source = "extends Node2D
 @onready var cinematic : Area2D = $cinematic
 @onready var block_boss : StaticBody2D = $block_boss
 @onready var boss_cinematic : Node2D = $boss_cinematic
+@onready var scientist_pod : ScientistPod = $scientist_pod
 
 func _ready() -> void:
 	AudioPlayer.play(\"musics/Drifting Beyond the Stars.ogg\")
@@ -37,6 +39,10 @@ func _ready() -> void:
 		)
 	else:
 		door.open(false)
+	# If boss started, remove the block blocking boss room
+	if GS.data.get(\"boss_1_cave_crash\"):
+		block_boss.queue_free()
+		scientist_pod.queue_free()
 
 func _on_save_pillar_interacted() -> void:
 	if !GS.data.get(\"intro\"):
@@ -65,10 +71,14 @@ func _on_scientist_pod_interacted() -> void:
 		GS.data[\"boss_1_cave_crash\"] = true
 		await Global.play_dialogue_player(\"cave_crash_sc_4.json\",{},false)
 	if boss_time:
+		GS.data[\"boss_1_cave_crash\"] = true
+		block_boss.queue_free()
 		AudioPlayer.play(\"sounds//Monster_SoftGrowl1.mp3\")
 		Global.shake_camera(Global.player.camera,Vector2(100,100),120,0.01)
 		await get_tree().create_timer(2.4).timeout
-		Global.play_dialogue_player(\"cave_crash_sc_5.json\")
+		await Global.play_dialogue_player(\"cave_crash_sc_5.json\",{},false)
+		Global.shake_camera(Global.player.camera,Vector2(100,100),60,0.01)
+		boss_cinematic.play()
 		
 "
 
@@ -415,6 +425,320 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e61c6"]
 size = Vector2(298.443, 699.373)
 
+[sub_resource type="GDScript" id="GDScript_okefy"]
+script/source = "extends Node2D
+
+@onready var anim : AnimationPlayer = $anim
+
+func _ready() -> void:
+	if GS.data.get(\"boss_1_cave_crash\"):
+		queue_free()
+
+func play() -> void:
+	anim.play(\"take_scientist\")
+	await anim.animation_finished
+	Global.play_dialogue_player(\"cave_crash_sc_6.json\")
+	anim.play(\"kidnap\")
+	await anim.animation_finished
+	queue_free()
+"
+
+[sub_resource type="Animation" id="Animation_7c4aj"]
+resource_name = "take_scientist"
+length = 1.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("boss_cinematic/boss:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("boss_cinematic/boss:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(14549, -0.25, 0, 0.25, 0, 14478, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.6)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("boss_cinematic/boss:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-2236, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.6)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("boss_cinematic/rock:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("boss_cinematic/rock2:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("boss_cinematic/rock3:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("boss_cinematic/rock:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-25, -377), Vector2(-691, 2582)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("boss_cinematic/rock2:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1194, -415), Vector2(1165, 2553)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("boss_cinematic/rock3:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(559, -529), Vector2(293, 2392)]
+}
+
+[sub_resource type="Animation" id="Animation_00qup"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("boss_cinematic/boss:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(14478, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("boss_cinematic/boss:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(2, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("boss_cinematic/boss:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("boss_cinematic/rock:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("boss_cinematic/rock2:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("boss_cinematic/rock3:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("boss_cinematic/rock:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-691, 2582)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("boss_cinematic/rock2:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1165, 2553)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("boss_cinematic/rock3:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(559, -529)]
+}
+tracks/9/type = "bezier"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("scientist_pod:position:x")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(14465, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/10/type = "bezier"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("scientist_pod:position:y")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(324, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_huwyy"]
+resource_name = "kidnap"
+length = 3.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("boss_cinematic/boss:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(14478, -0.25, 0, 0.25, 0, 14309.7, -0.25, 0, 0.25, 0, 14115, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.4, 3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("boss_cinematic/boss:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(2, -0.25, 0, 0.25, 0, -4643.23, -0.25, 0, 0.25, 0, -10017, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.4, 3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("scientist_pod:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(14465, -0.25, 0, 0.25, 0, 14302.7, -0.25, 0, 0.25, 0, 14115, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.4, 3)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("scientist_pod:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(324, -0.25, 0, 0.25, 0, -4470.52, -0.25, 0, 0.25, 0, -10017, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.4, 3)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vpy1j"]
+_data = {
+"RESET": SubResource("Animation_00qup"),
+"kidnap": SubResource("Animation_huwyy"),
+"take_scientist": SubResource("Animation_7c4aj")
+}
+
 [node name="cave_crash" type="Node2D"]
 script = SubResource("GDScript_6arar")
 
@@ -673,9 +997,38 @@ rotation = 0.328218
 shape = SubResource("RectangleShape2D_e61c6")
 
 [node name="boss_cinematic" type="Node2D" parent="."]
+script = SubResource("GDScript_okefy")
 
 [node name="anim" type="AnimationPlayer" parent="boss_cinematic"]
 root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_vpy1j")
+}
+
+[node name="boss" type="Sprite2D" parent="boss_cinematic"]
+visible = false
+position = Vector2(14478, 2)
+rotation = -1.5708
+scale = Vector2(2, 2)
+texture = ExtResource("15_oh4oy")
+
+[node name="rock" type="Polygon2D" parent="boss_cinematic"]
+visible = false
+position = Vector2(-691, 2582)
+color = Color(0.141176, 0.141176, 0.141176, 1)
+polygon = PackedVector2Array(13875, -1794, 14039, -1776, 14103, -1673, 14035, -1573, 13835, -1587, 13800, -1648, 13825, -1701)
+
+[node name="rock2" type="Polygon2D" parent="boss_cinematic"]
+visible = false
+position = Vector2(1165, 2553)
+color = Color(0.141176, 0.141176, 0.141176, 1)
+polygon = PackedVector2Array(13913, -1746, 14039, -1776, 14103, -1673, 14035, -1573, 13899, -1608, 13828, -1647, 13825, -1701)
+
+[node name="rock3" type="Polygon2D" parent="boss_cinematic"]
+visible = false
+position = Vector2(559, -529)
+color = Color(0.141176, 0.141176, 0.141176, 1)
+polygon = PackedVector2Array(13875, -1794, 14039, -1776, 14020, -1696, 14035, -1573, 13835, -1587, 13813, -1661, 13864, -1723)
 
 [connection signal="interacted" from="save_pillar" to="." method="_on_save_pillar_interacted"]
 [connection signal="interacted" from="scientist_pod" to="." method="_on_scientist_pod_interacted"]
