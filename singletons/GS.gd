@@ -6,7 +6,8 @@ var save_loaded : bool = false
 
 var base_data : Dictionary = {
 	"current_scene" : "cave_crash.tscn",
-	"position":"(0,0)"
+	"position":"(0,0)",
+	"datetime":"0"
 }
 
 var data : Dictionary = base_data
@@ -14,9 +15,11 @@ var data : Dictionary = base_data
 func reset_data() -> void:
 	data = base_data
 
-func save(savename : String) -> void:
+func save(savename : String) -> String:
+	data.datetime = Time.get_datetime_string_from_system(false,true)
 	data.current_scene = get_tree().current_scene.scene_file_path.get_file()
 	FS.write(save_location + savename + ".json",JSON.stringify(data))
+	return save_location + savename + ".json"
 
 func load_save(savename : String) -> void:
 	save_loaded = true

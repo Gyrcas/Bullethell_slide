@@ -6,6 +6,8 @@ class_name SaveTab
 @onready var button : Button = $button
 var save_manager : Control
 
+var datetime : String = "0"
+
 func _on_delete_pressed() -> void:
 	GS.delete_save(save_lbl.text)
 	queue_free()

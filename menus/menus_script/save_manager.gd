@@ -27,15 +27,19 @@ var previous_save : SaveTab
 
 func load_saves() -> void:
 	var files : Array = FS.read_dir(GS.save_location)
+	var data : Array = []
 	for child in saves.get_children():
 		child.queue_free()
 	for file in files:
 		previous_save = create_save_tab(file)
+	if !previous_save:
+		return
 	previous_save.button.focus_neighbor_bottom = previous_save.button.get_path_to(save_button)
 	save_button.focus_neighbor_top = save_button.get_path_to(previous_save.button)
 	previous_save = null
 
-func on_save_deleted(previous_tab : SaveTab) -> void:
+func on_save_deleted(index : int) -> void:
+	var previous_tab : SaveTab = null if index == 0 else saves.get_child(index-1)
 	if previous_tab:
 		previous_tab.button.grab_focus()
 		if previous_tab.get_index() == saves.get_child_count() - 2:
@@ -53,14 +57,22 @@ func on_save_deleted(previous_tab : SaveTab) -> void:
 func create_save_tab(file : String, base_file : bool = true) -> SaveTab:
 	var save : SaveTab = save_scene.instantiate()
 	save.save_manager = self
+	save.datetime = JSON.parse_string(FS.read(file)).datetime
 	saves.add_child(save)
 	save.save_lbl.text = file.get_file().replace("."+file.get_extension(),"") if base_file else file
-	save.delete.connect("pressed",on_save_deleted.bind(previous_save))
+	save.delete.connect("pressed",on_save_deleted.bind(save.get_index()))
 	if previous_save:
 		save.button.focus_neighbor_top = save.button.get_path_to(previous_save.button)
 		previous_save.button.focus_neighbor_bottom = previous_save.button.get_path_to(save.button)
 	if save.save_lbl.text == GS.auto_save_name:
 		save.delete.queue_free()
+		saves.move_child(save,0)
+	else:
+		var placed : bool = false
+		for child in saves.get_children():
+			if child.datetime < save.datetime && child.get_index() != 0:
+				saves.move_child(save,child.get_index())
+				break
 	return save
 
 func _ready() -> void:
@@ -71,8 +83,7 @@ func _ready() -> void:
 
 func _on_save_button_pressed() -> void:
 	if GS.auto_save_name != input_savename.text:
-		GS.save(input_savename.text)
-		create_save_tab(input_savename.text,false)
+		create_save_tab(GS.save(input_savename.text),false)
 		input_savename.text = ""
 		load_saves()
 
