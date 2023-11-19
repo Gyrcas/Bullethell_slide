@@ -82,7 +82,7 @@ func _on_scientist_pod_interacted() -> void:
 		
 "
 
-[sub_resource type="Resource" id="Resource_5gs8o"]
+[sub_resource type="Resource" id="Resource_opqe6"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -99,7 +99,7 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_i33yo"]
+[sub_resource type="Resource" id="Resource_wnid0"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -116,7 +116,7 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_veskl"]
+[sub_resource type="Resource" id="Resource_4iww0"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -743,6 +743,7 @@ _data = {
 script = SubResource("GDScript_6arar")
 
 [node name="background" type="Node2D" parent="."]
+z_index = -7
 
 [node name="bg" type="Polygon2D" parent="background"]
 color = Color(0.141176, 0.141176, 0.141176, 1)
@@ -857,23 +858,22 @@ position = Vector2(14465, 324)
 [node name="turret" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(23472, 4966)
 rotation = -0.418446
-bullet_preset = SubResource("Resource_5gs8o")
+bullet_preset = SubResource("Resource_opqe6")
 
 [node name="turret2" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(22219, 4772)
 rotation = 0.0724223
-bullet_preset = SubResource("Resource_i33yo")
+bullet_preset = SubResource("Resource_wnid0")
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_veskl")
+bullet_preset = SubResource("Resource_4iww0")
 
 [node name="laser" parent="." instance=ExtResource("13_xknin")]
 position = Vector2(21169, 3710)
 rotation = 0.548645
 damage = 1.0
 dimensions = Vector2(200, 700)
-dim_col_scale = Vector2(0.3, 0.9)
 open_speed = 0.5
 
 [node name="laser2" parent="." instance=ExtResource("13_xknin")]
@@ -881,7 +881,6 @@ position = Vector2(19736, 7654)
 rotation = 2.5027
 damage = 1.0
 dimensions = Vector2(200, 700)
-dim_col_scale = Vector2(0.3, 0.9)
 open_speed = 0.5
 
 [node name="ground" type="Node2D" parent="."]
@@ -930,7 +929,7 @@ polygon = PackedVector2Array(5112, -13918, 17901, -15333, 22002, -9956, 19487, -
 [node name="PointLight2D" type="PointLight2D" parent="ground"]
 position = Vector2(14134, 226)
 scale = Vector2(2.65047, 1.08562)
-color = Color(0.807843, 0.388235, 0, 1)
+color = Color(0.713726, 0.337255, 0, 1)
 energy = 2.0
 texture = ExtResource("6_trcpa")
 texture_scale = 50.0

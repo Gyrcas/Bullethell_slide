@@ -9,7 +9,7 @@ class_name Laser
 
 @export var dimensions : Vector2 = Vector2(100,500) : set = set_dimensions
 
-@export var dim_col_scale : Vector2 = Vector2(1,1) : set = set_dim_col_scale
+@export var dim_col_scale : Vector2 = Vector2(0.3,0.9) : set = set_dim_col_scale
 
 @export var expel_force : float = 100
 
@@ -38,6 +38,9 @@ func set_dimensions(value : Vector2) -> void:
 		col.position.y = dimensions.y / 2 * dim_col_scale.y
 	else:
 		set_dimensions.call_deferred(value)
+
+func _ready() -> void:
+	connect("body_entered",_on_body_entered)
 
 func close(skip_anim : bool = false) -> void:
 	var tween : Tween = create_tween()

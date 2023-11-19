@@ -5,20 +5,18 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e3slq"]
 resource_local_to_scene = true
-size = Vector2(100, 500)
+size = Vector2(30, 450)
 
 [node name="laser" type="Area2D"]
 script = ExtResource("1_b7kch")
 damage = 5.0
 
 [node name="line" type="Line2D" parent="."]
-points = PackedVector2Array(0, 0, 0, 229)
+points = PackedVector2Array(0, 0, 0, 500)
 width = 100.0
 texture = ExtResource("2_gxv42")
 texture_mode = 2
 
 [node name="col" type="CollisionShape2D" parent="."]
-position = Vector2(0, 10)
+position = Vector2(0, 225)
 shape = SubResource("RectangleShape2D_e3slq")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]

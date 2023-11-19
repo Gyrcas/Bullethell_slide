@@ -58,7 +58,8 @@ func _ready() -> void:
 	check_dependance()
 	
 	anim.play("start")
-	
+	trail.reparent.call_deferred(get_parent())
+	trail.set_deferred("global_position",Vector2.ZERO)
 	if GS.save_loaded:
 		GS.save_loaded = false
 		if str_to_var(GS.data.position):

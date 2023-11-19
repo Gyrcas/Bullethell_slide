@@ -6,7 +6,7 @@ class_name AudioBusSlider
 @export var bus_name : String = "Master" : set = set_bus_name
 @export var min_range : float = -40
 @export var max_range : float = 10
-var settings_file : String = NodeLinker.request_resource("settings.json",true)
+var settings_file : String = "" if Engine.is_editor_hint() else NodeLinker.request_resource("settings.json",true)
 var bus_id : int = -1
 var slider : HSlider
 

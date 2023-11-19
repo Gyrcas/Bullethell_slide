@@ -23,20 +23,27 @@ func on_back_menu() -> void:
 	else:
 		pause_menu.change_view(back_to_view)
 
-var previous_save : SaveTab
-
 func load_saves() -> void:
 	var files : Array = FS.read_dir(GS.save_location)
-	var data : Array = []
 	for child in saves.get_children():
 		child.queue_free()
+	var save : SaveTab
 	for file in files:
-		previous_save = create_save_tab(file)
-	if !previous_save:
+		save = create_save_tab(file)
+	if !save:
 		return
-	previous_save.button.focus_neighbor_bottom = previous_save.button.get_path_to(save_button)
-	save_button.focus_neighbor_top = save_button.get_path_to(previous_save.button)
-	previous_save = null
+	make_navigations()
+
+func make_navigations() -> void:
+	for save in saves.get_children():
+		var index : int = save.get_index()
+		if index != 0:
+			save.focus_neighbor_top = save.get_path_to(saves.get_child(index - 1))
+		if index < saves.get_child_count() - 1:
+			save.focus_neighbor_bottom = save.get_path_to(saves.get_child(index + 1))
+		elif bottom.visible:
+			save.focus_neighbor_bottom = save.get_path_to(save_button)
+			save_button.focus_neighbor_top = save_button.get_path_to(save)
 
 func on_save_deleted(index : int) -> void:
 	var previous_tab : SaveTab = null if index == 0 else saves.get_child(index-1)
@@ -61,14 +68,10 @@ func create_save_tab(file : String, base_file : bool = true) -> SaveTab:
 	saves.add_child(save)
 	save.save_lbl.text = file.get_file().replace("."+file.get_extension(),"") if base_file else file
 	save.delete.connect("pressed",on_save_deleted.bind(save.get_index()))
-	if previous_save:
-		save.button.focus_neighbor_top = save.button.get_path_to(previous_save.button)
-		previous_save.button.focus_neighbor_bottom = previous_save.button.get_path_to(save.button)
 	if save.save_lbl.text == GS.auto_save_name:
 		save.delete.queue_free()
 		saves.move_child(save,0)
 	else:
-		var placed : bool = false
 		for child in saves.get_children():
 			if child.datetime < save.datetime && child.get_index() != 0:
 				saves.move_child(save,child.get_index())
@@ -88,7 +91,9 @@ func _on_save_button_pressed() -> void:
 		load_saves()
 
 func open_close(opening : bool) -> void:
-	if opening && saves.get_child_count() > 0:
-		saves.get_child(0).button.grab_focus()
-	else:
-		save_button.grab_focus()
+	if opening:
+		make_navigations()
+		if saves.get_child_count() > 0:
+			saves.get_child(0).button.grab_focus()
+		elif bottom.visible:
+			save_button.grab_focus()
