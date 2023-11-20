@@ -59,6 +59,7 @@ func _ready() -> void:
 	
 	anim.play("start")
 	trail.reparent.call_deferred(get_parent())
+	trail.set_deferred("rotation",0)
 	trail.set_deferred("global_position",Vector2.ZERO)
 	if GS.save_loaded:
 		GS.save_loaded = false

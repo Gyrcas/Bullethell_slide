@@ -31,7 +31,11 @@ func draw_wheel() -> void:
 		var center_angle : float = (rotate_angle - inc) + (rotate_angle - (rotate_angle - inc)) / 2
 		draw_string(font,half_screen + Vector2(1,0).rotated(center_angle) * center,perks[i].name)
 		if i == selected_arc:
-			draw_arc_between_circle(half_screen,inner_radius,outer_radius,rotate_angle,rotate_angle + inc,32,Color(0.27058824896812, 0.27058824896812, 0.27058824896812, 0.50980395078659))
+			if perks.size() == 1:
+				draw_arc_between_circle(half_screen,inner_radius,outer_radius,rotate_angle,(rotate_angle + inc)/2,32,Color(0.27058824896812, 0.27058824896812, 0.27058824896812, 0.50980395078659))
+				draw_arc_between_circle(half_screen,inner_radius,outer_radius,(rotate_angle + inc)/2,rotate_angle + inc,32,Color(0.27058824896812, 0.27058824896812, 0.27058824896812, 0.50980395078659))
+			else:
+				draw_arc_between_circle(half_screen,inner_radius,outer_radius,rotate_angle,rotate_angle + inc,32,Color(0.27058824896812, 0.27058824896812, 0.27058824896812, 0.50980395078659))
 		var dir : Vector2 = Vector2(1,0).rotated(rotate_angle)
 		draw_line(
 			half_screen + dir * inner_radius,
@@ -52,11 +56,11 @@ func _draw() -> void:
 func draw_arc_between_circle(center : Vector2, radius1 : float, radius2 : float, angle_from : float, angle_to : float,nb_points : int = 32, color : Color = Color(0,0,0)) -> void:
 	var points_arc = PackedVector2Array()
 	var inc = (angle_to - angle_from) / nb_points
-	for i in range(nb_points):
+	for i in nb_points + 1:
 		points_arc.push_back(
 			center + Vector2(1,0).rotated(angle_from + inc * i) * radius1
 		)
-	for i in range(nb_points):
+	for i in nb_points + 1:
 		var x : int = nb_points - i
 		points_arc.push_back(
 			center + Vector2(1,0).rotated(angle_from + inc * x) * radius2
