@@ -19,6 +19,8 @@ func set_dim_col_scale(value : Vector2) -> void:
 
 @export var open_speed : float = 1.5
 
+var is_open : bool = true
+
 var target : Vector2 : set = set_target
 
 func set_target(value : Vector2) -> void:
@@ -43,6 +45,7 @@ func _ready() -> void:
 	connect("body_entered",_on_body_entered)
 
 func close(skip_anim : bool = false) -> void:
+	is_open = false
 	var tween : Tween = create_tween()
 	var speed : float = 0.0 if skip_anim else open_speed
 	tween.parallel().tween_property(self,"target",Vector2.ZERO,speed)
@@ -53,6 +56,7 @@ func close(skip_anim : bool = false) -> void:
 	)
 
 func open(skip_anim : bool = false) -> void:
+	is_open = true
 	col.set_deferred("disabled",false)
 	var speed : float = 0.0 if skip_anim else open_speed
 	var tween : Tween = create_tween()

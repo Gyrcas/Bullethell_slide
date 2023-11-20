@@ -12,6 +12,9 @@ class_name LaserAttack
 @export var width : float = 100 : set = set_width
 @export var laser_hit_box_fraction : float = 6
 
+
+var victim_condition : Callable
+
 func set_width(value : float) -> void:
 	width = value
 	if laser:
@@ -28,11 +31,11 @@ func _ready() -> void:
 
 signal shot_finished
 
-func shoot(target : Node2D) -> void:
+func shoot(target : Vector2) -> void:
 	var point : Vector2 = laser.global_position
 	var target_pos : Vector2 = (
-		point + point.direction_to(target.global_position) *
-		(point.distance_to(target.global_position) + marge_target)
+		point + point.direction_to(target) *
+		(point.distance_to(target) + marge_target)
 		- laser.global_position
 	)
 	var width_fraction : Vector2 = Vector2(laser.width / laser_hit_box_fraction,0)
@@ -63,7 +66,7 @@ func _on_anim_animation_finished(anim_name : String) -> void:
 	match anim_name:
 		"shoot":
 			for victim in laser_hit_box.get_overlapping_bodies():
-				if victim is MoverEntity:
+				if victim is MoverEntity && !(victim_condition  && !victim_condition.call(victim)):
 					victim.apply_damage(damage)
 			anim.play("cooldown")
 		"cooldown":

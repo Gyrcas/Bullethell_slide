@@ -28,17 +28,17 @@ polygon = PackedVector2Array(-39, 129, -134, 75, -144, 38, -159, 12, -159, -19, 
 [node name="laser_attack" parent="laser" instance=ExtResource("3_70683")]
 position = Vector2(-136, 0)
 speed = 5.0
-width = 400.0
+width = 200.0
 
 [node name="laser_attack2" parent="laser" instance=ExtResource("3_70683")]
 position = Vector2(-136, 0)
 speed = 5.0
-width = 400.0
+width = 200.0
 
 [node name="laser_attack3" parent="laser" instance=ExtResource("3_70683")]
 position = Vector2(-136, 0)
 speed = 5.0
-width = 400.0
+width = 200.0
 
 [node name="shoot_timer" type="Timer" parent="."]
 
