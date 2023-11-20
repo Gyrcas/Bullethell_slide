@@ -31,10 +31,10 @@ func _ready() -> void:
 		await Global.play_dialogue_player(
 			\"intro_2.json\",
 			{
-				\"#{up}\":InputMap.action_get_events(\"up\")[0].as_text(),
-				\"#{down}\":InputMap.action_get_events(\"down\")[0].as_text(),
-				\"#{left}\":InputMap.action_get_events(\"left\")[0].as_text(),
-				\"#{right}\":InputMap.action_get_events(\"right\")[0].as_text()
+				\"#{up}\":Global.get_actions_as_text(\"up\"),
+				\"#{down}\":Global.get_actions_as_text(\"down\"),
+				\"#{left}\":Global.get_actions_as_text(\"left\"),
+				\"#{right}\":Global.get_actions_as_text(\"right\")
 			}
 		)
 	else:
@@ -60,7 +60,10 @@ func _on_scientist_pod_interacted() -> void:
 		await Global.play_dialogue_player(\"cave_crash_sc_3.json\",{},false)
 	# Didn't talk to the scientist
 	elif !GS.data.get(\"cave_crash_sc_dial1\"):
-		await Global.play_dialogue_player(\"cave_crash_sc_1.json\")
+		await Global.play_dialogue_player(\"cave_crash_sc_1.json\",{
+			\"#{shoot}\":Global.get_actions_as_text(\"left_click\"),
+			\"#{autotarget}\":Global.get_actions_as_text(\"auto_target\")
+		})
 		GS.data[\"cave_crash_sc_dial1\"] = true
 	# Talked to the scientist and do not have the dash
 	elif !GS.data.get(\"dash_aquired\"):
@@ -82,7 +85,7 @@ func _on_scientist_pod_interacted() -> void:
 		
 "
 
-[sub_resource type="Resource" id="Resource_3rf41"]
+[sub_resource type="Resource" id="Resource_1ixjs"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -99,7 +102,7 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_0ehdp"]
+[sub_resource type="Resource" id="Resource_xps8m"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -116,7 +119,7 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_yntyg"]
+[sub_resource type="Resource" id="Resource_fkecp"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -195,6 +198,9 @@ func _ready() -> void:
 	connect(\"body_exited\",_on_zone_body_exited)
 
 func interact() -> void:
+	await Global.play_dialogue_player(\"perk_wheel_tuto.json\",{
+		\"#{perk}\":InputMap.action_get_events(\"perks\")[0].as_text()
+	})
 	GS.data[\"dash_aquired\"] = true
 	Global.player.perks_wheel.perks.append(DashPerk.new())
 	interacted.emit()
@@ -858,17 +864,17 @@ position = Vector2(14465, 324)
 [node name="turret" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(23472, 4966)
 rotation = -0.418446
-bullet_preset = SubResource("Resource_3rf41")
+bullet_preset = SubResource("Resource_1ixjs")
 
 [node name="turret2" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(22219, 4772)
 rotation = 0.0724223
-bullet_preset = SubResource("Resource_0ehdp")
+bullet_preset = SubResource("Resource_xps8m")
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 z_index = 1
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_yntyg")
+bullet_preset = SubResource("Resource_fkecp")
 
 [node name="laser" parent="." instance=ExtResource("13_xknin")]
 position = Vector2(21169, 3710)

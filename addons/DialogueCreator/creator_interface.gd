@@ -139,6 +139,5 @@ func _on_file_dialog_file_selected(path : String) -> void:
 		load_save(save_data)
 
 func _on_nodes_child_exiting_tree(node : Node) -> void:
-	used_ids.erase(node.id)
 	if nodes.get_child_count() == 1:
 		nodes.add_child.call_deferred(preload("res://addons/DialogueCreator/box.tscn").instantiate())

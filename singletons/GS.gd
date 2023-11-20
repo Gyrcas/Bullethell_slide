@@ -23,6 +23,9 @@ func save(savename : String) -> String:
 
 func load_save(savename : String) -> void:
 	save_loaded = true
+	if !FS.is_file(save_location + savename + ".json"):
+		Global.change_scene_to_file("main_menu.tscn")
+		return
 	data = JSON.parse_string(FS.read(save_location + savename + ".json"))
 	get_tree().paused = false
 	Global.change_scene_to_file(data.current_scene)

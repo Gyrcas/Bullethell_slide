@@ -97,3 +97,11 @@ func shake_camera(
 		tween.tween_callback(
 			shake_camera.bind(camera,cam_range,nb_shake-1,speed,base_pos,callback)
 		)
+
+func get_actions_as_text(action : String) -> String:
+	if !InputMap.has_action(action):
+		return ""
+	var events : Array[InputEvent] = InputMap.action_get_events(action)
+	if events.size() == 0:
+		return ""
+	return events[0].as_text()

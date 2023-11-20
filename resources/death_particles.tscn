@@ -59,4 +59,5 @@ process_material = SubResource("ParticleProcessMaterial_3dpq1")
 lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
+visibility_rect = Rect2(-5000, -5000, 10000, 10000)
 trail_enabled = true
