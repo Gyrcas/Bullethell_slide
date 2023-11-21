@@ -109,9 +109,6 @@ func play(dialogue : Dictionary, current_dialogue : Dictionary = dialogue) -> vo
 				button.connect("pressed",play.bind(dialogue,child.children[0] if child.children.size() > 0 else {}))
 				button_container.add_child(button)
 			if button_container.get_child_count() > 0:
-				if use_typewritter:
-					await typewritter_finished
-				await get_tree().create_timer(0.1).timeout
 				button_container.get_child(0).grab_focus()
 		types.condition:
 			var split : PackedStringArray = current_dialogue.content.split("?")
@@ -135,67 +132,6 @@ func play_from_file(path : String) -> void:
 	play(dialogue)
 
 ##Typewritter
-
-signal typewritter_finished
-
-func do_typewritter(string : String, nb_char : int = 0, bbcodes : Variant = null) -> void:
-	return
-	if !bbcodes:
-		var results : Variant = search_bbcode(string)
-		string = results.string
-		bbcodes = results.bbcodes
-	writing = true
-	timer.start(typewritter_speed)
-	await timer.timeout
-	var display_str : String = string.substr(0,nb_char) if writing else string
-	for bbcode in bbcodes:
-		if bbcode.idx <= display_str.length():
-			display_str = display_str.insert(bbcode.idx,bbcode.tag)
-		else:
-			break
-	if !writing || nb_char > string.length():
-		writing = false
-		timer.stop()
-		text_node.text = display_str
-		typewritter_finished.emit()
-		return
-	text_node.text = display_str
-	var sound_id : String = AudioPlayer.play("sounds/FUI Button Beep Clean.wav",true,false)
-	AudioPlayer.set_volume(sound_id, -15)
-	AudioPlayer.set_pitch(sound_id,randf_range(0.95,1))
-	AudioPlayer.set_bus_by_name(sound_id,"Dialogue")
-	AudioPlayer.set_play(sound_id,true)
-	do_typewritter(string, nb_char + 1, bbcodes)
-
-var timer : Timer = Timer.new()
-
-func search_bbcode(source : String) -> Dictionary:
-	var regex : RegEx = RegEx.new()
-	regex.compile("\\[.+?\\]")
-	var bbcodes : Array[Dictionary] = []
-	for bbcode in regex.search_all(source):
-		bbcodes.append({"idx":bbcode.get_start(),"tag":bbcode.get_string()})
-	return {"string":regex.sub(source,"",true),"bbcodes":bbcodes}
-
-func on_typewritter(string : String, nb_char : int, bbcodes : Variant = null) -> void:
-	var display_str : String = string.substr(0,nb_char) if writing else string
-	for bbcode in bbcodes:
-		if bbcode.idx <= display_str.length():
-			display_str = display_str.insert(bbcode.idx,bbcode.tag)
-		else:
-			break
-	if !writing || nb_char > string.length():
-		writing = false
-		timer.stop()
-		text_node.text = display_str
-		return
-	
-	text_node.text = display_str
-	do_typewritter(string, nb_char + 1, bbcodes)
-
-func _ready() -> void:
-	if !Engine.is_editor_hint():
-		add_child(timer)
 
 func _input(event : InputEvent) -> void:
 	if event.is_action_pressed(action_next):
