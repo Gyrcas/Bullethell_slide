@@ -64,6 +64,7 @@ func split_polygon(value : PackedVector2Array, parent : Node2D = get_parent()) -
 	for p in triangle:
 		var pol : SmoothStaticPolygon2D = SmoothStaticPolygon2D.new()
 		pol.global_position = global_position
+		pol.self_modulate = self_modulate
 		parent.add_child(pol)
 		pol.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
 		pol.polygon = p
@@ -97,6 +98,7 @@ func do_polygon_operation(value : Polygon2D, operate : String = operation, do_de
 			var new_pol : Variant
 			new_pol = SmoothStaticPolygon2D.new()
 			new_pol.global_position = global_position
+			new_pol.self_modulate = self_modulate
 			get_parent().add_child(new_pol)
 			new_pol.polygon = results[i]
 	if do_delete:
