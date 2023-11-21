@@ -41,9 +41,30 @@ func get_dialogue_by_id(id : int, dialogue : Dictionary) -> Variant:
 			return result
 	return null
 
-var playing : bool = false
-##Play dialogue
+var visible_characters : int = 0 : set = set_visible_characters
 
+func set_visible_characters(value : int) -> void:
+	if value > visible_characters && value > 0:
+		var sound_id : String = AudioPlayer.play("sounds/FUI Button Beep Clean.wav",true,false)
+		AudioPlayer.set_volume(sound_id, -15)
+		AudioPlayer.set_pitch(sound_id,randf_range(0.95,1))
+		AudioPlayer.set_bus_by_name(sound_id,"Dialogue")
+		AudioPlayer.set_play(sound_id,true)
+	visible_characters = value
+	text_node.visible_characters = value
+
+func tween_typewritter(text : String) -> void:
+	visible_characters = 0
+	text_node.text = text
+	var tween : Tween = create_tween()
+	tween.tween_property(self,"visible_characters",text_node.text.length(),typewritter_speed * text_node.text.length())
+	tween.tween_callback(func():confirm.emit())
+	await confirm
+	if tween && tween.is_valid():
+		tween.kill()
+	visible_characters = -1
+
+##Play dialogue
 func play(dialogue : Dictionary, current_dialogue : Dictionary = dialogue) -> void:
 	if current_dialogue == {}:
 		finished.emit()
@@ -51,12 +72,15 @@ func play(dialogue : Dictionary, current_dialogue : Dictionary = dialogue) -> vo
 	if button_container.get_child_count() > 0:
 		for child in button_container.get_children():
 			child.queue_free()
+	var s = ""
+	s.length()
 	match int(current_dialogue.type):
 		types.msg:
 			for key in variables.keys():
 				current_dialogue.content = current_dialogue.content.replace(key,variables[key])
 			if use_typewritter:
-				do_typewritter(current_dialogue.content)
+				await tween_typewritter(current_dialogue.content)
+				#do_typewritter(current_dialogue.content)
 			else:
 				text_node.text = current_dialogue.content
 			await confirm
@@ -74,7 +98,7 @@ func play(dialogue : Dictionary, current_dialogue : Dictionary = dialogue) -> vo
 			for key in variables.keys():
 				current_dialogue.content = current_dialogue.content.replace(key,variables[key])
 			if use_typewritter:
-				do_typewritter(current_dialogue.content)
+				await tween_typewritter(current_dialogue.content)
 			else:
 				text_node.text = current_dialogue.content
 			for child in current_dialogue.children:
@@ -115,6 +139,7 @@ func play_from_file(path : String) -> void:
 signal typewritter_finished
 
 func do_typewritter(string : String, nb_char : int = 0, bbcodes : Variant = null) -> void:
+	return
 	if !bbcodes:
 		var results : Variant = search_bbcode(string)
 		string = results.string
