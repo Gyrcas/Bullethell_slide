@@ -5,18 +5,15 @@ extends Control
 @onready var start : Button = $vbox/start
 @onready var vbox : VBoxContainer = $vbox
 
-var div_disappear : float = 10.0
-const div_appear : float = 50.0
-
 var last_focus : Control
-
-var disappear : bool = false
 
 func _on_start_pressed() -> void:
 	AudioPlayer.tween_volume(music_id,-50,2)
-	disappear = true
-	div_disappear = (0.30 - panel_shader.material.get_shader_parameter("opacity")) * 100
-
+	if tween && tween.is_valid():
+		tween.kill()
+	tween = create_tween()
+	tween.tween_property(self,"opacity",0,2)
+	tween.tween_callback(Global.change_scene_to_file.bind("intro.tscn"))
 
 
 func _on_settings_pressed() -> void:
@@ -27,9 +24,21 @@ func _on_settings_pressed() -> void:
 
 var audio_player : AudioStreamPlayer
 
+var opacity : float = 0.25 : set = set_opacity
+
+func set_opacity(value : float) -> void:
+	opacity = value
+	panel_shader.material.set_shader_parameter("opacity",opacity)
+
+var tween : Tween
+
 func _ready() -> void:
+	opacity = 0
 	start.grab_focus()
 	play_music()
+	tween = create_tween()
+	tween.tween_property(self,"opacity",0.25,10)
+	
 
 var music_id : String
 
@@ -39,15 +48,6 @@ func play_music(_file : String = "") -> void:
 	AudioPlayer.set_volume(music_id,-50)
 	AudioPlayer.tween_volume(music_id,0,6)
 	AudioPlayer.add_callback(music_id, play_music)
-
-func _process(delta):
-	var previous_opacity : float = panel_shader.material.get_shader_parameter("opacity")
-	if disappear:
-		panel_shader.material.set_shader_parameter("opacity",previous_opacity - delta / div_disappear)
-		if previous_opacity <= 0:
-			Global.change_scene_to_file("intro.tscn")
-	elif previous_opacity < 0.25:
-		panel_shader.material.set_shader_parameter("opacity",previous_opacity + delta / div_appear)
 
 func _on_load_pressed() -> void:
 	last_focus = get_viewport().gui_get_focus_owner()
@@ -60,7 +60,6 @@ func _on_pause_menu_closed() -> void:
 	for child in vbox.get_children():
 		child.focus_mode = FOCUS_ALL
 	last_focus.grab_focus()
-
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
