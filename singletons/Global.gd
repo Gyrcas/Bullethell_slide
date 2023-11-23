@@ -87,7 +87,6 @@ func shake_camera(
 		callback : Callable = func():pass
 		) -> void:
 	var tween : Tween = create_tween()
-	tween.is_valid()
 	if nb_shake == 0 || (shaking_cameras.get(camera) && !shaking_cameras[camera].active):
 		shaking_cameras[camera] = null
 		tween.tween_property(camera,"position",base_pos,speed)
