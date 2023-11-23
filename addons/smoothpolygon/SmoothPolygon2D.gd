@@ -221,7 +221,7 @@ func smoothen_polygon(pol : PackedVector2Array) -> Dictionary:
 	var left : float = pol[0].x
 	var right : float = pol[0].x
 	
-	var new_poly : PackedVector2Array = []
+	var new_poly : PackedVector2Array = [pol[0]] if invert_ignore_points else []
 	
 	var t : float = 0.0
 	

@@ -72,6 +72,12 @@ func play_dialogue_player(filename : String, variables : Dictionary = {}, give_c
 	if give_control_back:
 		player.controllable = true
 
+var shaking_cameras : Dictionary = {}
+
+func stop_shake_camera(camera : Camera2D) -> void:
+	if shaking_cameras[camera]:
+		shaking_cameras[camera].active = false
+
 func shake_camera(
 		camera : Camera2D,
 		cam_range : Vector2, 
@@ -81,7 +87,9 @@ func shake_camera(
 		callback : Callable = func():pass
 		) -> void:
 	var tween : Tween = create_tween()
-	if nb_shake == 0:
+	tween.is_valid()
+	if nb_shake == 0 || (shaking_cameras.get(camera) && !shaking_cameras[camera].active):
+		shaking_cameras[camera] = null
 		tween.tween_property(camera,"position",base_pos,speed)
 		tween.tween_callback(callback)
 	else:
@@ -97,6 +105,7 @@ func shake_camera(
 		tween.tween_callback(
 			shake_camera.bind(camera,cam_range,nb_shake-1,speed,base_pos,callback)
 		)
+		shaking_cameras[camera] = {"tween":tween,"active":true}
 
 func get_actions_as_text(action : String) -> String:
 	if !InputMap.has_action(action):

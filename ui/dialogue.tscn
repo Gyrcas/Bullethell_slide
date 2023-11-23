@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://brm6m6uuj3n0b"]
 
 [ext_resource type="Texture2D" uid="uid://dbxwou0a1odkj" path="res://textures/ui/panel.png" id="1_iloy6"]
-[ext_resource type="Script" path="res://addons/DialogueCreator/DialoguePlayer.gd" id="2_3iugo"]
+[ext_resource type="Script" path="res://resources/CustomDialoguePlayer.gd" id="2_wspxh"]
 
 [sub_resource type="GDScript" id="GDScript_lsb1g"]
 script/source = "extends CanvasLayer
@@ -51,7 +51,7 @@ offset_right = 678.0
 offset_bottom = 697.0
 
 [node name="DialoguePlayer" type="Node" parent="." node_paths=PackedStringArray("button_container", "text_node")]
-script = ExtResource("2_3iugo")
+script = ExtResource("2_wspxh")
 action_next = "interact"
 button_container = NodePath("../buttons")
 text_node = NodePath("../text")

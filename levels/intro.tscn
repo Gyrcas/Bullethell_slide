@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://3o2ppqrp0py7" path="res://textures/stars.png" id="1_1f1so"]
 [ext_resource type="Texture2D" uid="uid://cp5roovi7se7x" path="res://textures/planet.png" id="2_rqexs"]
-[ext_resource type="Script" path="res://addons/DialogueCreator/DialoguePlayer.gd" id="3_0a3bu"]
+[ext_resource type="Script" path="res://resources/CustomDialoguePlayer.gd" id="3_hnlps"]
 [ext_resource type="Texture2D" uid="uid://bvqkegii4jywk" path="res://textures/ship.png" id="4_two8p"]
 [ext_resource type="Texture2D" uid="uid://dm8gav5stwvra" path="res://textures/spot.png" id="5_jvjob"]
 
@@ -20,6 +20,8 @@ const stars_speed : float = 20
 @onready var particle : GPUParticles2D = $ship/booster
 
 @onready var particle_pos : Vector2 = particle.position
+
+@onready var camera : Camera2D = $camera
 
 var current_dialogue : int = 0
 var move_stars : bool = true
@@ -51,8 +53,16 @@ func _ready() -> void:
 	turn = true
 	explosion.emitting = true
 	smoke.emitting = true
+	Global.shake_camera(
+		camera,
+		Vector2(10,10),
+		25,
+		0.01,
+		camera.position
+	)
 	anim.play(\"crash\")
 	await anim.animation_finished
+	Global.stop_shake_camera(camera)
 	#------------------------------
 	stars.motion_offset.y += 500
 	smoke.restart()
@@ -553,7 +563,7 @@ position = Vector2(992, 458)
 texture = ExtResource("2_rqexs")
 
 [node name="dialogue" type="Node" parent="." node_paths=PackedStringArray("button_container", "text_node")]
-script = ExtResource("3_0a3bu")
+script = ExtResource("3_hnlps")
 action_next = "interact"
 button_container = NodePath("../text")
 text_node = NodePath("../text")
@@ -613,3 +623,6 @@ offset_top = -54.0
 offset_right = 1301.0
 offset_bottom = 750.0
 color = Color(0, 0, 0, 1)
+
+[node name="camera" type="Camera2D" parent="."]
+position = Vector2(641, 360)

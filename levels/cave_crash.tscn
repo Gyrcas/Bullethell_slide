@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://cb1ngswxfr1i2"]
+[gd_scene load_steps=63 format=3 uid="uid://cb1ngswxfr1i2"]
 
 [ext_resource type="Script" path="res://addons/smoothpolygon/SmoothPolygon2D.gd" id="1_wdskp"]
 [ext_resource type="Texture2D" uid="uid://bvqkegii4jywk" path="res://textures/ship.png" id="2_0sblj"]
@@ -15,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://droptbsmlp3fe" path="res://entities/laser.tscn" id="13_xknin"]
 [ext_resource type="Script" path="res://entities/entities_script/laser_trap.gd" id="14_fvlcm"]
 [ext_resource type="Texture2D" uid="uid://fw1j5jgje64v" path="res://textures/boss_1.png" id="15_oh4oy"]
-[ext_resource type="Script" path="res://addons/smoothpolygon/SmoothPolygonSub.gd" id="16_dbu3t"]
 
 [sub_resource type="GDScript" id="GDScript_6arar"]
 script/source = "extends Node2D
@@ -86,7 +85,7 @@ func _on_scientist_pod_interacted() -> void:
 		
 "
 
-[sub_resource type="Resource" id="Resource_4rbmx"]
+[sub_resource type="Resource" id="Resource_bsmcw"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -103,7 +102,7 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_eibaw"]
+[sub_resource type="Resource" id="Resource_8d6f2"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -120,7 +119,7 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_no17p"]
+[sub_resource type="Resource" id="Resource_rilb5"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -865,17 +864,17 @@ position = Vector2(14465, 324)
 [node name="turret" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(23472, 4966)
 rotation = -0.418446
-bullet_preset = SubResource("Resource_4rbmx")
+bullet_preset = SubResource("Resource_bsmcw")
 
 [node name="turret2" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(22219, 4772)
 rotation = 0.0724223
-bullet_preset = SubResource("Resource_eibaw")
+bullet_preset = SubResource("Resource_8d6f2")
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 z_index = 1
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_no17p")
+bullet_preset = SubResource("Resource_rilb5")
 
 [node name="laser" parent="." instance=ExtResource("13_xknin")]
 position = Vector2(21169, 3710)
@@ -1038,13 +1037,6 @@ visible = false
 position = Vector2(559, -529)
 color = Color(0.141176, 0.141176, 0.141176, 1)
 polygon = PackedVector2Array(13875, -1794, 14039, -1776, 14020, -1696, 14035, -1573, 13835, -1587, 13813, -1661, 13864, -1723)
-
-[node name="SmoothPolygonSub" type="Polygon2D" parent="."]
-color = Color(1, 1, 1, 0)
-script = ExtResource("16_dbu3t")
-ignore_points = PackedInt32Array()
-ignore_points_outline = PackedInt32Array()
-smoothed_pol = PackedVector2Array()
 
 [connection signal="interacted" from="save_pillar" to="." method="_on_save_pillar_interacted"]
 [connection signal="interacted" from="scientist_pod" to="." method="_on_scientist_pod_interacted"]
