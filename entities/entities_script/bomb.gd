@@ -34,6 +34,7 @@ func die() -> void:
 	particles.global_position = global_position
 	particles.lifetime = 5
 	var sound_id : String = AudioPlayer.play("sounds/explosion1.wav",false)
+	AudioPlayer.set_bus_by_name(sound_id,"VFX")
 	AudioPlayer.set_position(sound_id,global_position)
 	AudioPlayer.set_pitch(sound_id, randf_range(0.5,1.5))
 	if sprite:

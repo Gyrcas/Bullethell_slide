@@ -26,7 +26,9 @@ script/source = "extends Node2D
 @onready var scientist_pod : ScientistPod = $scientist_pod
 
 func _ready() -> void:
-	AudioPlayer.play(\"musics/Drifting Beyond the Stars.ogg\")
+	var music_id : String = AudioPlayer.play(\"musics/Drifting Beyond the Stars.ogg\")
+	AudioPlayer.set_bus_by_name(music_id,\"Music\")
+	AudioPlayer.set_audio_process_mode(music_id, PROCESS_MODE_ALWAYS)
 	if !GS.data.get(\"intro\"):
 		await Global.play_dialogue_player(
 			\"intro_2.json\",
@@ -76,7 +78,8 @@ func _on_scientist_pod_interacted() -> void:
 	if boss_time:
 		GS.data[\"boss_1_cave_crash\"] = true
 		block_boss.queue_free()
-		AudioPlayer.play(\"sounds//Monster_SoftGrowl1.mp3\")
+		var sound_id : String = AudioPlayer.play(\"sounds//Monster_SoftGrowl1.mp3\")
+		AudioPlayer.set_bus_by_name(sound_id,\"VFX\")
 		Global.shake_camera(Global.player.camera,Vector2(100,100),120,0.01)
 		await get_tree().create_timer(2.4).timeout
 		await Global.play_dialogue_player(\"cave_crash_sc_5.json\",{},false)
@@ -85,7 +88,7 @@ func _on_scientist_pod_interacted() -> void:
 		
 "
 
-[sub_resource type="Resource" id="Resource_bsmcw"]
+[sub_resource type="Resource" id="Resource_je8of"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -102,7 +105,7 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_8d6f2"]
+[sub_resource type="Resource" id="Resource_col4y"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -119,7 +122,7 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_rilb5"]
+[sub_resource type="Resource" id="Resource_kh3pn"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -864,17 +867,17 @@ position = Vector2(14465, 324)
 [node name="turret" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(23472, 4966)
 rotation = -0.418446
-bullet_preset = SubResource("Resource_bsmcw")
+bullet_preset = SubResource("Resource_je8of")
 
 [node name="turret2" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(22219, 4772)
 rotation = 0.0724223
-bullet_preset = SubResource("Resource_8d6f2")
+bullet_preset = SubResource("Resource_col4y")
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 z_index = 1
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_rilb5")
+bullet_preset = SubResource("Resource_kh3pn")
 
 [node name="laser" parent="." instance=ExtResource("13_xknin")]
 position = Vector2(21169, 3710)

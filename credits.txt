@@ -23,6 +23,8 @@ Shaders
 Musics
 
 	Main menu:					yd					OpenGameArt.org
+	Drifting beyond the stars	Hitctrl				OpenGameArt.org
+	Boss battle:				OveMelaa			OpenGameArt.org
 
 
 Sounds

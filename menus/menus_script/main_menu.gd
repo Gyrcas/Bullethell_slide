@@ -44,9 +44,10 @@ var music_id : String
 
 func play_music(_file : String = "") -> void:
 	music_id = AudioPlayer.play("musics/ObservingTheStar.ogg",true)
+	AudioPlayer.set_bus_by_name(music_id,"Music")
 	AudioPlayer.set_audio_process_mode(music_id, PROCESS_MODE_ALWAYS)
-	AudioPlayer.set_volume(music_id,-50)
-	AudioPlayer.tween_volume(music_id,0,6)
+	#AudioPlayer.set_volume(music_id,-50)
+	#AudioPlayer.tween_volume(music_id,0,6)
 	AudioPlayer.add_callback(music_id, play_music)
 
 func _on_load_pressed() -> void:

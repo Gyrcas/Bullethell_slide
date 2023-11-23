@@ -52,8 +52,6 @@ func set_nano(value : float) -> void:
 	tween.tween_property(
 		nano_bar,"value",float(nano) / nano_max * nano_bar.max_value,0.1)
 
-var thruster_sound_id : String
-
 func _ready() -> void:
 	check_dependance()
 	

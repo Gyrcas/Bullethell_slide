@@ -38,6 +38,7 @@ func die() -> void:
 	get_parent().add_child(particles)
 	var sound_id : String = AudioPlayer.play("sounds/Misc_DissolveSweep.wav",false)
 	AudioPlayer.set_position(sound_id, global_position)
+	AudioPlayer.set_bus_by_name(sound_id,"VFX")
 	anim.play("death")
 	died.emit()
 

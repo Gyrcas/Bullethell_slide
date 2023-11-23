@@ -36,10 +36,26 @@ script = ExtResource("2_3e664")
 [node name="dialogue" type="VSplitContainer" parent="center/vbox"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../volume")
-focus_neighbor_bottom = NodePath("../window_type")
+focus_neighbor_bottom = NodePath("../music")
 script = ExtResource("2_3e664")
 text = "Dialogue"
 bus_name = "Dialogue"
+
+[node name="music" type="VSplitContainer" parent="center/vbox"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../dialogue")
+focus_neighbor_bottom = NodePath("../vfx")
+script = ExtResource("2_3e664")
+text = "Music"
+bus_name = "Music"
+
+[node name="vfx" type="VSplitContainer" parent="center/vbox"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../music")
+focus_neighbor_bottom = NodePath("../window_type")
+script = ExtResource("2_3e664")
+text = "VFX"
+bus_name = "VFX"
 
 [node name="window_type_lbl" type="Label" parent="center/vbox"]
 layout_mode = 2
@@ -48,7 +64,7 @@ text = "Window type
 
 [node name="window_type" type="OptionButton" parent="center/vbox"]
 layout_mode = 2
-focus_neighbor_top = NodePath("../dialogue")
+focus_neighbor_top = NodePath("../vfx")
 item_count = 2
 popup/item_0/text = "windowed"
 popup/item_0/id = 0

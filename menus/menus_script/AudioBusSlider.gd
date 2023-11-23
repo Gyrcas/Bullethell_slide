@@ -48,24 +48,8 @@ func _ready() -> void:
 	slider.min_value = min_range
 	slider.max_value = max_range
 	slider.value = AudioServer.get_bus_volume_db(bus_id)
-	slider.connect("drag_started",on_slider_started)
-	slider.connect("drag_ended",on_slider_ended)
+	slider.connect("value_changed",change_volume)
 	add_child(slider)
 
-var changing_volume : bool = false
-
-func _process(_delta : float) -> void:
-	if changing_volume:
-		AudioServer.set_bus_volume_db(bus_id,slider.value)
-
-func on_slider_started() -> void:
-	changing_volume = true
-
-func on_slider_ended(_same : bool) -> void:
-	changing_volume = false
-	AudioServer.set_bus_volume_db(bus_id,slider.value)
-	var settings : Dictionary = JSON.parse_string(FS.read(settings_file))
-	if !settings.has("volume"):
-		settings["volume"] = {}
-	settings.volume[bus_name] = slider.value
-	FS.write(settings_file,JSON.stringify(settings))
+func change_volume(value : float) -> void:
+	AudioServer.set_bus_volume_db(bus_id,value)
