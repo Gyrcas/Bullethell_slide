@@ -71,6 +71,9 @@ func draw_arc_between_circle(center : Vector2, radius1 : float, radius2 : float,
 func _process(_delta : float) -> void:
 	if !visible:
 		return
+	if !Global.player.controllable:
+		visible = false
+		Global.tween_time_scale(1,time_trans_speed)
 	var angle : float = Vector2(1,0).angle_to(half_screen.direction_to(get_local_mouse_position()))
 	if angle < 0:
 		angle += deg_to_rad(360)

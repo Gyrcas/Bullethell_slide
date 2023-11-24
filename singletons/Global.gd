@@ -64,6 +64,8 @@ func _input(event : InputEvent) -> void:
 		AudioPlayer.muted = !AudioPlayer.muted
 
 func play_dialogue_player(filename : String, variables : Dictionary = {}, give_control_back : bool = true) -> void:
+	var tween : Tween = create_tween()
+	tween.tween_property(player,"velocity",Vector2.ZERO,1)
 	player.controllable = false
 	player.dialogue.variables = variables
 	player.dialogue.play(NodeLinker.request_resource(filename,true))
