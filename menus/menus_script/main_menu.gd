@@ -7,7 +7,12 @@ extends Control
 
 var last_focus : Control
 
+var starting : bool = false
+
 func _on_start_pressed() -> void:
+	if starting:
+		return
+	starting = true
 	AudioPlayer.tween_volume(music_id,-50,2)
 	if tween && tween.is_valid():
 		tween.kill()

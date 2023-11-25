@@ -33,6 +33,11 @@ func on_focus() -> void:
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
+	var settings : Dictionary = JSON.parse_string(FS.read(settings_file))
+	if !settings.get("volume"):
+		settings["volume"] = {}
+	if !settings.volume.get(bus_name):
+		settings.volume[bus_name] = 0
 	focus_mode = Control.FOCUS_ALL
 	bus_id = AudioServer.get_bus_index(bus_name)
 	if bus_id == null:
@@ -53,3 +58,7 @@ func _ready() -> void:
 
 func change_volume(value : float) -> void:
 	AudioServer.set_bus_volume_db(bus_id,value)
+	var settings : Dictionary = JSON.parse_string(FS.read(settings_file))
+	settings.volume[bus_name] = value
+	FS.write(settings_file,JSON.stringify(settings))
+		

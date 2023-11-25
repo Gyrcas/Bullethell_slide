@@ -88,7 +88,7 @@ func _on_scientist_pod_interacted() -> void:
 		
 "
 
-[sub_resource type="Resource" id="Resource_7ctda"]
+[sub_resource type="Resource" id="Resource_6i2m4"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -105,7 +105,7 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_aiqnm"]
+[sub_resource type="Resource" id="Resource_13f1h"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -122,7 +122,7 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_5phkl"]
+[sub_resource type="Resource" id="Resource_fucyr"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -830,7 +830,8 @@ polygon = PackedVector2Array(327, 591, 413, 581, 419, 655, 408, 707, 372.259, 65
 
 [node name="ship_clip" type="Polygon2D" parent="background"]
 clip_children = 1
-polygon = PackedVector2Array(-410, 202, -216, 212, -104, 315, 104, 368, 138, 445, 109, 464, 186, 475, 207, 534, 271, 521, 311, 565, 432, 703, 575, 736, 487, 935, 224.676, 912.689, 99, 902, -191, 706, -453, 499)
+position = Vector2(31, 5)
+polygon = PackedVector2Array(-410, 202, -216, 212, -104, 315, -3, 343, -8, 371, 18, 377, 32, 408, 71, 393, 92, 446, 165, 460, 186, 475, 223, 498, 267, 532, 311, 565, 432, 703, 575, 736, 487, 935, 224.676, 912.689, 99, 902, -191, 706, -453, 499)
 
 [node name="ship" type="Sprite2D" parent="background/ship_clip"]
 texture_filter = 1
@@ -867,17 +868,17 @@ position = Vector2(14465, 324)
 [node name="turret" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(23472, 4966)
 rotation = -0.418446
-bullet_preset = SubResource("Resource_7ctda")
+bullet_preset = SubResource("Resource_6i2m4")
 
 [node name="turret2" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(22219, 4772)
 rotation = 0.0724223
-bullet_preset = SubResource("Resource_aiqnm")
+bullet_preset = SubResource("Resource_13f1h")
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 z_index = 1
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_5phkl")
+bullet_preset = SubResource("Resource_fucyr")
 
 [node name="laser" parent="." instance=ExtResource("13_xknin")]
 position = Vector2(21169, 3710)

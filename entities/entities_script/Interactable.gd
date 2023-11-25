@@ -16,4 +16,6 @@ func _ready() -> void:
 	connect("body_exited",_on_zone_body_exited)
 
 func interact() -> void:
+	if Global.player.dying:
+		return
 	interacted.emit()

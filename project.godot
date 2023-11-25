@@ -31,7 +31,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/DialogueCreator/plugin.cfg", "res://addons/smoothpolygon/plugin.cfg")
+enabled=PackedStringArray("res://addons/DialogueCreator/plugin.cfg", "res://addons/modcreator/plugin.cfg", "res://addons/smoothpolygon/plugin.cfg")
 
 [input]
 
