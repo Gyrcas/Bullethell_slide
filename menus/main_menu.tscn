@@ -98,19 +98,12 @@ text = "Start"
 [node name="load" type="Button" parent="vbox"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../start")
-focus_neighbor_bottom = NodePath("../mods")
-text = "Load"
-
-[node name="mods" type="Button" parent="vbox"]
-layout_mode = 2
-focus_neighbor_top = NodePath("../load")
 focus_neighbor_bottom = NodePath("../settings")
-text = "Mods
-"
+text = "Load"
 
 [node name="settings" type="Button" parent="vbox"]
 layout_mode = 2
-focus_neighbor_top = NodePath("../mods")
+focus_neighbor_top = NodePath("../load")
 focus_neighbor_bottom = NodePath("../quit")
 text = "Setting"
 
@@ -126,7 +119,6 @@ open_with_back = false
 
 [connection signal="pressed" from="vbox/start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="vbox/load" to="." method="_on_load_pressed"]
-[connection signal="pressed" from="vbox/mods" to="." method="_on_mods_pressed"]
 [connection signal="pressed" from="vbox/settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="vbox/quit" to="." method="_on_quit_pressed"]
 [connection signal="closed" from="pause_menu" to="." method="_on_pause_menu_closed"]

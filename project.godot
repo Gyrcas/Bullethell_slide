@@ -22,7 +22,6 @@ NodeLinker="*res://singletons/NodeLinker.gd"
 GS="*res://singletons/GS.gd"
 Global="*res://singletons/Global.gd"
 AudioPlayer="*res://singletons/AudioPlayer.gd"
-ModManager="*res://addons/ModCreator/ModManager.gd"
 
 [display]
 
@@ -32,7 +31,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/DialogueCreator/plugin.cfg", "res://addons/ModCreator/plugin.cfg", "res://addons/SmoothPolygon/plugin.cfg", "res://addons/smoothpolygon/plugin.cfg")
+enabled=PackedStringArray("res://addons/DialogueCreator/plugin.cfg", "res://addons/SmoothPolygon/plugin.cfg", "res://addons/smoothpolygon/plugin.cfg")
 
 [input]
 
