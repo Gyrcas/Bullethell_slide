@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbrkegeq5ih3r"]
+[gd_scene load_steps=3 format=3 uid="uid://cbrkegeq5ih3r"]
 
 [ext_resource type="Script" path="res://menus/menus_script/mod_menu.gd" id="1_upm0m"]
+[ext_resource type="PackedScene" uid="uid://cpq54i83b88i3" path="res://addons/ModCreator/mod_list.tscn" id="2_klg2p"]
 
 [node name="mod_menu" type="Control"]
 layout_mode = 3
@@ -10,3 +11,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_upm0m")
+
+[node name="mod_list" parent="." instance=ExtResource("2_klg2p")]
+layout_mode = 1

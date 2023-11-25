@@ -6,13 +6,22 @@ script/source = "extends Control
 @onready var mods : VBoxContainer = $vbox/scroll/mods
 
 func _ready() -> void:
-	for mod in ModManager.data.mods:
-		var save_tab : CheckButton = CheckButton.new()
-		save_tab.text = mod
-		save_tab.button_pressed = ModManager.data.active_mods.has(mod)
+	for mod in ModManager.mods:
+		var mod_tab : CheckButton = CheckButton.new()
+		mod_tab.text = mod
+		mod_tab.button_pressed = ModManager.active_mods.has(mod)
+		mod_tab.connect(\"pressed\",mod_state_changed.bind(mod_tab))
+		mods.add_child(mod_tab)
 
 func _on_save_pressed() -> void:
-	pass # Replace with function body.
+	ModManager.save()
+
+func mod_state_changed(tab : CheckButton) -> void:
+	if tab.button_pressed:
+		if !ModManager.active_mods.has(tab.text):
+			ModManager.active_mods.append(tab.text)
+	else:
+		ModManager.active_mods.erase(tab.text)
 "
 
 [node name="mod_list" type="Control"]
@@ -37,9 +46,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="mods" type="VBoxContainer" parent="vbox/scroll"]
-layout_mode = 2
-
-[node name="CheckButton" type="CheckButton" parent="vbox/scroll/mods"]
 layout_mode = 2
 
 [node name="save" type="Button" parent="vbox"]

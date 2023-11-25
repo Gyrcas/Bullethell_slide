@@ -69,3 +69,10 @@ func _on_pause_menu_closed() -> void:
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_mods_pressed() -> void:
+	last_focus = get_viewport().gui_get_focus_owner()
+	for child in vbox.get_children():
+		child.focus_mode = FOCUS_NONE
+	pause_menu.open("mod_menu",{"back_to_view":""})

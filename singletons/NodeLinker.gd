@@ -20,7 +20,7 @@ func _init() -> void:
 func search(path : String, content : String, ignore_godot_folder : bool = true) -> Variant:
 	var files : Array = FS.read_dir(path)
 	for file in files:
-		if file == ".godot" && ignore_godot_folder:
+		if (".godot" in file && FS.is_dir(file) && ignore_godot_folder) || ("mods" in file && FS.is_dir(file)):
 			continue
 		if file.get_file() == content:
 			return file
