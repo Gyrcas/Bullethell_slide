@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpq54i83b88i3"]
+
+[sub_resource type="GDScript" id="GDScript_5wpg0"]
+script/source = "extends Control
+
+@onready var mods : VBoxContainer = $vbox/scroll/mods
+
+func _ready() -> void:
+	for mod in ModManager.data.mods:
+		var save_tab : CheckButton = CheckButton.new()
+		save_tab.text = mod
+		save_tab.button_pressed = ModManager.data.active_mods.has(mod)
+
+func _on_save_pressed() -> void:
+	pass # Replace with function body.
+"
+
+[node name="mod_list" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_5wpg0")
+
+[node name="vbox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="scroll" type="ScrollContainer" parent="vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="mods" type="VBoxContainer" parent="vbox/scroll"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="vbox/scroll/mods"]
+layout_mode = 2
+
+[node name="save" type="Button" parent="vbox"]
+layout_mode = 2
+text = "Save"
+
+[connection signal="pressed" from="vbox/save" to="." method="_on_save_pressed"]
