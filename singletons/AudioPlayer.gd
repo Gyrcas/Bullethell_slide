@@ -98,7 +98,7 @@ func delete(id : String) -> void:
 const pitch_effect_id : int = 0
 
 func set_bus_pitch(pitch : float) -> void:
-	AudioServer.get_bus_effect(0,pitch_effect_id).pitch_scale = pitch
+	AudioServer.get_bus_effect(3,pitch_effect_id).pitch_scale = pitch
 
 func get_bus_pitchs() -> Array[AudioEffectPitchShift]:
 	var pitchs : Array[AudioEffectPitchShift] = []

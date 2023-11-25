@@ -29,8 +29,7 @@ func tween_time_scale(final_scale : float,time : float, tween_sound : bool = tru
 	var pitchs : Array[AudioEffectPitchShift] = AudioPlayer.get_bus_pitchs()
 	var pitch_value : float = 1 - (1 - final_scale) / time_pitch_div
 	time *= time_tween_mult
-	for pitch in pitchs:
-		tween.parallel().tween_property(pitch,"pitch_scale",pitch_value,time)
+	tween.parallel().tween_property(pitchs[3],"pitch_scale",pitch_value,time)
 
 func add_debug() -> void:
 	var debug : Debug = Debug.new()
