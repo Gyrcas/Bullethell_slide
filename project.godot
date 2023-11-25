@@ -22,8 +22,6 @@ NodeLinker="*res://singletons/NodeLinker.gd"
 GS="*res://singletons/GS.gd"
 Global="*res://singletons/Global.gd"
 AudioPlayer="*res://singletons/AudioPlayer.gd"
-FileLoaderManager="*res://singletons/FileLoaderManager.gd"
-FileLoader="*res://singletons/FileLoader.gd"
 
 [display]
 
