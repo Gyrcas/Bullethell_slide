@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=3 uid="uid://jnmauf8sxcsu"]
+
+[ext_resource type="Script" path="res://resources/death_particles.gd" id="1_dpkyi"]
+[ext_resource type="Texture2D" uid="uid://dm8gav5stwvra" path="res://textures/spot.png" id="2_e2onb"]
+
+[sub_resource type="Curve" id="Curve_v616c"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.487903, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.621053), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_m1jye"]
+offsets = PackedFloat32Array(0, 0.193548, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.396078, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_3bmbv"]
+offsets = PackedFloat32Array(0, 0.578431, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.852941, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rm076"]
+gradient = SubResource("Gradient_3bmbv")
+
+[sub_resource type="Curve" id="Curve_a54my"]
+_data = [Vector2(0, 0.126316), 0.0, 0.0, 0, 0, Vector2(0.541353, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_7v0yd"]
+curve = SubResource("Curve_a54my")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3dpq1"]
+resource_local_to_scene = true
+lifetime_randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 1.0
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 300.0
+initial_velocity_max = 300.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_curve = SubResource("CurveTexture_7v0yd")
+color_ramp = SubResource("GradientTexture1D_rm076")
+
+[node name="death_particles" type="Node2D"]
+script = ExtResource("1_dpkyi")
+
+[node name="blast" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 1
+one_shot = true
+texture = ExtResource("2_e2onb")
+gravity = Vector2(0, 0)
+scale_amount_curve = SubResource("Curve_v616c")
+color_ramp = SubResource("Gradient_m1jye")
+
+[node name="sparkle" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 25
+process_material = SubResource("ParticleProcessMaterial_3dpq1")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+visibility_rect = Rect2(-5000, -5000, 10000, 10000)
+trail_enabled = true

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cksrr1rdojrue"]
+
+[ext_resource type="Texture2D" uid="uid://j4stj2vugaxx" path="res://textures/save_pillar.png" id="1_lnr1u"]
+[ext_resource type="Script" path="res://entities/entities_script/save_pillar.gd" id="2_lixqf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o2wqq"]
+radius = 295.015
+
+[node name="save_zone" type="Area2D"]
+script = ExtResource("2_lixqf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_o2wqq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(28, -42)
+texture = ExtResource("1_lnr1u")
+
+[node name="save_pillar" type="Node2D" parent="."]
+position = Vector2(-3, 3)

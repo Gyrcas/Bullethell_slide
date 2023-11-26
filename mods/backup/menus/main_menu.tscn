@@ -1,0 +1,124 @@
+[gd_scene load_steps=6 format=3 uid="uid://h632u4hd5rep"]
+
+[ext_resource type="Script" path="res://menus/menus_script/main_menu.gd" id="1_2jd54"]
+[ext_resource type="PackedScene" uid="uid://bhrculwo037fi" path="res://menus/pause_menu.tscn" id="2_t1veq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5hoos"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_q0ofh"]
+code = "shader_type canvas_item;
+
+uniform float opacity = 0.25;
+
+void fragment() {
+    float aspect = (1.0 / SCREEN_PIXEL_SIZE).y / (1.0 / SCREEN_PIXEL_SIZE).x;
+    float value;
+    vec2 uv = UV.xy / SCREEN_PIXEL_SIZE / (1.0 / SCREEN_PIXEL_SIZE).x;
+    uv -= vec2(0.5, 0.5 * aspect);
+
+    float rot = radians(45.0);
+    float s = sin(rot);
+    float c = cos(rot);
+
+    float newX = uv.x * c - uv.y * s;
+    float newY = uv.x * s + uv.y * c;
+
+    uv = vec2(newX, newY);
+
+    uv += vec2(0.5, 0.5 * aspect);
+    uv.y += 0.5 * (1.0 - aspect);
+
+    vec2 pos = 10.0 * uv;
+    vec2 rep = fract(pos);
+    float dist = 2.0 * min(min(rep.x, 1.0 - rep.x), min(rep.y, 1.0 - rep.y));
+    float squareDist = length((floor(pos) + vec2(0.5)) - vec2(5.0));
+
+    float edge = sin(TIME - squareDist * 0.5) * 0.5 + 0.5;
+    edge = (TIME - squareDist * 0.5) * 0.5;
+    edge = 2.0 * fract(edge * 0.5);
+
+    value = fract(dist * 2.0);
+    value = mix(value, 1.0 - value, step(1.0, edge));
+    edge = pow(abs(1.0 - edge), 2.0);
+    value = smoothstep(edge - 0.05, edge, 0.95 * value);
+    value += squareDist * 0.1;
+
+    COLOR = mix(vec4(1.0, 1.0, 1.0, 1.0), vec4(0.5, 0.75, 1.0, 1.0), value);
+	COLOR.g = 0.25 * clamp(value, 0.0, 1.0);
+	COLOR.b = 0.25 * clamp(value, 0.0, 1.0);
+	COLOR.a = opacity / clamp(value, 0.0, 1.0);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fm780"]
+shader = SubResource("Shader_q0ofh")
+shader_parameter/opacity = 0.0
+
+[node name="main_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2jd54")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5hoos")
+
+[node name="shader" type="Panel" parent="."]
+material = SubResource("ShaderMaterial_fm780")
+layout_mode = 0
+offset_right = 1281.0
+offset_bottom = 716.0
+
+[node name="vbox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_right = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="start" type="Button" parent="vbox"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../load")
+text = "Start"
+
+[node name="load" type="Button" parent="vbox"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../start")
+focus_neighbor_bottom = NodePath("../settings")
+text = "Load"
+
+[node name="settings" type="Button" parent="vbox"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../load")
+focus_neighbor_bottom = NodePath("../quit")
+text = "Setting"
+
+[node name="quit" type="Button" parent="vbox"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../settings")
+text = "Quit"
+
+[node name="pause_menu" parent="." instance=ExtResource("2_t1veq")]
+layout_mode = 1
+views_array = Array[String](["pause_options.tscn", "pause_inputs.tscn", "save_manager.tscn"])
+open_with_back = false
+
+[connection signal="pressed" from="vbox/start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="vbox/load" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="vbox/settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="vbox/quit" to="." method="_on_quit_pressed"]
+[connection signal="closed" from="pause_menu" to="." method="_on_pause_menu_closed"]

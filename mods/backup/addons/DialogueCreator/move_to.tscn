@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7xwgueloo017"]
+
+[ext_resource type="Script" path="res://addons/DialogueCreator/text.gd" id="1_rr52q"]
+
+[node name="move_to" type="TextEdit"]
+custom_minimum_size = Vector2(150, 50)
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_rr52q")

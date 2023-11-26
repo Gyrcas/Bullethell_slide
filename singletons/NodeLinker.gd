@@ -1,10 +1,14 @@
 extends Node
 
-var save_file : String = "res://resources/nodelinker_data.json"
+const save_file : String = "res://resources/nodelinker_data.json"
+
+const mod_folder : String = "mods/"
+
+const backup_folder : String = "backup/"
 
 var data : Dictionary = {}
 
-func _init() -> void:
+func load_data_file() -> void:
 	data = JSON.parse_string(FS.read(save_file))
 	var dup : Dictionary = data.duplicate()
 	for key in data.keys():
@@ -16,10 +20,41 @@ func _init() -> void:
 	if data != dup:
 		FS.write(save_file,JSON.stringify(data))
 
+func load_mods() -> void:
+	load_backup()
+	do_backup()
+	load_data_file()
+
+func do_backup(path : String = FS.root_dir()) -> void:
+	for file in FS.read_dir(path):
+		if (".godot" in file || backup_folder in file || mod_folder in file) && FS.is_dir(file): continue
+		if file.get_extension() == "tscn":
+			var local_path : String = file.replace(FS.root_dir(),"")
+			FS.write_absolute(
+				FS.root_dir() + mod_folder + backup_folder + local_path,
+				FS.read(file)
+			)
+		if FS.is_dir(file):
+			do_backup(file + "/")
+
+func load_backup(path : String = FS.root_dir() + backup_folder) -> void:
+	for file in FS.read_dir(path):
+		var backup : String = file.replace(FS.root_dir() + backup_folder,"")
+		var real_file : String = FS.root_dir() + backup
+		if FS.exist(real_file):
+			#print(backup + " exist")
+			pass
+		if FS.is_dir(file):
+			load_backup(file + "/")
+
+func _init() -> void:
+	load_mods()
+	
+
 func search(path : String, content : String, ignore_godot_folder : bool = true) -> Variant:
 	var files : Array = FS.read_dir(path)
 	for file in files:
-		if (".godot" in file && FS.is_dir(file) && ignore_godot_folder) || ("mods" in file && FS.is_dir(file)):
+		if ((".godot" in file && ignore_godot_folder) || mod_folder in file || backup_folder in file) && FS.is_dir(file):
 			continue
 		if file.get_file() == content:
 			return file

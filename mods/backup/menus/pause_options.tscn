@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlfrvmg2jiyoh"]
+
+[ext_resource type="Script" path="res://menus/menus_script/pause_options.gd" id="1_agj35"]
+[ext_resource type="Script" path="res://menus/menus_script/AudioBusSlider.gd" id="2_3e664"]
+
+[node name="options" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_agj35")
+
+[node name="center" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="vbox" type="VBoxContainer" parent="center"]
+layout_mode = 2
+
+[node name="inputs" type="Button" parent="center/vbox"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../volume")
+text = "map inputs"
+
+[node name="volume" type="VSplitContainer" parent="center/vbox"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../inputs")
+focus_neighbor_bottom = NodePath("../dialogue")
+focus_mode = 2
+dragger_visibility = 2
+script = ExtResource("2_3e664")
+
+[node name="dialogue" type="VSplitContainer" parent="center/vbox"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../volume")
+focus_neighbor_bottom = NodePath("../music")
+script = ExtResource("2_3e664")
+text = "Dialogue"
+bus_name = "Dialogue"
+
+[node name="music" type="VSplitContainer" parent="center/vbox"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../dialogue")
+focus_neighbor_bottom = NodePath("../vfx")
+script = ExtResource("2_3e664")
+text = "Music"
+bus_name = "Music"
+
+[node name="vfx" type="VSplitContainer" parent="center/vbox"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../music")
+focus_neighbor_bottom = NodePath("../window_type")
+script = ExtResource("2_3e664")
+text = "VFX"
+bus_name = "VFX"
+
+[node name="window_type_lbl" type="Label" parent="center/vbox"]
+layout_mode = 2
+text = "Window type
+"
+
+[node name="window_type" type="OptionButton" parent="center/vbox"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../vfx")
+item_count = 2
+popup/item_0/text = "windowed"
+popup/item_0/id = 0
+popup/item_1/text = "Fullscreen"
+popup/item_1/id = 1
+
+[connection signal="pressed" from="center/vbox/inputs" to="." method="_on_inputs_pressed"]
+[connection signal="item_selected" from="center/vbox/window_type" to="." method="_on_window_type_item_selected"]

@@ -1,0 +1,73 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqkyhok4wq2fv"]
+
+[ext_resource type="Script" path="res://addons/DialogueCreator/creator_interface.gd" id="1_ifglr"]
+
+[node name="creator_interface" type="Control"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ifglr")
+
+[node name="scroll" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 1
+
+[node name="nodes" type="Control" parent="scroll"]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="nodes" type="Control" parent="scroll/nodes"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="menu" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+
+[node name="new" type="Button" parent="menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "New"
+
+[node name="save" type="Button" parent="menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save"
+
+[node name="load" type="Button" parent="menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Load"
+
+[node name="export" type="Button" parent="menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Export"
+
+[node name="file_dialog" type="FileDialog" parent="."]
+ok_button_text = "Save"
+
+[connection signal="child_entered_tree" from="scroll/nodes/nodes" to="." method="_on_nodes_child_entered_tree"]
+[connection signal="child_exiting_tree" from="scroll/nodes/nodes" to="." method="_on_nodes_child_exiting_tree"]
+[connection signal="pressed" from="menu/new" to="." method="_on_new_pressed"]
+[connection signal="pressed" from="menu/save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="menu/load" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="menu/export" to="." method="_on_export_pressed"]
+[connection signal="file_selected" from="file_dialog" to="." method="_on_file_dialog_file_selected"]

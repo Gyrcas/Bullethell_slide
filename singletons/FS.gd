@@ -107,3 +107,7 @@ func delete_all(dir_path : String) -> void:
 	for file in files:
 		delete(file)
 
+func root_dir() -> String:
+	if OS.has_feature("editor"):
+		return ProjectSettings.globalize_path("res://")
+	return OS.get_executable_path().get_base_dir()
