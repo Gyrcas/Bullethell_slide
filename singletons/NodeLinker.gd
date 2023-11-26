@@ -15,7 +15,6 @@ func _init() -> void:
 			data[key].res = load(data[key].str)
 	if data != dup:
 		FS.write(save_file,JSON.stringify(data))
-			
 
 func search(path : String, content : String, ignore_godot_folder : bool = true) -> Variant:
 	var files : Array = FS.read_dir(path)

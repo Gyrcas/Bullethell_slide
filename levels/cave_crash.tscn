@@ -1046,3 +1046,4 @@ polygon = PackedVector2Array(13875, -1794, 14039, -1776, 14020, -1696, 14035, -1
 [connection signal="interacted" from="scientist_pod" to="." method="_on_scientist_pod_interacted"]
 [connection signal="body_entered" from="boss_zone" to="boss_zone" method="_on_body_entered"]
 [connection signal="body_entered" from="cinematic" to="cinematic" method="_on_body_entered"]
+
