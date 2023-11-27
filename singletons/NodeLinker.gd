@@ -76,6 +76,9 @@ func remove_mod(mod_name : String, path : String = FS.root_dir() + mod_folder + 
 			pack.pack(node)
 			ResourceSaver.save(pack,real_file)
 
+func get_mod_path(mod : String) -> String:
+	return FS.root_dir() + mod_folder + mod + "/"
+
 func _ready() -> void:
 	fetch_mods()
 	load_data_file()

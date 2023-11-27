@@ -9,9 +9,12 @@ func _ready():
 	if !Global.storage.get(\"speedrun_time\"):
 		Global.storage[\"speedrun_time\"] = 0
 
+func round_to_dec(num, digit):
+	return round(num * pow(10.0, digit)) / pow(10.0, digit)
+
 func _process(delta):
 	Global.storage.speedrun_time += delta
-	time_lbl.text = str(floorf(Global.storage.speedrun_time))
+	time_lbl.text = str(round_to_dec(Global.storage.speedrun_time,2))
 	
 "
 

@@ -1,19 +1,17 @@
-[gd_scene load_steps=25 format=3]
+[gd_scene load_steps=23 format=3 uid="uid://ctuy00ic2nele"]
 
 [ext_resource type="Script" path="res://entities/entities_script/player.gd" id="1_mah8r"]
 [ext_resource type="Script" path="res://resources/PolygonBody.gd" id="2_h6qts"]
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="2_je2js"]
-[ext_resource type="Texture2D" path="res://textures/ui/bars/bg.png" id="3_8b3ji"]
+[ext_resource type="Texture2D" uid="uid://drrlgjjdq4twp" path="res://textures/ui/bars/bg.png" id="3_8b3ji"]
 [ext_resource type="PackedScene" path="res://menus/pause_menu.tscn" id="3_r0pq6"]
 [ext_resource type="PackedScene" path="res://ui/target.tscn" id="4_davdh"]
-[ext_resource type="Texture2D" path="res://textures/ui/bars/red.png" id="4_xj7c0"]
-[ext_resource type="Texture2D" path="res://textures/ui/bars/blue.png" id="5_jdmre"]
+[ext_resource type="Texture2D" uid="uid://ptg8tcs3a5e0" path="res://textures/ui/bars/red.png" id="4_xj7c0"]
+[ext_resource type="Texture2D" uid="uid://b041x38jby5jb" path="res://textures/ui/bars/blue.png" id="5_jdmre"]
 [ext_resource type="PackedScene" path="res://ui/dialogue.tscn" id="7_mf1iq"]
 [ext_resource type="Script" path="res://ui/ui_script/perks.gd" id="7_o73hs"]
-[ext_resource type="Script" path="res://menus/menus_script/PauseMenu.gd" id="10_leowm"]
-[ext_resource type="Script" path="res://ui/ui_script/target.gd" id="12_wve7w"]
 
-[sub_resource type="Resource" id="Resource_dupev"]
+[sub_resource type="Resource" id="Resource_xprnp"]
 resource_local_to_scene = true
 script = ExtResource("2_je2js")
 ignore_sender = true
@@ -234,25 +232,11 @@ wall_min_slide_angle = 3.14159
 platform_on_leave = 2
 safe_margin = 0.1
 script = ExtResource("1_mah8r")
-health_max = 5.0
-imunities = Array[String]([])
-vulnerabilities = Array[String]([])
-restistances = Array[String]([])
-nano_max = 100.0
-shoot_cooldown = 0.1
-bullet_preset = SubResource("Resource_dupev")
-max_speed = 15.0
-move_speed = 10.0
-turn_speed = 5.0
-friction = 3.0
-gravity = Vector2(0, 0)
-maniability = 0.25
+bullet_preset = SubResource("Resource_xprnp")
 
 [node name="body" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-14, -14, 31, 0, -14, 13, -12, 0)
 script = ExtResource("2_h6qts")
-outline = Color(0, 0, 0, 1)
-outline_width = 3.0
 
 [node name="camera" type="Camera2D" parent="."]
 zoom = Vector2(0.4, 0.4)
@@ -297,7 +281,7 @@ grow_horizontal = 0
 text = "Bullet"
 horizontal_alignment = 2
 
-[node name="dialogue" type="CanvasLayer" parent="camera/ui/hud" instance=ExtResource("7_mf1iq")]
+[node name="dialogue" parent="camera/ui/hud" instance=ExtResource("7_mf1iq")]
 visible = false
 script = SubResource("GDScript_lsb1g")
 
@@ -349,18 +333,9 @@ mouse_filter = 2
 
 [node name="pause_layer" type="CanvasLayer" parent="camera/ui"]
 
-[node name="pause_menu" type="Control" parent="camera/ui/pause_layer" instance=ExtResource("3_r0pq6")]
-process_mode = 3
+[node name="pause_menu" parent="camera/ui/pause_layer" instance=ExtResource("3_r0pq6")]
 visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("10_leowm")
 views_array = Array[String](["game_pause.tscn", "pause_inputs.tscn", "pause_options.tscn", "save_manager.tscn", "save_pillar_menu.tscn"])
-open_with_back = true
 
 [node name="shoot_timer" type="Timer" parent="."]
 
@@ -374,12 +349,10 @@ shape = SubResource("CapsuleShape2D_bcdmy")
 [node name="trail" type="Line2D" parent="."]
 gradient = SubResource("Gradient_2xgqr")
 
-[node name="target" type="Node2D" parent="." instance=ExtResource("4_davdh")]
+[node name="target" parent="." instance=ExtResource("4_davdh")]
 visible = false
-top_level = true
 z_index = 5
 material = SubResource("CanvasItemMaterial_gc3ky")
-script = ExtResource("12_wve7w")
 
 [node name="auto_target" type="Area2D" parent="."]
 visible = false

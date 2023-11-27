@@ -32,6 +32,8 @@ func die() -> void:
 	dying = true
 	can_shoot = false
 	shoot_timer.stop()
+	if !death_particles_scene:
+		death_particles_scene = NodeLinker.request_resource("death_particles.tscn")
 	var particles : DeathParticles = death_particles_scene.instantiate()
 	particles.global_position = global_position
 	particles.lifetime = 3
