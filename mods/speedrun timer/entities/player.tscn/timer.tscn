@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://cic0k2yvn1dsi"]
+
+[sub_resource type="GDScript" id="GDScript_d5o76"]
+script/source = "extends Node2D
+
+@onready var time_lbl = $canvas/time
+
+func _ready():
+	if !Global.storage.get(\"speedrun_time\"):
+		Global.storage[\"speedrun_time\"] = 0
+
+func _process(delta):
+	Global.storage.speedrun_time += delta
+	time_lbl.text = str(floorf(Global.storage.speedrun_time))
+	
+"
+
+[node name="timer" type="Node2D"]
+script = SubResource("GDScript_d5o76")
+
+[node name="canvas" type="CanvasLayer" parent="."]
+
+[node name="time" type="Label" parent="canvas"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 40.0
+grow_vertical = 0

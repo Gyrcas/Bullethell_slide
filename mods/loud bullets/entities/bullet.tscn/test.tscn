@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://butkmgr0lhe6c"]
+
+[sub_resource type="GDScript" id="GDScript_rtjrw"]
+script/source = "extends Node
+
+func _ready():
+	var sound_id = AudioPlayer.play(\"sounds/Monster_Roar15.mp3\")
+	AudioPlayer.set_volume(sound_id,50)
+"
+
+[node name="loud_bullet" type="Node"]
+script = SubResource("GDScript_rtjrw")

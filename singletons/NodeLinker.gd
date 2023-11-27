@@ -40,8 +40,6 @@ func fetch_mods() -> void:
 func load_mods() -> void:
 	for mod in active_mods:
 		load_mod(mod)
-	
-	load_data_file()
 
 func load_mod(mod_name : String, path : String = FS.root_dir() + mod_folder + mod_name + "/") -> void:
 	var mod_path : String = FS.root_dir() + mod_folder + mod_name + "/"
@@ -80,7 +78,7 @@ func remove_mod(mod_name : String, path : String = FS.root_dir() + mod_folder + 
 
 func _ready() -> void:
 	fetch_mods()
-	load_mods()
+	load_data_file()
 	get_tree().set_auto_accept_quit(false)
 
 func _notification(what : int) -> void:

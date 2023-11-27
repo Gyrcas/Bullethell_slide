@@ -10,6 +10,8 @@ var bullet_script : Dictionary = {
 	"bomb":Bomb.new().get_script()
 }
 
+var storage : Dictionary = {}
+
 var debug_open : bool = false
 var debug_pos : Vector2 = Vector2.ZERO
 
