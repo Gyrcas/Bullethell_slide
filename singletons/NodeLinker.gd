@@ -21,15 +21,27 @@ func load_data_file() -> void:
 		print(data)
 		FS.write(save_file,JSON.stringify(data))
 
-var active_mods : Array[String] = ["test"]
+var active_mods : Array = []
 
 func get_mods_list() -> PackedStringArray:
 	var list : Array = FS.read_dir(FS.root_dir() + mod_folder,false)
 	list.erase(backup_folder.split("/")[0])
 	return list
 
+func apply_mods() -> void:
+	FS.write(
+		request_resource("active_mods.json",true),
+		JSON.stringify(active_mods)
+	)
+	load_mods()
+
+func fetch_mods() -> void:
+	active_mods = JSON.parse_string(
+		FS.read(request_resource("active_mods.json",true))
+	)
+
 func load_mods() -> void:
-	#load_backup()
+	load_backup()
 	
 	for mod in active_mods:
 		load_mod(mod)
@@ -76,6 +88,7 @@ func load_backup(path : String = FS.root_dir() + mod_folder + backup_folder) -> 
 
 func _init() -> void:
 	do_backup()
+	fetch_mods()
 	load_mods()
 
 func _ready() -> void:

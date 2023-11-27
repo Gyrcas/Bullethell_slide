@@ -104,16 +104,18 @@ text = "Load"
 [node name="settings" type="Button" parent="vbox"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../load")
-focus_neighbor_bottom = NodePath("../quit")
+focus_neighbor_bottom = NodePath("../mods")
 text = "Setting"
 
 [node name="mods" type="Button" parent="vbox"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../settings")
+focus_neighbor_bottom = NodePath("../quit")
 text = "Mods"
 
 [node name="quit" type="Button" parent="vbox"]
 layout_mode = 2
-focus_neighbor_top = NodePath("../settings")
+focus_neighbor_top = NodePath("../mods")
 text = "Quit"
 
 [node name="pause_menu" parent="." instance=ExtResource("2_t1veq")]
