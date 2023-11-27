@@ -45,7 +45,7 @@ func create_dir(dir_path : String) -> void:
 # parameters:
 # 	dir_path -> path of the dir
 # return -> array containing the name of all the files and directories inside the given path
-func read_dir(dir_path : String) -> Array:
+func read_dir(dir_path : String, full_path : bool = true) -> Array:
 	if !is_dir(dir_path):
 		push_error(dir_path + " is not a dir")
 		return []
@@ -54,11 +54,12 @@ func read_dir(dir_path : String) -> Array:
 		push_error("Dir unexpected null")
 		return []
 	var files : Array = dir.get_directories() + dir.get_files()
-	for i in files.size():
-		if dir_path.right(1) != "/":
-			files[i] = dir_path + "/" + files[i]
-		else:
-			files[i] = dir_path + files[i]
+	if full_path:
+		for i in files.size():
+			if dir_path.right(1) != "/":
+				files[i] = dir_path + "/" + files[i]
+			else:
+				files[i] = dir_path + files[i]
 	return files
 
 # get the text content of a file

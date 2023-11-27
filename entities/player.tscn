@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://resources/PolygonBody.gd" id="2_h6qts"]
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="2_je2js"]
 [ext_resource type="Texture2D" uid="uid://drrlgjjdq4twp" path="res://textures/ui/bars/bg.png" id="3_8b3ji"]
-[ext_resource type="PackedScene" uid="uid://bhrculwo037fi" path="res://menus/pause_menu.tscn" id="3_r0pq6"]
+[ext_resource type="PackedScene" uid="uid://bhrculwo037fi" path="res://mods/backup/menus/pause_menu.tscn" id="3_r0pq6"]
 [ext_resource type="PackedScene" uid="uid://ctlk12wtd554v" path="res://ui/target.tscn" id="4_davdh"]
 [ext_resource type="Texture2D" uid="uid://ptg8tcs3a5e0" path="res://textures/ui/bars/red.png" id="4_xj7c0"]
 [ext_resource type="Texture2D" uid="uid://b041x38jby5jb" path="res://textures/ui/bars/blue.png" id="5_jdmre"]

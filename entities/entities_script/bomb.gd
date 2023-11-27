@@ -10,6 +10,7 @@ var blast_zone : Area2D = Area2D.new()
 
 func _ready() -> void:
 	add_child.call_deferred(blast_zone)
+	death_particles_scene = NodeLinker.request_resource("death_particles.tscn")
 	var col : CollisionShape2D = CollisionShape2D.new()
 	col.shape = CircleShape2D.new()
 	col.shape.radius = 300

@@ -1,6 +1,6 @@
 extends Node
 
-const save_file : String = "res://resources/nodelinker_data.json"
+var save_file : String = "res://resources/nodelinker_data.json"
 
 const mod_folder : String = "mods/"
 
@@ -18,12 +18,41 @@ func load_data_file() -> void:
 		if data[key].keys().has("res"):
 			data[key].res = load(data[key].str)
 	if data != dup:
+		print(data)
 		FS.write(save_file,JSON.stringify(data))
+
+var active_mods : Array[String] = ["test"]
+
+func get_mods_list() -> PackedStringArray:
+	var list : Array[String] = FS.read_dir(FS.root_dir() + mod_folder,false)
+	list.erase(backup_folder)
+	return list
 
 func load_mods() -> void:
 	load_backup()
 	do_backup()
+	
+	for mod in active_mods:
+		load_mod(mod)
+	
 	load_data_file()
+
+func load_mod(mod_name : String, path : String = FS.root_dir() + mod_folder + mod_name + "/") -> void:
+	var mod_path : String = FS.root_dir() + mod_folder + mod_name + "/"
+	for file in FS.read_dir(path):
+		if FS.is_dir(file):
+			load_mod(mod_name,file)
+		if FS.is_file(file) && file.get_extension() == "tscn":
+			var real_file : String = FS.root_dir() + file.get_base_dir().replace(mod_path,"")
+			if !FS.is_file(real_file):
+				continue
+			var pack : PackedScene = load(real_file)
+			var base : Node = pack.instantiate()
+			var addon : Node = load(file).instantiate()
+			base.add_child(addon)
+			addon.owner = base
+			pack.pack(base)
+			ResourceSaver.save(pack,real_file)
 
 func do_backup(path : String = FS.root_dir()) -> void:
 	for file in FS.read_dir(path):
@@ -37,13 +66,12 @@ func do_backup(path : String = FS.root_dir()) -> void:
 		if FS.is_dir(file):
 			do_backup(file + "/")
 
-func load_backup(path : String = FS.root_dir() + backup_folder) -> void:
+func load_backup(path : String = FS.root_dir() + mod_folder + backup_folder) -> void:
 	for file in FS.read_dir(path):
-		var backup : String = file.replace(FS.root_dir() + backup_folder,"")
+		var backup : String = file.replace(FS.root_dir() + mod_folder + backup_folder,"")
 		var real_file : String = FS.root_dir() + backup
-		if FS.exist(real_file):
-			#print(backup + " exist")
-			pass
+		if FS.is_file(real_file):
+			FS.write(real_file,FS.read(file))
 		if FS.is_dir(file):
 			load_backup(file + "/")
 
