@@ -57,6 +57,7 @@ func load_mod(mod_name : String, path : String = FS.root_dir() + mod_folder + mo
 			addon.add_to_group("mod_"+mod_name,true)
 			addon.owner = base
 			pack.pack(base)
+			#ResourceSaver cause the "Transient parent has another exclusive child." error
 			ResourceSaver.save(pack,real_file)
 			base.queue_free()
 
@@ -75,6 +76,7 @@ func remove_mod(mod_name : String, path : String = FS.root_dir() + mod_folder + 
 				if child.is_in_group("mod_"+mod_name):
 					child.free()
 			pack.pack(node)
+			#ResourceSaver cause the "Transient parent has another exclusive child." error
 			ResourceSaver.save(pack,real_file)
 			node.queue_free()
 
