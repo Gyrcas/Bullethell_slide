@@ -10,3 +10,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_upm0m")
+
+[node name="vbox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="scroll" type="ScrollContainer" parent="vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="mod_list" type="VBoxContainer" parent="vbox/scroll"]
+layout_mode = 2
+
+[node name="buttons" type="HBoxContainer" parent="vbox"]
+layout_mode = 2
+
+[node name="apply" type="Button" parent="vbox/buttons"]
+layout_mode = 2
+text = "Apply"
+
+[connection signal="pressed" from="vbox/buttons/apply" to="." method="_on_apply_pressed"]
