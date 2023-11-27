@@ -54,8 +54,19 @@ func _ready() -> void:
 		1:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 
-func change_scene_to_file(filename : String) -> void:
-	get_tree().change_scene_to_file(NodeLinker.request_resource(filename,true))
+# Made longer because caused unknown crash before
+func change_scene_to_file(filename : String, mod : String = "") -> void:
+	var path : String = ""
+	if mod != "":
+		path = FS.root_dir() + NodeLinker.mod_folder + mod + "/" + filename
+	else:
+		path = NodeLinker.request_resource(filename,true)
+	if !FS.is_file(path):
+		push_error(path + " is not a file")
+		return
+	var scene : PackedScene = load(path)
+	var tree : SceneTree = get_tree()
+	tree.change_scene_to_packed(scene)
 	add_debug.call_deferred()
 
 func _input(event : InputEvent) -> void:

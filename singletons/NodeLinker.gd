@@ -58,6 +58,7 @@ func load_mod(mod_name : String, path : String = FS.root_dir() + mod_folder + mo
 			addon.owner = base
 			pack.pack(base)
 			ResourceSaver.save(pack,real_file)
+			base.queue_free()
 
 func remove_mod(mod_name : String, path : String = FS.root_dir() + mod_folder + mod_name + "/") -> void:
 	var mod_path : String = FS.root_dir() + mod_folder + mod_name + "/"
@@ -72,9 +73,10 @@ func remove_mod(mod_name : String, path : String = FS.root_dir() + mod_folder + 
 			var node : Node = pack.instantiate()
 			for child in node.get_children():
 				if child.is_in_group("mod_"+mod_name):
-					node.remove_child(child)
+					child.free()
 			pack.pack(node)
 			ResourceSaver.save(pack,real_file)
+			node.queue_free()
 
 func get_mod_path(mod : String) -> String:
 	return FS.root_dir() + mod_folder + mod + "/"

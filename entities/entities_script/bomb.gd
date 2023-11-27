@@ -31,6 +31,8 @@ func collide(collision) -> void:
 func die() -> void:
 	if sender != null:
 		sender.nano += nano
+	if !death_particles_scene:
+		death_particles_scene = NodeLinker.request_resource("death_particles.tscn")
 	var particles : DeathParticles = death_particles_scene.instantiate()
 	particles.global_position = global_position
 	particles.lifetime = 5
