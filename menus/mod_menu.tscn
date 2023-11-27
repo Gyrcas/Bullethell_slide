@@ -33,4 +33,4 @@ layout_mode = 2
 layout_mode = 2
 text = "Apply"
 
-[connection signal="pressed" from="vbox/buttons/apply" to="." method="_on_apply_pressed"]
+[connection signal="pressed" from="vbox/buttons/apply" to="." method="_on_apply_pressed" flags=18]

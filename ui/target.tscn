@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctlk12wtd554v"]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://ui/ui_script/target.gd" id="1_qubcg"]
 [ext_resource type="Script" path="res://resources/PolygonBody.gd" id="2_v6k7a"]
@@ -205,24 +205,32 @@ script = ExtResource("1_qubcg")
 use_parent_material = true
 polygon = PackedVector2Array(19, -5, 19, 5, 72, 5, 72, -5)
 script = ExtResource("2_v6k7a")
+outline = Color(0, 0, 0, 1)
+outline_width = 3.0
 
 [node name="bar2" type="Polygon2D" parent="."]
 use_parent_material = true
 rotation = 3.14159
 polygon = PackedVector2Array(19, -5, 19, 5, 72, 5, 72, -5)
 script = ExtResource("2_v6k7a")
+outline = Color(0, 0, 0, 1)
+outline_width = 3.0
 
 [node name="bar3" type="Polygon2D" parent="."]
 use_parent_material = true
 rotation = 1.5708
 polygon = PackedVector2Array(19, -5, 19, 5, 72, 5, 72, -5)
 script = ExtResource("2_v6k7a")
+outline = Color(0, 0, 0, 1)
+outline_width = 3.0
 
 [node name="bar4" type="Polygon2D" parent="."]
 use_parent_material = true
 rotation = 4.71239
 polygon = PackedVector2Array(19, -5, 19, 5, 72, 5, 72, -5)
 script = ExtResource("2_v6k7a")
+outline = Color(0, 0, 0, 1)
+outline_width = 3.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -231,4 +239,4 @@ libraries = {
 
 [node name="two_click_target_timer" type="Timer" parent="."]
 
-[connection signal="timeout" from="two_click_target_timer" to="." method="_on_two_click_target_timer_timeout"]
+[connection signal="timeout" from="two_click_target_timer" to="." method="_on_two_click_target_timer_timeout" flags=18]

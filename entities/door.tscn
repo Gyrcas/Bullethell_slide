@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://entities/entities_script/door.gd" id="1_r6qm0"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sysv1"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pk7rl"]
 resource_local_to_scene = true
 size = Vector2(50, 100)
 
@@ -11,7 +11,7 @@ script = ExtResource("1_r6qm0")
 
 [node name="col" type="CollisionShape2D" parent="."]
 position = Vector2(25, 50)
-shape = SubResource("RectangleShape2D_sysv1")
+shape = SubResource("RectangleShape2D_pk7rl")
 
 [node name="sprite" type="TextureRect" parent="."]
 offset_right = 50.0

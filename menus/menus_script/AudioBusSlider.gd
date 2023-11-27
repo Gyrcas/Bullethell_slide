@@ -6,7 +6,7 @@ class_name AudioBusSlider
 @export var bus_name : String = "Master" : set = set_bus_name
 @export var min_range : float = -40
 @export var max_range : float = 10
-var settings_file : String = "" if Engine.is_editor_hint() else NodeLinker.request_resource("settings.json",true)
+var settings_file : String = ""
 var bus_id : int = -1
 var slider : HSlider
 
@@ -33,6 +33,7 @@ func on_focus() -> void:
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
+	settings_file = NodeLinker.request_resource("settings.json",true)
 	var settings : Dictionary = JSON.parse_string(FS.read(settings_file))
 	if !settings.get("volume"):
 		settings["volume"] = {}

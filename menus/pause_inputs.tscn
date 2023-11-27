@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://d1xsid48dfcrf"]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://menus/menus_script/pause_inputs.gd" id="1_wn7ye"]
 [ext_resource type="Script" path="res://menus/menus_script/InputsMapper.gd" id="2_6a13i"]

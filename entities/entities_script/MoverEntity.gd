@@ -8,7 +8,7 @@ signal died
 @export var health_max : float = 5
 var health : float = health_max : set = set_health
 
-var death_particles_scene : PackedScene = NodeLinker.request_resource("death_particles.tscn")
+var death_particles_scene : PackedScene
 
 @onready var anim : AnimationPlayer = $anim
 
@@ -80,6 +80,7 @@ func check_dependance() -> void:
 		push_warning("anim animation_finished not connected to _on_anim_animation_finished")
 
 func _ready() -> void:
+	death_particles_scene = NodeLinker.request_resource("death_particles.tscn")
 	check_dependance()
 	bullet_preset.sender = self
 

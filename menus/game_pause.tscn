@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqt4ei83dll16"]
+[gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://menus/menus_script/game_pause.gd" id="1_gwrri"]
 
@@ -39,7 +39,7 @@ layout_mode = 2
 focus_neighbor_top = NodePath("../options")
 text = "Quit"
 
-[connection signal="pressed" from="center/vbox/resume" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="center/vbox/load" to="." method="_on_load_pressed"]
-[connection signal="pressed" from="center/vbox/options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="center/vbox/quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="center/vbox/resume" to="." method="_on_resume_pressed" flags=18]
+[connection signal="pressed" from="center/vbox/load" to="." method="_on_load_pressed" flags=18]
+[connection signal="pressed" from="center/vbox/options" to="." method="_on_options_pressed" flags=18]
+[connection signal="pressed" from="center/vbox/quit" to="." method="_on_quit_pressed" flags=18]

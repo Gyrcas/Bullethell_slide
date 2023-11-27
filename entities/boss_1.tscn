@@ -1,8 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://cjprbp7eylcxt"]
+[gd_scene load_steps=8 format=3 uid="uid://cjprbp7eylcxt"]
 
 [ext_resource type="Script" path="res://entities/entities_script/boss_1.gd" id="1_4ctrh"]
 [ext_resource type="Texture2D" uid="uid://fw1j5jgje64v" path="res://textures/boss_1.png" id="1_8pkqb"]
-[ext_resource type="PackedScene" uid="uid://mmny8lgv5eim" path="res://mods/backup/entities/laser_attack.tscn" id="3_70683"]
+[ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="2_clm1r"]
+[ext_resource type="PackedScene" uid="uid://mmny8lgv5eim" path="res://entities/laser_attack.tscn" id="3_70683"]
+
+[sub_resource type="Resource" id="Resource_62fyf"]
+script = ExtResource("2_clm1r")
+ignore_sender = true
+max_speed = 15.0
+move_speed = 2.5
+turn_speed = 10.0
+target_position = Vector2(0, 0)
+damage = 1.0
+maniability = 0.25
+nano = 10
+global_position = Vector2(0, 0)
+rotation = 0.0
+velocity = Vector2(0, 0)
+color = Color(1, 1, 1, 1)
+type = "default"
 
 [sub_resource type="Animation" id="Animation_cuhyy"]
 resource_name = "death"
@@ -15,6 +32,7 @@ _data = {
 
 [node name="boss_1" type="CharacterBody2D"]
 script = ExtResource("1_4ctrh")
+bullet_preset = SubResource("Resource_62fyf")
 
 [node name="sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_8pkqb")
@@ -47,8 +65,8 @@ libraries = {
 "": SubResource("AnimationLibrary_ckjum")
 }
 
-[connection signal="shot_finished" from="laser/laser_attack" to="." method="_on_laser_attack_shot_finished"]
-[connection signal="shot_finished" from="laser/laser_attack2" to="." method="_on_laser_attack_shot_finished"]
-[connection signal="shot_finished" from="laser/laser_attack3" to="." method="_on_laser_attack_shot_finished"]
-[connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout"]
-[connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]
+[connection signal="shot_finished" from="laser/laser_attack" to="." method="_on_laser_attack_shot_finished" flags=18]
+[connection signal="shot_finished" from="laser/laser_attack2" to="." method="_on_laser_attack_shot_finished" flags=18]
+[connection signal="shot_finished" from="laser/laser_attack3" to="." method="_on_laser_attack_shot_finished" flags=18]
+[connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout" flags=18]
+[connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished" flags=18]

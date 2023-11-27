@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://bhrculwo037fi"]
+[gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://menus/menus_script/PauseMenu.gd" id="1_ao6yr"]
 
@@ -11,6 +11,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ao6yr")
+views_array = Array[String]([])
+open_with_back = true
 
 [node name="background" type="ColorRect" parent="."]
 layout_mode = 0

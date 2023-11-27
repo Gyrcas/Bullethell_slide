@@ -123,9 +123,9 @@ layout_mode = 1
 views_array = Array[String](["pause_options.tscn", "pause_inputs.tscn", "save_manager.tscn", "mod_menu.tscn"])
 open_with_back = false
 
-[connection signal="pressed" from="vbox/start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="vbox/load" to="." method="_on_load_pressed"]
-[connection signal="pressed" from="vbox/settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="vbox/mods" to="." method="_on_mods_pressed"]
-[connection signal="pressed" from="vbox/quit" to="." method="_on_quit_pressed"]
-[connection signal="closed" from="pause_menu" to="." method="_on_pause_menu_closed"]
+[connection signal="pressed" from="vbox/start" to="." method="_on_start_pressed" flags=18]
+[connection signal="pressed" from="vbox/load" to="." method="_on_load_pressed" flags=18]
+[connection signal="pressed" from="vbox/settings" to="." method="_on_settings_pressed" flags=18]
+[connection signal="pressed" from="vbox/mods" to="." method="_on_mods_pressed" flags=18]
+[connection signal="pressed" from="vbox/quit" to="." method="_on_quit_pressed" flags=18]
+[connection signal="closed" from="pause_menu" to="." method="_on_pause_menu_closed" flags=18]

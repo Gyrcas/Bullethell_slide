@@ -271,4 +271,4 @@ layout_mode = 2
 [node name="Control2" type="Control" parent="CanvasLayer/credits"]
 layout_mode = 2
 
-[connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]
+[connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished" flags=18]

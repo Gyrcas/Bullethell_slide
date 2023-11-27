@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://cqkyhok4wq2fv"]
+[gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://addons/DialogueCreator/creator_interface.gd" id="1_ifglr"]
 
@@ -64,10 +64,10 @@ text = "Export"
 [node name="file_dialog" type="FileDialog" parent="."]
 ok_button_text = "Save"
 
-[connection signal="child_entered_tree" from="scroll/nodes/nodes" to="." method="_on_nodes_child_entered_tree"]
-[connection signal="child_exiting_tree" from="scroll/nodes/nodes" to="." method="_on_nodes_child_exiting_tree"]
-[connection signal="pressed" from="menu/new" to="." method="_on_new_pressed"]
-[connection signal="pressed" from="menu/save" to="." method="_on_save_pressed"]
-[connection signal="pressed" from="menu/load" to="." method="_on_load_pressed"]
-[connection signal="pressed" from="menu/export" to="." method="_on_export_pressed"]
-[connection signal="file_selected" from="file_dialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="child_entered_tree" from="scroll/nodes/nodes" to="." method="_on_nodes_child_entered_tree" flags=18]
+[connection signal="child_exiting_tree" from="scroll/nodes/nodes" to="." method="_on_nodes_child_exiting_tree" flags=18]
+[connection signal="pressed" from="menu/new" to="." method="_on_new_pressed" flags=18]
+[connection signal="pressed" from="menu/save" to="." method="_on_save_pressed" flags=18]
+[connection signal="pressed" from="menu/load" to="." method="_on_load_pressed" flags=18]
+[connection signal="pressed" from="menu/export" to="." method="_on_export_pressed" flags=18]
+[connection signal="file_selected" from="file_dialog" to="." method="_on_file_dialog_file_selected" flags=18]

@@ -14,18 +14,25 @@ class_name PerkObject
 
 func set_col_size(value : float) -> void:
 	col_size = value
-	(func():
+	if !col:
+		set_col_size.call_deferred(col_size)
+	else:
 		col.shape.radius = col_size
-	).call_deferred()
 	
 
 func set_texture_scale(value : Vector2) -> void:
 	texture_scale = value
-	sprite.set_deferred(\"scale\",value)
+	if !sprite:
+		set_texture_scale.call_deferred(sprite)
+	else:
+		sprite.scale = value
 
 func set_texture(value : Texture2D) -> void:
 	texture = value
-	sprite.set_deferred(\"texture\",value)
+	if !sprite:
+		set_texture_scale.call_deferred(texture)
+	else:
+		sprite.texture = value
 
 func interact() -> void:
 	Global.player.perks_wheel.perks.append(load(NodeLinker.request_resource(perk_file)).instantiate())

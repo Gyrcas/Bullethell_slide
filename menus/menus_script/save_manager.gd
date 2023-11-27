@@ -1,6 +1,6 @@
 extends PauseMenuView
 
-var save_scene : PackedScene = NodeLinker.request_resource("save_tab.tscn")
+var save_scene : PackedScene
 @onready var saves : VBoxContainer = $vbox/scroll/saves
 @onready var bottom : HSplitContainer = $vbox/bottom
 @onready var input_savename : LineEdit = $vbox/bottom/input_savename
@@ -79,6 +79,7 @@ func create_save_tab(file : String, base_file : bool = true) -> SaveTab:
 	return save
 
 func _ready() -> void:
+	save_scene = NodeLinker.request_resource("save_tab.tscn")
 	load_saves()
 	if !pause_menu.views.get_node_or_null("main"):
 		load_save = false

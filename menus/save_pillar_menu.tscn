@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://deq46astu2smg"]
+[gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://menus/menus_script/save_pillar_menu.gd" id="1_7luer"]
 
@@ -30,4 +30,4 @@ text = "Save"
 layout_mode = 2
 text = "Perks"
 
-[connection signal="pressed" from="center/vbox/save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="center/vbox/save" to="." method="_on_save_pressed" flags=18]

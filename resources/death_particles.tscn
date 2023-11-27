@@ -25,7 +25,7 @@ point_count = 3
 [sub_resource type="CurveTexture" id="CurveTexture_7v0yd"]
 curve = SubResource("Curve_a54my")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3dpq1"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aaddt"]
 resource_local_to_scene = true
 lifetime_randomness = 1.0
 emission_shape = 1
@@ -55,7 +55,7 @@ color_ramp = SubResource("Gradient_m1jye")
 [node name="sparkle" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 25
-process_material = SubResource("ParticleProcessMaterial_3dpq1")
+process_material = SubResource("ParticleProcessMaterial_aaddt")
 lifetime = 0.5
 one_shot = true
 explosiveness = 1.0

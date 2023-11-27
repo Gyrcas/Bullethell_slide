@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://cckg4auu6pwh2"]
+[gd_scene load_steps=2 format=3]
 
 [sub_resource type="GDScript" id="GDScript_pc61c"]
 script/source = "@tool
@@ -39,7 +39,6 @@ func set_content(retry : int = 0) -> void:
 
 [node name="script" type="VBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
-anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -67,6 +66,6 @@ size = Vector2i(312, 162)
 ok_button_text = "Open"
 file_mode = 0
 
-[connection signal="pressed" from="set" to="." method="_on_set_pressed"]
-[connection signal="text_changed" from="function" to="." method="_on_function_text_changed"]
-[connection signal="file_selected" from="file_dialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="set" to="." method="_on_set_pressed" flags=18]
+[connection signal="text_changed" from="function" to="." method="_on_function_text_changed" flags=18]
+[connection signal="file_selected" from="file_dialog" to="." method="_on_file_dialog_file_selected" flags=18]

@@ -5,7 +5,7 @@ const mouse_button_id : String = "mouseB"
 const key_id : String = "key"
 const joypad_btn_id : String = "jpbtn"
 
-var settings_file : String = NodeLinker.request_resource("settings.json",true)
+var settings_file : String
 var grid : GridContainer = GridContainer.new()
 var save_btn : Button
 
@@ -190,6 +190,7 @@ func remove_input(action : String,input : InputEvent) -> void:
 	load_inputs()
 
 func _ready() -> void:
+	settings_file = NodeLinker.request_resource("settings.json",true)
 	var scroll : ScrollContainer = ScrollContainer.new()
 	scroll.size = size
 	add_child(scroll)

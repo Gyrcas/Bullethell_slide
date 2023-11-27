@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgnohcdxh4mhi"]
+[gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://menus/menus_script/save_tab.gd" id="1_t47xd"]
 
@@ -43,5 +43,5 @@ focus_neighbor_top = NodePath("../../button")
 focus_neighbor_bottom = NodePath("../../button")
 text = "X"
 
-[connection signal="pressed" from="button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="split/delete" to="." method="_on_delete_pressed"]
+[connection signal="pressed" from="button" to="." method="_on_button_pressed" flags=18]
+[connection signal="pressed" from="split/delete" to="." method="_on_delete_pressed" flags=18]

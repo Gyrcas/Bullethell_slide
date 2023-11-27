@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://entities/entities_script/laser.gd" id="1_b7kch"]
 [ext_resource type="Texture2D" uid="uid://d0l0dqnd8dlu7" path="res://textures/laser.png" id="2_gxv42"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e3slq"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8tjfv"]
 resource_local_to_scene = true
 size = Vector2(30, 450)
 
@@ -19,4 +19,4 @@ texture_mode = 2
 
 [node name="col" type="CollisionShape2D" parent="."]
 position = Vector2(0, 225)
-shape = SubResource("RectangleShape2D_e3slq")
+shape = SubResource("RectangleShape2D_8tjfv")

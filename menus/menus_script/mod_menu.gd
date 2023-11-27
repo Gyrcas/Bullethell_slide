@@ -12,8 +12,10 @@ func _ready() -> void:
 		mod_list.add_child(mod_tab)
 
 func _on_apply_pressed() -> void:
+	var old_mods : Array = NodeLinker.active_mods
 	NodeLinker.active_mods = []
 	for mod_tab in mod_list.get_children():
 		if mod_tab.button_pressed:
 			NodeLinker.active_mods.append(mod_tab.text)
-	NodeLinker.apply_mods()
+	print(old_mods)
+	NodeLinker.apply_mods(old_mods)

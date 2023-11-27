@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://mxvk3v6r1mc7"]
+[gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://menus/menus_script/save_manager.gd" id="1_iun1a"]
 
@@ -44,4 +44,4 @@ size_flags_horizontal = 3
 focus_neighbor_left = NodePath("../input_savename")
 text = "Save"
 
-[connection signal="pressed" from="vbox/bottom/save_button" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="vbox/bottom/save_button" to="." method="_on_save_button_pressed" flags=18]
