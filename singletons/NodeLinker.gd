@@ -24,13 +24,12 @@ func load_data_file() -> void:
 var active_mods : Array[String] = ["test"]
 
 func get_mods_list() -> PackedStringArray:
-	var list : Array[String] = FS.read_dir(FS.root_dir() + mod_folder,false)
-	list.erase(backup_folder)
+	var list : Array = FS.read_dir(FS.root_dir() + mod_folder,false)
+	list.erase(backup_folder.split("/")[0])
 	return list
 
 func load_mods() -> void:
-	load_backup()
-	do_backup()
+	#load_backup()
 	
 	for mod in active_mods:
 		load_mod(mod)
@@ -76,8 +75,16 @@ func load_backup(path : String = FS.root_dir() + mod_folder + backup_folder) -> 
 			load_backup(file + "/")
 
 func _init() -> void:
+	do_backup()
 	load_mods()
-	
+
+func _ready() -> void:
+	get_tree().set_auto_accept_quit(false)
+
+func _notification(what : int) -> void:
+	if what == NOTIFICATION_CRASH || what == NOTIFICATION_WM_CLOSE_REQUEST:
+		load_backup()
+		get_tree().quit()
 
 func search(path : String, content : String, ignore_godot_folder : bool = true) -> Variant:
 	var files : Array = FS.read_dir(path)

@@ -68,7 +68,7 @@ func _on_pause_menu_closed() -> void:
 	last_focus.grab_focus()
 
 func _on_quit_pressed() -> void:
-	get_tree().quit()
+	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 
 
 func _on_mods_pressed() -> void:
