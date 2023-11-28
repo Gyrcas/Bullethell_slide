@@ -13,19 +13,20 @@ class_name Door
 
 func set_color(value : Color) -> void:
 	color = value
-	if sprite:
-		sprite.self_modulate = value
-	elif !Engine.is_editor_hint():
-		set_color.call_deferred(value)
+	if !is_node_ready():
+		await ready
+	if !sprite.is_node_ready():
+		await sprite.ready
+	sprite.self_modulate = value
 
 func set_texture(value : Texture2D) -> void:
 	texture = value
-	if sprite:
-		sprite.texture = texture
-		sprite.size = dimensions
-	elif !Engine.is_editor_hint():
-		set_texture.call_deferred(value)
-	
+	if !is_node_ready():
+		await ready
+	if !sprite.is_node_ready():
+		await sprite.ready
+	sprite.texture = texture
+	sprite.size = dimensions
 
 @export var time : float = 1.0
 @export var dimensions : Vector2 = Vector2(50,100) : set = set_dimensions
@@ -33,12 +34,15 @@ var opened : bool = false
 
 func set_dimensions(value : Vector2) -> void:
 	dimensions = value
-	if col && sprite:
-		col.position = dimensions / 2
-		col.shape.size = dimensions
-		sprite.size = dimensions
-	elif !Engine.is_editor_hint():
-		set_dimensions.call_deferred(dimensions)
+	if !is_node_ready():
+		await ready
+	if !col.is_node_ready():
+		await col.ready
+	if !sprite.is_node_ready():
+		await sprite.ready
+	col.position = dimensions / 2
+	col.shape.size = dimensions
+	sprite.size = dimensions
 
 func open(anim : bool = true) -> void:
 	opened = true

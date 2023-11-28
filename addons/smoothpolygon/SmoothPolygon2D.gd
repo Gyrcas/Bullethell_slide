@@ -191,7 +191,6 @@ func _ready() -> void:
 				split_polygon(polygon)
 				queue_free()
 			split_start.call_deferred()
-			
 	else:
 		color.a = 0
 	add_child(outline_node)

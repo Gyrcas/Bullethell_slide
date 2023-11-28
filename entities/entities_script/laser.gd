@@ -25,21 +25,25 @@ var target : Vector2 : set = set_target
 
 func set_target(value : Vector2) -> void:
 	target = value
-	if line:
-		line.points[1] = value
-	elif !Engine.is_editor_hint():
-		set_target.call_deferred(target)
+	if !is_node_ready():
+		await ready
+	if !line.is_node_ready():
+		await line.ready
+	line.points[1] = value
 
 func set_dimensions(value : Vector2) -> void:
 	dimensions = value
 	target = Vector2(0,dimensions.y)
-	if line && col:
-		line.width = dimensions.x
-		line.points[1] = Vector2(0,dimensions.y)
-		col.shape.size = dimensions * dim_col_scale
-		col.position.y = dimensions.y / 2 * dim_col_scale.y
-	elif !Engine.is_editor_hint():
-		set_dimensions.call_deferred(value)
+	if !is_node_ready():
+		await ready
+	if !line.is_node_ready():
+		await line.ready
+	if !col.is_node_ready():
+		await col.ready
+	line.width = dimensions.x
+	line.points[1] = Vector2(0,dimensions.y)
+	col.shape.size = dimensions * dim_col_scale
+	col.position.y = dimensions.y / 2 * dim_col_scale.y
 
 func _ready() -> void:
 	connect("body_entered",_on_body_entered)
