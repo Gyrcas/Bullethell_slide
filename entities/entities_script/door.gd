@@ -15,7 +15,7 @@ func set_color(value : Color) -> void:
 	color = value
 	if sprite:
 		sprite.self_modulate = value
-	else:
+	elif !Engine.is_editor_hint():
 		set_color.call_deferred(value)
 
 func set_texture(value : Texture2D) -> void:
@@ -23,7 +23,7 @@ func set_texture(value : Texture2D) -> void:
 	if sprite:
 		sprite.texture = texture
 		sprite.size = dimensions
-	else:
+	elif !Engine.is_editor_hint():
 		set_texture.call_deferred(value)
 	
 
@@ -37,7 +37,7 @@ func set_dimensions(value : Vector2) -> void:
 		col.position = dimensions / 2
 		col.shape.size = dimensions
 		sprite.size = dimensions
-	else:
+	elif !Engine.is_editor_hint():
 		set_dimensions.call_deferred(dimensions)
 
 func open(anim : bool = true) -> void:
