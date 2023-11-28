@@ -7,8 +7,8 @@ func set_outline(value : bool) -> void:
 	outline = value
 	queue_redraw()
 	
-var outlines : Array[PackedVector2Array] = [] : set = set_outlines
-func set_outlines(value : Array[PackedVector2Array]) -> void:
+var outlines : Array = [] : set = set_outlines
+func set_outlines(value : Array) -> void:
 	outlines = value
 	queue_redraw()
 	

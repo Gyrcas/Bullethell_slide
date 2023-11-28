@@ -144,7 +144,7 @@ func set_ignore_points_outline(value : PackedInt32Array) -> void:
 ## Do not change value of this variable
 @export var smoothed_pol : PackedVector2Array = []
 
-@export var outlines_array : Array[PackedVector2Array] = []
+@export var outlines_array : Array = []
 
 var outline_node : OutlineSmoothPolygon2D = OutlineSmoothPolygon2D.new()
 
