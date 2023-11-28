@@ -67,7 +67,8 @@ func change_scene_to_file(filename : String, mod : String = "") -> void:
 	var tree : SceneTree = get_tree()
 	var level = scene.instantiate()
 	tree.current_scene.queue_free()
-	tree.root.add_child(level)
+	tree.root.add_child.call_deferred(level)
+	await level.ready
 	tree.current_scene = level
 	#tree.change_scene_to_packed(scene)
 	scene_changed.emit()

@@ -1,0 +1,69 @@
+[gd_scene load_steps=2 format=3 uid="uid://buhigym363n5h"]
+
+[sub_resource type="GDScript" id="GDScript_biep7"]
+script/source = "extends Control
+
+@onready var auto_save : Button = $center/buttons/auto_save
+
+func _ready() -> void:
+	await get_tree().create_timer(0.1).timeout
+	auto_save.grab_focus()
+
+func _on_restart_pressed() -> void:
+	Global.change_scene_to_file(\"intro.tscn\")
+
+
+func _on_last_auto_save_pressed() -> void:
+	GS.load_save(GS.auto_save_name)
+
+
+func _on_quit_pressed() -> void:
+	Global.change_scene_to_file(\"main_menu.tscn\")
+"
+
+[node name="death_screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_biep7")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0313726, 0.0313726, 0.0313726, 1)
+
+[node name="center" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="buttons" type="VBoxContainer" parent="center"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="center/buttons"]
+layout_mode = 2
+text = "You lost"
+horizontal_alignment = 1
+
+[node name="auto_save" type="Button" parent="center/buttons"]
+layout_mode = 2
+text = "Auto save"
+
+[node name="restart" type="Button" parent="center/buttons"]
+layout_mode = 2
+text = "Restart"
+
+[node name="quit" type="Button" parent="center/buttons"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="center/buttons/auto_save" to="." method="_on_last_auto_save_pressed"]
+[connection signal="pressed" from="center/buttons/restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="center/buttons/quit" to="." method="_on_quit_pressed"]

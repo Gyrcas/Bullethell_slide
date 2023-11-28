@@ -13,7 +13,7 @@ var destination : Vector2 = Vector2.ZERO
 var hole_scene : PackedScene
 
 func _ready() -> void:
-	hole_scene = NodeLinker.request_resource("blackhole.tscn")
+	hole_scene = await NodeLinker.request_resource("blackhole.tscn")
 	check_dependance()
 	_on_move_timer_timeout()
 	bullet_preset.target_node = Global.player

@@ -122,7 +122,7 @@ func _input(event : InputEvent) -> void:
 		if interaction:
 			interaction.interact()
 		elif dying:
-			GS.load_save(GS.auto_save_name)
+			on_death()
 	if event.is_action_pressed("projectile_1"):
 		change_bullet_type("default")
 	if event.is_action_pressed("projectile_2"):
@@ -156,11 +156,15 @@ func _on_auto_target_body_exited(node : Node2D) -> void:
 
 signal end_anim_done
 
+func on_death() -> void:
+	Global.change_scene_to_file("death_screen.tscn")
+	#GS.load_save(GS.auto_save_name)
+
 func _on_anim_animation_finished(anim_name : String) -> void:
 	match anim_name:
 		"death":
 			anim.play("death_message")
 		"death_message":
-			GS.load_save(GS.auto_save_name)
+			on_death()
 		"end":
 			end_anim_done.emit()
