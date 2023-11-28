@@ -27,7 +27,7 @@ func set_target(value : Vector2) -> void:
 	target = value
 	if line:
 		line.points[1] = value
-	else:
+	elif !Engine.is_editor_hint():
 		set_target.call_deferred(target)
 
 func set_dimensions(value : Vector2) -> void:
@@ -38,7 +38,7 @@ func set_dimensions(value : Vector2) -> void:
 		line.points[1] = Vector2(0,dimensions.y)
 		col.shape.size = dimensions * dim_col_scale
 		col.position.y = dimensions.y / 2 * dim_col_scale.y
-	else:
+	elif !Engine.is_editor_hint():
 		set_dimensions.call_deferred(value)
 
 func _ready() -> void:
