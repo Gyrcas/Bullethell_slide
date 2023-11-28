@@ -60,6 +60,7 @@ func load_mod(mod_name : String, path : String = FS.root_dir() + mod_folder + mo
 			#ResourceSaver cause the "Transient parent has another exclusive child." error
 			ResourceSaver.save(pack,real_file)
 			base.queue_free()
+			#nodelinker 54: cannot assign contents of "Array[PackedVector2Array]" to "Array[String]"
 
 func remove_mod(mod_name : String, path : String = FS.root_dir() + mod_folder + mod_name + "/") -> void:
 	var mod_path : String = FS.root_dir() + mod_folder + mod_name + "/"
