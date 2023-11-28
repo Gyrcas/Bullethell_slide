@@ -157,7 +157,7 @@ func _on_auto_target_body_exited(node : Node2D) -> void:
 signal end_anim_done
 
 func on_death() -> void:
-	Global.change_scene_to_file("death_screen.tscn")
+	Global.change_scene_to_file("end_screen.tscn")
 	#GS.load_save(GS.auto_save_name)
 
 func _on_anim_animation_finished(anim_name : String) -> void:

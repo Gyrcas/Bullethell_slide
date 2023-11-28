@@ -57,7 +57,7 @@ func _input(event : InputEvent) -> void:
 		end()
 
 func end() -> void:
-	Global.change_scene_to_file(\"main_menu.tscn\")
+	Global.change_scene_to_file(\"end_screen.tscn\")
 
 func _on_anim_animation_finished(anim_name : String) -> void:
 	if anim_name == \"end\":
