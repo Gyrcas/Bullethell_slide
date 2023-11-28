@@ -70,14 +70,16 @@ func change_scene_to_file(filename : String, mod : String = "") -> void:
 	tree.root.add_child(level)
 	tree.current_scene = level
 	#tree.change_scene_to_packed(scene)
-	add_debug.call_deferred()
 	scene_changed.emit()
+	add_debug.call_deferred()
+	print("Scene changed--------------------------")
+	Node.print_orphan_nodes()
 
 signal scene_changed
 
 func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("skip_to_end"):
-		change_scene_to_file("end_demo.tscn")
+		Global.change_scene_to_file("end_demo.tscn")
 	elif event.is_action_pressed("mute"):
 		AudioPlayer.muted = !AudioPlayer.muted
 

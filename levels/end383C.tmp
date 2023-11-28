@@ -13,10 +13,11 @@ script/source = "extends Node2D
 const speed_by_pixel : float = 100
 
 func create_credits() -> void:
+	await Global.scene_changed
 	var music_id : String = AudioPlayer.play(\"musics/SpaceFMin.mp3\")
 	AudioPlayer.set_bus_by_name(music_id,\"Music\")
 	AudioPlayer.set_audio_process_mode(music_id,PROCESS_MODE_ALWAYS)
-	var lines : Array = FS.read(await NodeLinker.request_resource(\"credits.txt\",true)).split(\"\\n\")
+	var lines : Array = FS.read(NodeLinker.request_resource(\"credits.txt\",true)).split(\"\\n\")
 	for i in lines.size():
 		var split : Array = lines[i].split(\"\\t\")
 		var keep_tabs : int = 0
@@ -44,7 +45,6 @@ func create_credits() -> void:
 	anim.play(\"start\")
 
 func _ready() -> void:
-	await Global.scene_changed
 	create_credits.call_deferred()
 	
 func roll_credits() -> void:

@@ -39,6 +39,7 @@ func play_music(_file : String = \"\") -> void:
 	AudioPlayer.add_callback(music_id, play_music)
 
 func _ready() -> void:
+	await Global.scene_changed
 	GS.reset_data()
 	play_music()
 	anim.play(\"start\")
