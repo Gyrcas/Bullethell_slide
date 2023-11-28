@@ -33,7 +33,7 @@ func die() -> void:
 	can_shoot = false
 	shoot_timer.stop()
 	if !death_particles_scene:
-		death_particles_scene = NodeLinker.request_resource("death_particles.tscn")
+		death_particles_scene = await NodeLinker.request_resource("death_particles.tscn")
 	var particles : DeathParticles = death_particles_scene.instantiate()
 	particles.global_position = global_position
 	particles.lifetime = 3
@@ -74,7 +74,7 @@ func check_dependance() -> void:
 		push_warning("AnimationPlayer anim not set")
 	if !anim.has_animation("death"):
 		var library : AnimationLibrary = AnimationLibrary.new()
-		library.add_animation("death",NodeLinker.request_resource("death_animation.res"))
+		library.add_animation("death",await NodeLinker.request_resource("death_animation.res"))
 		anim.add_animation_library("library",library)
 		push_warning("animation player doesn't have the animation death")
 	if !anim.is_connected("animation_finished",_on_anim_animation_finished):
@@ -82,7 +82,7 @@ func check_dependance() -> void:
 		push_warning("anim animation_finished not connected to _on_anim_animation_finished")
 
 func _ready() -> void:
-	death_particles_scene = NodeLinker.request_resource("death_particles.tscn")
+	death_particles_scene = await NodeLinker.request_resource("death_particles.tscn")
 	check_dependance()
 	bullet_preset.sender = self
 

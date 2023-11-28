@@ -6,6 +6,10 @@ const mod_folder : String = "mods/"
 
 var data : Dictionary = {}
 
+var is_data_loaded : bool = false
+
+signal data_loaded
+
 func load_data_file() -> void:
 	data = JSON.parse_string(FS.read(save_file))
 	var dup : Dictionary = data.duplicate()
@@ -17,6 +21,8 @@ func load_data_file() -> void:
 			data[key].res = load(data[key].str)
 	if data != dup:
 		FS.write(save_file,JSON.stringify(data))
+	is_data_loaded = true
+	data_loaded.emit()
 
 var active_mods : Array = []
 
@@ -25,7 +31,7 @@ func get_mods_list() -> PackedStringArray:
 
 func apply_mods(old_mods : Array = []) -> void:
 	FS.write(
-		request_resource("active_mods.json",true),
+		await request_resource("active_mods.json",true),
 		JSON.stringify(active_mods)
 	)
 	for mod in old_mods:
@@ -34,7 +40,7 @@ func apply_mods(old_mods : Array = []) -> void:
 
 func fetch_mods() -> void:
 	active_mods = JSON.parse_string(
-		FS.read(request_resource("active_mods.json",true))
+		FS.read(await request_resource("active_mods.json",true))
 	)
 
 func load_mods() -> void:
@@ -106,6 +112,8 @@ func search(path : String, content : String, ignore_godot_folder : bool = true) 
 	return null
 
 func request_resource(filename : String, only_path : bool = false, ignore_godot_folder : bool = true) -> Variant:
+	if !is_data_loaded:
+		await data_loaded
 	if data.keys().has(filename) && FS.exist(data[filename].str):
 		return data[filename].res if data[filename].keys().has("res") && !only_path else data[filename].str
 	var result : Variant = search(OS.get_executable_path().get_base_dir() + "/",filename, ignore_godot_folder)

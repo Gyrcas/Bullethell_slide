@@ -39,6 +39,7 @@ var tween : Tween
 
 func _ready() -> void:
 	opacity = 0
+	await get_tree().create_timer(0.1).timeout
 	start.grab_focus()
 	play_music()
 	tween = create_tween()

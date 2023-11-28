@@ -12,7 +12,8 @@ var current_view : Control
 func _ready() -> void:
 	visible = false
 	for i in views_array.size():
-		var v : PauseMenuView = NodeLinker.request_resource(views_array[i]).instantiate()
+		var scene : PackedScene = await NodeLinker.request_resource(views_array[i])
+		var v : PauseMenuView = scene.instantiate()
 		if i == 0:
 			current_view = v
 		v.pause_menu = self

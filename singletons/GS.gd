@@ -1,7 +1,7 @@
 extends Node
 
 const auto_save_name : String = "auto save"
-var save_location : String = NodeLinker.request_resource("saves",true) + "/"
+var save_location : String = await NodeLinker.request_resource("saves",true) + "/"
 var save_loaded : bool = false
 
 var base_data : Dictionary = {

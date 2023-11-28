@@ -17,5 +17,4 @@ func _on_apply_pressed() -> void:
 	for mod_tab in mod_list.get_children():
 		if mod_tab.button_pressed:
 			NodeLinker.active_mods.append(mod_tab.text)
-	print(old_mods)
 	NodeLinker.apply_mods(old_mods)

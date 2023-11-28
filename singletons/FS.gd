@@ -13,6 +13,8 @@ func write(file_path : String, content : String) -> void:
 	if !is_dir(file_path.get_base_dir()):
 		push_error(file_path + " is not a file")
 		return
+	if "nodelinker_data" in file_path:
+		print(get_stack())
 	var file : FileAccess = FileAccess.open(file_path,FileAccess.WRITE)
 	file.store_string(content)
 

@@ -74,7 +74,7 @@ func collide(collision) -> void:
 	die()
 
 func _ready() -> void:
-	death_particles_scene = NodeLinker.request_resource("death_particles.tscn")
+	death_particles_scene = await NodeLinker.request_resource("death_particles.tscn")
 	sprite.color = color
 
 func _physics_process(delta : float) -> void:

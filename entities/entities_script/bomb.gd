@@ -9,7 +9,7 @@ func _draw() -> void:
 var blast_zone : Area2D = Area2D.new()
 
 func _ready() -> void:
-	death_particles_scene = NodeLinker.request_resource("death_particles.tscn")
+	death_particles_scene = await NodeLinker.request_resource("death_particles.tscn")
 	add_child.call_deferred(blast_zone)
 	var col : CollisionShape2D = CollisionShape2D.new()
 	col.shape = CircleShape2D.new()
@@ -32,7 +32,7 @@ func die() -> void:
 	if sender != null:
 		sender.nano += nano
 	if !death_particles_scene:
-		death_particles_scene = NodeLinker.request_resource("death_particles.tscn")
+		death_particles_scene = await NodeLinker.request_resource("death_particles.tscn")
 	var particles : DeathParticles = death_particles_scene.instantiate()
 	particles.global_position = global_position
 	particles.lifetime = 5

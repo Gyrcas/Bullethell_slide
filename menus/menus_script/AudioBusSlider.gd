@@ -33,7 +33,7 @@ func on_focus() -> void:
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	settings_file = NodeLinker.request_resource("settings.json",true)
+	settings_file = await NodeLinker.request_resource("settings.json",true)
 	var settings : Dictionary = JSON.parse_string(FS.read(settings_file))
 	if !settings.get("volume"):
 		settings["volume"] = {}

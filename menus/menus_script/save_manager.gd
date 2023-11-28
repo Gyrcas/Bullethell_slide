@@ -79,7 +79,7 @@ func create_save_tab(file : String, base_file : bool = true) -> SaveTab:
 	return save
 
 func _ready() -> void:
-	save_scene = NodeLinker.request_resource("save_tab.tscn")
+	save_scene = await NodeLinker.request_resource("save_tab.tscn")
 	load_saves()
 	if !pause_menu.views.get_node_or_null("main"):
 		load_save = false

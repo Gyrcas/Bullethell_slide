@@ -21,7 +21,7 @@ var bullet_scene : PackedScene
 
 func _init() -> void:
 	(func():
-		bullet_scene = NodeLinker.request_resource("bullet.tscn")
+		bullet_scene = await NodeLinker.request_resource("bullet.tscn")
 	).call_deferred()
 
 func instantiate() -> Bullet:

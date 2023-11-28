@@ -190,7 +190,7 @@ func remove_input(action : String,input : InputEvent) -> void:
 	load_inputs()
 
 func _ready() -> void:
-	settings_file = NodeLinker.request_resource("settings.json",true)
+	settings_file = await NodeLinker.request_resource("settings.json",true)
 	var scroll : ScrollContainer = ScrollContainer.new()
 	scroll.size = size
 	add_child(scroll)

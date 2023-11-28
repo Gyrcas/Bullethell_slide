@@ -61,3 +61,5 @@ one_shot = true
 explosiveness = 1.0
 visibility_rect = Rect2(-5000, -5000, 10000, 10000)
 trail_enabled = true
+
+[node name="lifetime_timer" type="Timer" parent="."]

@@ -44,7 +44,7 @@ func add_debug() -> void:
 func _ready() -> void:
 	add_debug.call_deferred()
 	var settings : Dictionary = JSON.parse_string(FS.read(
-		NodeLinker.request_resource("settings.json",true)
+		await NodeLinker.request_resource("settings.json",true)
 	))
 	if !settings.has("window_type"):
 		settings["window_type"] = 0
@@ -54,20 +54,26 @@ func _ready() -> void:
 		1:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 
-# Made longer because caused unknown crash before
 func change_scene_to_file(filename : String, mod : String = "") -> void:
 	var path : String = ""
 	if mod != "":
 		path = FS.root_dir() + NodeLinker.mod_folder + mod + "/" + filename
 	else:
-		path = NodeLinker.request_resource(filename,true)
+		path = await NodeLinker.request_resource(filename,true)
 	if !FS.is_file(path):
 		push_error(path + " is not a file")
 		return
 	var scene : PackedScene = load(path)
 	var tree : SceneTree = get_tree()
-	tree.change_scene_to_packed(scene)
+	var level = scene.instantiate()
+	tree.current_scene.queue_free()
+	tree.root.add_child(level)
+	tree.current_scene = level
+	#tree.change_scene_to_packed(scene)
 	add_debug.call_deferred()
+	scene_changed.emit()
+
+signal scene_changed
 
 func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("skip_to_end"):
@@ -80,7 +86,7 @@ func play_dialogue_player(filename : String, variables : Dictionary = {}, give_c
 	tween.tween_property(player,"velocity",Vector2.ZERO,1)
 	player.controllable = false
 	player.dialogue.variables = variables
-	player.dialogue.play(NodeLinker.request_resource(filename,true))
+	player.dialogue.play(await NodeLinker.request_resource(filename,true))
 	await player.dialogue.finished
 	await get_tree().create_timer(0.1).timeout
 	if give_control_back:
