@@ -197,7 +197,8 @@ func _ready() -> void:
 	
 func _notification(what : int) -> void:
 	if what == NOTIFICATION_PREDELETE:
-		outline_node.queue_free()
+		if weakref(outline_node).get_ref():
+			outline_node.queue_free()
 
 #Smooth the given polygon by using a curve2D to make a smooth transition between the points.
 #Return the smoothed polygon as "polygon", the rect values as "top","bottom","left" and "right",

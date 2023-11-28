@@ -11,7 +11,8 @@ func _init() -> void:
 
 func _notification(what : int) -> void:
 	if what == NOTIFICATION_PREDELETE:
-		col.queue_free()
+		if weakref(col).get_ref():
+			col.queue_free()
 
 func _ready() -> void:
 	super()
