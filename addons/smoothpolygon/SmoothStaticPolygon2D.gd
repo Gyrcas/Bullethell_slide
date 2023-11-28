@@ -9,6 +9,10 @@ func _init() -> void:
 	super()
 	_class.append("SmoothStaticPolygon2D")
 
+func _notification(what : int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		col.queue_free()
+
 func _ready() -> void:
 	super()
 	if !Engine.is_editor_hint():

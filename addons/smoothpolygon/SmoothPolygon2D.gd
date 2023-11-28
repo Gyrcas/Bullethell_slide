@@ -194,6 +194,10 @@ func _ready() -> void:
 	else:
 		color.a = 0
 	add_child(outline_node)
+	
+func _notification(what : int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		outline_node.queue_free()
 
 #Smooth the given polygon by using a curve2D to make a smooth transition between the points.
 #Return the smoothed polygon as "polygon", the rect values as "top","bottom","left" and "right",

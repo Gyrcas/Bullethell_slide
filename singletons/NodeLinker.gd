@@ -52,6 +52,8 @@ func load_mod(mod_name : String, path : String = FS.root_dir() + mod_folder + mo
 				continue
 			var pack : PackedScene = load(real_file)
 			var base : Node = pack.instantiate()
+			base.queue_free()
+			continue
 			var addon : Node = load(file).instantiate()
 			base.add_child(addon)
 			addon.add_to_group("mod_"+mod_name,true)
@@ -60,7 +62,6 @@ func load_mod(mod_name : String, path : String = FS.root_dir() + mod_folder + mo
 			#ResourceSaver cause the "Transient parent has another exclusive child." error
 			ResourceSaver.save(pack,real_file)
 			base.queue_free()
-			#nodelinker 54: cannot assign contents of "Array[PackedVector2Array]" to "Array[String]"
 
 func remove_mod(mod_name : String, path : String = FS.root_dir() + mod_folder + mod_name + "/") -> void:
 	var mod_path : String = FS.root_dir() + mod_folder + mod_name + "/"
@@ -73,6 +74,8 @@ func remove_mod(mod_name : String, path : String = FS.root_dir() + mod_folder + 
 				continue
 			var pack : PackedScene = load(real_file)
 			var node : Node = pack.instantiate()
+			node.queue_free()
+			continue
 			for child in node.get_children():
 				if child.is_in_group("mod_"+mod_name):
 					child.free()
