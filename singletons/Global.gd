@@ -63,18 +63,9 @@ func change_scene_to_file(filename : String, mod : String = "") -> void:
 	if !FS.is_file(path):
 		push_error(path + " is not a file")
 		return
-	var scene : PackedScene = load(path)
-	var tree : SceneTree = get_tree()
-	var level = scene.instantiate()
-	tree.current_scene.queue_free()
-	tree.root.add_child.call_deferred(level)
-	await level.ready
-	tree.current_scene = level
+	get_tree().change_scene_to_file(path)
 	#tree.change_scene_to_packed(scene)
 	scene_changed.emit()
-	add_debug.call_deferred()
-	print("Scene changed--------------------------")
-	Node.print_orphan_nodes()
 
 signal scene_changed
 

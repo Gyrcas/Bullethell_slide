@@ -44,7 +44,6 @@ func create_credits() -> void:
 	anim.play(\"start\")
 
 func _ready() -> void:
-	await Global.scene_changed
 	create_credits.call_deferred()
 	
 func roll_credits() -> void:

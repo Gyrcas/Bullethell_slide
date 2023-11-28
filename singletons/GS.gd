@@ -13,7 +13,7 @@ var base_data : Dictionary = {
 var data : Dictionary = base_data
 
 func reset_data() -> void:
-	data = base_data
+	data = base_data.duplicate()
 
 func save(savename : String) -> String:
 	data.datetime = Time.get_datetime_string_from_system(false,true)
