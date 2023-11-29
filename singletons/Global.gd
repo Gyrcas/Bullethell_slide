@@ -59,6 +59,7 @@ func change_scene_to_file(filename : String, mod : String = "") -> void:
 	if mod != "":
 		path = FS.root_dir() + NodeLinker.mod_folder + mod + "/" + filename
 	else:
+		
 		path = await NodeLinker.request_resource(filename,true)
 	if !FS.is_file(path):
 		push_error(path + " is not a file")
