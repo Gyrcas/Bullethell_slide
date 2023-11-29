@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://d228b1lhliiqr"]
+[gd_scene load_steps=23 format=3 uid="uid://pje7e54fbw6b"]
 
 [ext_resource type="Script" path="res://entities/entities_script/player.gd" id="1_mah8r"]
 [ext_resource type="Script" path="res://resources/PolygonBody.gd" id="2_h6qts"]
@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" path="res://ui/dialogue.tscn" id="7_mf1iq"]
 [ext_resource type="Script" path="res://ui/ui_script/perks.gd" id="7_o73hs"]
 
-[sub_resource type="Resource" id="Resource_qd2be"]
+[sub_resource type="Resource" id="Resource_vfyaq"]
 resource_local_to_scene = true
 script = ExtResource("2_je2js")
 ignore_sender = true
@@ -232,7 +232,7 @@ wall_min_slide_angle = 3.14159
 platform_on_leave = 2
 safe_margin = 0.1
 script = ExtResource("1_mah8r")
-bullet_preset = SubResource("Resource_qd2be")
+bullet_preset = SubResource("Resource_vfyaq")
 
 [node name="body" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-14, -14, 31, 0, -14, 13, -12, 0)
