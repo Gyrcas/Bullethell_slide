@@ -63,8 +63,10 @@ func change_scene_to_file(filename : String, mod : String = "") -> void:
 	if !FS.is_file(path):
 		push_error(path + " is not a file")
 		return
+	var tweens : Array = get_tree().get_processed_tweens()
+	for tween in tweens:
+		tween.kill()
 	get_tree().change_scene_to_file(path)
-	#tree.change_scene_to_packed(scene)
 	scene_changed.emit()
 
 signal scene_changed
