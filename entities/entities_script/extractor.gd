@@ -15,7 +15,6 @@ var hole_scene : PackedScene = await NodeLinker.request_resource("blackhole.tscn
 func _ready() -> void:
 	check_dependance()
 	_on_move_timer_timeout()
-	bullet_preset.target_node = Global.player
 	set_collision_layer_value(Global.auto_target_collision_level,true)
 
 @onready var detection : RayCast2D = $detection
@@ -29,6 +28,7 @@ func _physics_process(delta : float) -> void:
 	var collision = move_and_collide(velocity * Engine.time_scale)
 	if collision:
 		velocity = velocity.bounce(collision.get_normal())
+	bullet_preset.target_node = Global.player
 	detection.target_position = detection.global_position.direction_to(Global.player.global_position) * (detection.global_position.distance_to(Global.player.global_position) + 100)
 	var bullet : Bullet = shoot(
 		detection.get_collider() == Global.player && nano >= bullet_preset.nano && can_shoot

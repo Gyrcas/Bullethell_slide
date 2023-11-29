@@ -112,9 +112,6 @@ func search(path : String, content : String, ignore_godot_folder : bool = true) 
 func request_resource(filename : String, only_path : bool = false, ignore_godot_folder : bool = true) -> Variant:
 	if !is_data_loaded:
 		await data_loaded
-	if "boss_level_1" in filename:
-		print()
-	print(filename)
 	if data.keys().has(filename) && FS.exist(data[filename].str):
 		return data[filename].res if data[filename].keys().has("res") && !only_path else data[filename].str
 	var result : Variant = search(OS.get_executable_path().get_base_dir() + "/",filename, ignore_godot_folder)

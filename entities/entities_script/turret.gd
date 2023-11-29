@@ -20,7 +20,6 @@ func _ready() -> void:
 	bullet_preset.rotation = rotation - randf_range(90 - range_angle, 90 + range_angle)
 	bullet_preset.global_position = bullet_spawn_point
 	bullet_preset.velocity = -global_transform.y * 2
-	bullet_preset.target_node = Global.player
 	set_collision_layer_value(Global.auto_target_collision_level,true)
 
 func _physics_process(_delta : float) -> void:
