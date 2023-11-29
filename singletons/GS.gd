@@ -10,7 +10,7 @@ var base_data : Dictionary = {
 	"datetime":"0"
 }
 
-var data : Dictionary = base_data
+var data : Dictionary = base_data.duplicate()
 
 func reset_data() -> void:
 	data = base_data.duplicate()

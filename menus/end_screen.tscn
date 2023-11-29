@@ -54,7 +54,7 @@ horizontal_alignment = 1
 
 [node name="auto_save" type="Button" parent="center/buttons"]
 layout_mode = 2
-text = "Auto save"
+text = "Load from auto save"
 
 [node name="restart" type="Button" parent="center/buttons"]
 layout_mode = 2

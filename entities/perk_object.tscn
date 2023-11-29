@@ -35,7 +35,7 @@ func set_texture(value : Texture2D) -> void:
 		sprite.texture = value
 
 func interact() -> void:
-	Global.player.perks_wheel.perks.append(load(NodeLinker.request_resource(perk_file)).instantiate())
+	Global.player.perks_wheel.perks.append(load(await NodeLinker.request_resource(perk_file,true)).instantiate())
 	interacted.emit()
 	queue_free()
 "

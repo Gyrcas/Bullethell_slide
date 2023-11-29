@@ -54,7 +54,6 @@ func set_nano(value : float) -> void:
 
 func _ready() -> void:
 	check_dependance()
-	
 	anim.play("start")
 	trail.reparent.call_deferred(get_parent())
 	trail.set_deferred("rotation",0)
@@ -119,10 +118,10 @@ func _input(event : InputEvent) -> void:
 		current_target_id += 1
 		do_target()
 	if event.is_action_pressed("interact"):
-		if interaction:
-			interaction.interact()
-		elif dying:
+		if dying:
 			on_death()
+		elif interaction:
+			interaction.interact()
 	if event.is_action_pressed("projectile_1"):
 		change_bullet_type("default")
 	if event.is_action_pressed("projectile_2"):
