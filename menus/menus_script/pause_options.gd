@@ -1,6 +1,6 @@
 extends PauseMenuView
 
-var settings_file : String 
+var settings_file : String = await NodeLinker.request_resource("settings.json",true)
 @onready var inputs : Button = $center/vbox/inputs
 @onready var window_type : OptionButton = $center/vbox/window_type
 
@@ -12,7 +12,6 @@ func on_back_menu() -> void:
 		get_tree().paused = false
 
 func _ready() -> void:
-	settings_file = await NodeLinker.request_resource("settings.json",true)
 	var settings : Dictionary = JSON.parse_string(FS.read(settings_file))
 	if settings.has("window_type"):
 		window_type.selected = settings.window_type

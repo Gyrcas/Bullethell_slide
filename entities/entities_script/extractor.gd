@@ -10,10 +10,9 @@ class_name Extractor
 var can_hole : bool = true
 @onready var move_timer : Timer = $move_timer
 var destination : Vector2 = Vector2.ZERO
-var hole_scene : PackedScene
+var hole_scene : PackedScene = await NodeLinker.request_resource("blackhole.tscn")
 
 func _ready() -> void:
-	hole_scene = await NodeLinker.request_resource("blackhole.tscn")
 	check_dependance()
 	_on_move_timer_timeout()
 	bullet_preset.target_node = Global.player

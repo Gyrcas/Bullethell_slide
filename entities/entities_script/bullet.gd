@@ -6,7 +6,7 @@ class_name Bullet
 
 var color : Color = Color(1,1,1)
 
-var death_particles_scene : PackedScene
+var death_particles_scene : PackedScene = await NodeLinker.request_resource("death_particles.tscn")
 
 var nano : int = 10
 
@@ -74,7 +74,6 @@ func collide(collision) -> void:
 	die()
 
 func _ready() -> void:
-	death_particles_scene = await NodeLinker.request_resource("death_particles.tscn")
 	sprite.color = color
 
 func _physics_process(delta : float) -> void:

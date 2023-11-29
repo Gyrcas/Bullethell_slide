@@ -17,12 +17,7 @@ class_name BulletRes
 @export var color : Color = Color(1,1,1)
 @export_enum("default","bomb") var type : String = "default"
 
-var bullet_scene : PackedScene
-
-func _init() -> void:
-	(func():
-		bullet_scene = await NodeLinker.request_resource("bullet.tscn")
-	).call_deferred()
+var bullet_scene : PackedScene = await NodeLinker.request_resource("bullet.tscn")
 
 func instantiate() -> Bullet:
 	var bullet : Bullet = bullet_scene.instantiate()
