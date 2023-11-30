@@ -52,7 +52,7 @@ func save_to_file() -> void:
 	var settings : Dictionary = JSON.parse_string(FS.read(settings_file))
 	if !settings.has("inputs"):
 		settings["inputs"] = {}
-	var actions : Array = get_actions()
+	var actions : Array = InputsMapper.get_actions()
 	for action in actions:
 		var inputs : Array = InputMap.action_get_events(action)
 		settings["inputs"][action] = []
@@ -97,7 +97,7 @@ func load_file() -> void:
 				InputMap.action_add_event(event_pairing[input],input_event)
 	load_inputs()
 
-func get_actions() -> PackedStringArray:
+static func get_actions() -> PackedStringArray:
 	var actions : PackedStringArray = InputMap.get_actions()
 	var new_actions : PackedStringArray = []
 	for action in actions:
@@ -108,7 +108,7 @@ func get_actions() -> PackedStringArray:
 func load_inputs() -> void:
 	for child in grid.get_children():
 		child.queue_free()
-	var actions : PackedStringArray = get_actions()
+	var actions : PackedStringArray = InputsMapper.get_actions()
 	var inputs : Dictionary = {}
 	grid.columns = 1
 	for action in actions:

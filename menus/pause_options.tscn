@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://h6ov6jkbnx0e"]
 
 [ext_resource type="Script" path="res://menus/menus_script/pause_options.gd" id="1_agj35"]
 [ext_resource type="Script" path="res://menus/menus_script/AudioBusSlider.gd" id="2_3e664"]
@@ -22,20 +22,23 @@ layout_mode = 2
 
 [node name="inputs" type="Button" parent="center/vbox"]
 layout_mode = 2
-focus_neighbor_bottom = NodePath("../volume")
+focus_neighbor_bottom = NodePath("../tuto")
 text = "map inputs"
+
+[node name="tuto" type="Button" parent="center/vbox"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../inputs")
+focus_neighbor_bottom = NodePath("../volume")
+text = "Tutorial
+"
 
 [node name="volume" type="VSplitContainer" parent="center/vbox"]
 layout_mode = 2
-focus_neighbor_top = NodePath("../inputs")
+focus_neighbor_top = NodePath("../tuto")
 focus_neighbor_bottom = NodePath("../dialogue")
 focus_mode = 2
 dragger_visibility = 2
 script = ExtResource("2_3e664")
-text = "Volume"
-bus_name = "Master"
-min_range = -40.0
-max_range = 10.0
 
 [node name="dialogue" type="VSplitContainer" parent="center/vbox"]
 layout_mode = 2
@@ -44,8 +47,6 @@ focus_neighbor_bottom = NodePath("../music")
 script = ExtResource("2_3e664")
 text = "Dialogue"
 bus_name = "Dialogue"
-min_range = -40.0
-max_range = 10.0
 
 [node name="music" type="VSplitContainer" parent="center/vbox"]
 layout_mode = 2
@@ -54,8 +55,6 @@ focus_neighbor_bottom = NodePath("../vfx")
 script = ExtResource("2_3e664")
 text = "Music"
 bus_name = "Music"
-min_range = -40.0
-max_range = 10.0
 
 [node name="vfx" type="VSplitContainer" parent="center/vbox"]
 layout_mode = 2
@@ -64,8 +63,6 @@ focus_neighbor_bottom = NodePath("../window_type")
 script = ExtResource("2_3e664")
 text = "VFX"
 bus_name = "VFX"
-min_range = -40.0
-max_range = 10.0
 
 [node name="window_type_lbl" type="Label" parent="center/vbox"]
 layout_mode = 2
@@ -82,4 +79,5 @@ popup/item_1/text = "Fullscreen"
 popup/item_1/id = 1
 
 [connection signal="pressed" from="center/vbox/inputs" to="." method="_on_inputs_pressed" flags=18]
+[connection signal="pressed" from="center/vbox/tuto" to="." method="_on_tuto_pressed"]
 [connection signal="item_selected" from="center/vbox/window_type" to="." method="_on_window_type_item_selected" flags=18]

@@ -32,3 +32,7 @@ func _on_window_type_item_selected(index : int) -> void:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		1:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+
+
+func _on_tuto_pressed() -> void:
+	pause_menu.change_view("menu_tuto")

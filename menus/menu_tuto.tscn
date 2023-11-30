@@ -1,0 +1,73 @@
+[gd_scene load_steps=2 format=3 uid="uid://baogv5t1en7no"]
+
+[sub_resource type="GDScript" id="GDScript_7rhso"]
+script/source = "extends PauseMenuView
+
+@onready var inputs : VBoxContainer = $scroll/inputs
+
+const texts : Dictionary = {
+	\"interact\":\"Press \\\"#{key}\\\" to interact with things like the scientist pod or the perk object.\",
+	\"left_click\":\"Press \\\"#{key}\\\" to shoot and select a perk in the perk wheel.\",
+	\"right_click\":\"Press \\\"#{key}\\\" to place a target for the bullets. Double click to remove target. Bullets will follow mouse when there is not target.\",
+	\"back\":\"Press \\\"#{key}\\\" to open the pause menu and to go back while in the pause menu.\",
+	\"up\":\"Press \\\"#{key}\\\" to go forward or to navigate up in the menus.\",
+	\"down\":\"Press \\\"#{key}\\\" to go backward or to navigate down in the menus.\",
+	\"left\":\"Press \\\"#{key}\\\" to turn left or to navigate left in the menus.\",
+	\"right\":\"Press \\\"#{key}\\\" to turn right or to navigate right in the menus.\",
+	\"projectile_1\":\"Press \\\"#{key}\\\" to change projectile to bullet.\",
+	\"projectile_2\":\"Press \\\"#{key}\\\" to change projectile to bomb.\",
+	\"perks\":\"Press \\\"#{key}\\\" to open the perk wheel. While in the perk wheel, click on a perk to select it. Once it's selected, a red circle will be displayed to show the range of the perk. Click where you want to execute the perk.\",
+	\"debug\":\"Press \\\"#{key}\\\" to open or close the debug overlay.\",
+	\"skip_to_end\":\"Press \\\"#{key}\\\" to skip to the end of the game.\",
+	\"mute\":\"Press \\\"#{key}\\\" to mute or unmute the game.\",
+	\"auto_target\":\"Press \\\"#{key}\\\" to auto target an enemy or target the next enemy.\"
+}
+
+func on_back_menu() -> void:
+	pause_menu.change_view(\"options\")
+
+func open_close(opening : bool) -> void:
+	if !opening:
+		return
+	for child in inputs.get_children():
+		child.queue_free()
+	var actions : Array = InputsMapper.get_actions()
+	for action in actions:
+		var label : Label = Label.new()
+		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		var key : String = InputMap.action_get_events(action)[0].as_text()
+		label.text = texts[action] if texts.get(action) else \"N/A \" + action
+		label.text = label.text.replace(\"#{key}\",key)
+		inputs.add_child(label)
+		label = Label.new()
+		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		label.text = \"-------------------------------------\"
+		inputs.add_child(label)
+"
+
+[node name="menu_tuto" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_7rhso")
+
+[node name="scroll" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="inputs" type="VBoxContainer" parent="scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
