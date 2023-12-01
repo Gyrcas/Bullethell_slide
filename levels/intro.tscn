@@ -1,10 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://dk6jx335yxa0o"]
+[gd_scene load_steps=24 format=3]
 
-[ext_resource type="Texture2D" uid="uid://3o2ppqrp0py7" path="res://textures/stars.png" id="1_1f1so"]
-[ext_resource type="Texture2D" uid="uid://cp5roovi7se7x" path="res://textures/planet.png" id="2_rqexs"]
+[ext_resource type="Texture2D" path="res://textures/stars.png" id="1_1f1so"]
+[ext_resource type="Texture2D" path="res://textures/planet.png" id="2_rqexs"]
 [ext_resource type="Script" path="res://resources/CustomDialoguePlayer.gd" id="3_hnlps"]
-[ext_resource type="Texture2D" uid="uid://bvqkegii4jywk" path="res://textures/ship.png" id="4_two8p"]
-[ext_resource type="Texture2D" uid="uid://dm8gav5stwvra" path="res://textures/spot.png" id="5_jvjob"]
+[ext_resource type="Texture2D" path="res://textures/ship.png" id="4_two8p"]
+[ext_resource type="Texture2D" path="res://textures/spot.png" id="5_jvjob"]
 
 [sub_resource type="GDScript" id="GDScript_nqdti"]
 script/source = "extends Node2D
@@ -569,7 +569,9 @@ script = ExtResource("3_hnlps")
 action_next = "interact"
 button_container = NodePath("../text")
 text_node = NodePath("../text")
+use_typewritter = true
 typewritter_speed = 0.05
+variables = {}
 
 [node name="ship" type="Sprite2D" parent="."]
 position = Vector2(-208, 333)

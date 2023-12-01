@@ -23,7 +23,14 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="mod_list" type="VBoxContainer" parent="vbox/scroll"]
+[node name="split" type="HSplitContainer" parent="vbox/scroll"]
+layout_mode = 2
+dragger_visibility = 2
+
+[node name="mod_list" type="VBoxContainer" parent="vbox/scroll/split"]
+layout_mode = 2
+
+[node name="buttons" type="VBoxContainer" parent="vbox/scroll/split"]
 layout_mode = 2
 
 [node name="buttons" type="HBoxContainer" parent="vbox"]
@@ -32,5 +39,9 @@ layout_mode = 2
 [node name="apply" type="Button" parent="vbox/buttons"]
 layout_mode = 2
 text = "Apply"
+
+[node name="warning" type="Label" parent="vbox/buttons"]
+layout_mode = 2
+text = "Some mods need a game restart to install or uninstall"
 
 [connection signal="pressed" from="vbox/buttons/apply" to="." method="_on_apply_pressed" flags=18]

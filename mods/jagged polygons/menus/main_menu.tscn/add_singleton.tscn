@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwmbeqq4ho2i5"]
+
+[sub_resource type="GDScript" id="GDScript_4er1k"]
+script/source = "extends Node
+
+func _ready():
+	var singleton = load(NodeLinker.get_mod_path(\"jagged polygons\") + \"jaggleton.gd\")
+	get_tree().root.add_child.call_deferred(singleton.new())
+"
+
+[node name="add_singleton" type="Node"]
+script = SubResource("GDScript_4er1k")

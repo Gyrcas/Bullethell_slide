@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1wogyk4ii7xr"]
+
+[sub_resource type="GDScript" id="GDScript_bqf5y"]
+script/source = "extends Node2D
+
+func _ready():
+	get_parent().queue_free()
+"
+
+[node name="byebye" type="Node2D"]
+script = SubResource("GDScript_bqf5y")

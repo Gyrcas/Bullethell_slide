@@ -19,6 +19,6 @@ func _ready() -> void:
 	blast.scale_amount_min = lifetime * 2
 	sparkle.emitting = true
 	blast.emitting = true
-	lifetime_timer.start(lifetime * 5)
+	lifetime_timer.start(lifetime)
 	await lifetime_timer.timeout
 	queue_free()

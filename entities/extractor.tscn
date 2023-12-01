@@ -1,11 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://docggmrtco8vd"]
+[gd_scene load_steps=8 format=3 uid="uid://ynktybnwe6n2"]
 
 [ext_resource type="Script" path="res://entities/entities_script/extractor.gd" id="1_sq0fq"]
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="2_rkbe8"]
 [ext_resource type="Texture2D" uid="uid://cm12sdyt03knq" path="res://icon.svg" id="3_rasb6"]
 [ext_resource type="Animation" uid="uid://bqe02inrdvmmd" path="res://resources/animation/death_animation.res" id="4_ja6nq"]
 
-[sub_resource type="Resource" id="Resource_eayyw"]
+[sub_resource type="Resource" id="Resource_nw3ps"]
 resource_local_to_scene = true
 script = ExtResource("2_rkbe8")
 ignore_sender = false
@@ -33,7 +33,7 @@ _data = {
 [node name="extractor" type="CharacterBody2D"]
 script = ExtResource("1_sq0fq")
 shoot_cooldown = 5.0
-bullet_preset = SubResource("Resource_eayyw")
+bullet_preset = SubResource("Resource_nw3ps")
 max_speed = 5.0
 move_speed = 1.0
 

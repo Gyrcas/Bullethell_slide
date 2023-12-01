@@ -179,8 +179,11 @@ func _draw() -> void:
 	
 	outline_node.outlines = outlines_array
 
+var base_polygon : PackedVector2Array = []
+
 func _ready() -> void:
 	if !Engine.is_editor_hint():
+		base_polygon = polygon
 		polygon = smoothed_pol
 		outline_node.outlines = outlines_array.duplicate()
 		smoothed_pol.clear()

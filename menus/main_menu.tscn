@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://h632u4hd5rep"]
+[gd_scene load_steps=6 format=3 uid="uid://cpfsbo8krytnv"]
 
 [ext_resource type="Script" path="res://menus/menus_script/main_menu.gd" id="1_2jd54"]
 [ext_resource type="PackedScene" uid="uid://dh66vw8ss4rlv" path="res://menus/pause_menu.tscn" id="2_t1veq"]
@@ -52,7 +52,7 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fm780"]
 shader = SubResource("Shader_q0ofh")
-shader_parameter/opacity = 0.0
+shader_parameter/opacity = 0.0173703
 
 [node name="main_menu" type="Control"]
 layout_mode = 3

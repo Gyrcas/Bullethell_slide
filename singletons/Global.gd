@@ -130,3 +130,7 @@ func get_actions_as_text(action : String) -> String:
 	if events.size() == 0:
 		return ""
 	return events[0].as_text()
+
+func restart_game() -> void:
+	OS.execute(OS.get_executable_path(), [])
+	get_tree().quit()
