@@ -6,6 +6,7 @@ script/source = "extends Node
 func _ready() -> void:
 	var player : Player = get_parent()
 	player.max_speed = 10000000
+	player.move_speed = 500 
 "
 
 [node name="speed_boi" type="Node"]

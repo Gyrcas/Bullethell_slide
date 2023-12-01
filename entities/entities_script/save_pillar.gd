@@ -1,4 +1,5 @@
 extends Interactable
+class_name SavePillar
 
 func interact() -> void:
 	if Global.player.dying:

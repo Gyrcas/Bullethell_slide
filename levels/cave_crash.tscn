@@ -1,16 +1,16 @@
-[gd_scene load_steps=63 format=3 uid="uid://cfcvssojc2pr8"]
+[gd_scene load_steps=63 format=3 uid="uid://b36jdywxtq5y4"]
 
 [ext_resource type="Script" path="res://addons/smoothpolygon/SmoothPolygon2D.gd" id="1_wdskp"]
 [ext_resource type="Texture2D" uid="uid://bvqkegii4jywk" path="res://textures/ship.png" id="2_0sblj"]
 [ext_resource type="Script" path="res://addons/smoothpolygon/SmoothStaticPolygon2D.gd" id="3_2ktvo"]
 [ext_resource type="PackedScene" uid="uid://con7hjkkaviqn" path="res://entities/door.tscn" id="4_336vv"]
-[ext_resource type="PackedScene" uid="uid://rar625uhfv1y" path="res://entities/player.tscn" id="4_mqsbn"]
+[ext_resource type="PackedScene" uid="uid://bji3sr6nn0s62" path="res://entities/player.tscn" id="4_mqsbn"]
 [ext_resource type="PackedScene" uid="uid://cksrr1rdojrue" path="res://entities/save_pillar.tscn" id="4_x3wy6"]
 [ext_resource type="Texture2D" uid="uid://bu47foj0xu6hr" path="res://textures/pixel.png" id="5_2upfm"]
 [ext_resource type="PackedScene" uid="uid://c4b0c0h1gmwi3" path="res://entities/scientist_pod.tscn" id="6_jdkdk"]
 [ext_resource type="Texture2D" uid="uid://dm8gav5stwvra" path="res://textures/spot.png" id="6_trcpa"]
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="7_4ea8p"]
-[ext_resource type="PackedScene" path="res://entities/turret.tscn" id="7_tj60k"]
+[ext_resource type="PackedScene" uid="uid://bypokp6tfcxpe" path="res://entities/turret.tscn" id="7_tj60k"]
 [ext_resource type="Texture2D" uid="uid://djlc7eem47xeb" path="res://textures/pipo-nazoobj01a_192.png" id="11_uow0h"]
 [ext_resource type="PackedScene" uid="uid://droptbsmlp3fe" path="res://entities/laser.tscn" id="13_xknin"]
 [ext_resource type="Script" path="res://entities/entities_script/laser_trap.gd" id="14_fvlcm"]
@@ -18,6 +18,7 @@
 
 [sub_resource type="GDScript" id="GDScript_6arar"]
 script/source = "extends Node2D
+class_name cave_crash
 
 @onready var door : Door = $door
 @onready var cinematic : Area2D = $cinematic
@@ -88,14 +89,13 @@ func _on_scientist_pod_interacted() -> void:
 		
 "
 
-[sub_resource type="Resource" id="Resource_4rcjp"]
+[sub_resource type="Resource" id="Resource_47k0j"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
 max_speed = 15.0
 move_speed = 2.5
 turn_speed = 10.0
-target_position = Vector2(0, 0)
 damage = 1.0
 maniability = 0.25
 nano = 10
@@ -105,14 +105,13 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_7rgbf"]
+[sub_resource type="Resource" id="Resource_365dx"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
 max_speed = 15.0
 move_speed = 2.5
 turn_speed = 10.0
-target_position = Vector2(0, 0)
 damage = 1.0
 maniability = 0.25
 nano = 10
@@ -122,14 +121,13 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_c10do"]
+[sub_resource type="Resource" id="Resource_1168j"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
 max_speed = 25.0
 move_speed = 15.0
 turn_speed = 10.0
-target_position = Vector2(0, 0)
 damage = 1.0
 maniability = 0.25
 nano = 10
@@ -868,17 +866,17 @@ position = Vector2(14465, 324)
 [node name="turret" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(23472, 4966)
 rotation = -0.418446
-bullet_preset = SubResource("Resource_4rcjp")
+bullet_preset = SubResource("Resource_47k0j")
 
 [node name="turret2" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(22219, 4772)
 rotation = 0.0724223
-bullet_preset = SubResource("Resource_7rgbf")
+bullet_preset = SubResource("Resource_365dx")
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 z_index = 1
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_c10do")
+bullet_preset = SubResource("Resource_1168j")
 
 [node name="laser" parent="." instance=ExtResource("13_xknin")]
 position = Vector2(21169, 3710)

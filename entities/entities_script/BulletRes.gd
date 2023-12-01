@@ -5,7 +5,6 @@ class_name BulletRes
 @export var max_speed : float = 15
 @export var move_speed : float = 2.5
 @export var turn_speed : float = 10
-@export var target_position : Vector2 = Vector2(0,0)
 @export var target_node : Node2D
 @export var damage : float = 1
 @export var maniability : float = 0.25
@@ -24,7 +23,6 @@ func instantiate() -> Bullet:
 	bullet.set_script(Global.bullet_script[type])
 	bullet.max_speed = max_speed
 	bullet.turn_speed = turn_speed
-	bullet.target_position = target_position
 	bullet.move_speed = move_speed
 	bullet.target_node = target_node
 	bullet.damage = damage

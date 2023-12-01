@@ -3,8 +3,6 @@ extends Node
 
 const audio_folder : String = "res://audio/"
 
-var cache : Dictionary = {}
-
 var active_audio : Dictionary = {}
 
 func tween_volume(id : String,final_value : float,time : float, callback = null) -> void:
