@@ -42,3 +42,21 @@ Désavantages:
 
 ![InputsMapper](https://github.com/Gyrcas/Bullethell_slide/assets/88252411/3954cd05-7435-4808-8232-840db175941d)
 
+---
+
+#### - Système de sauvegarde (GS)
+Permet de faire des sauvegardes, de les supprimer et de les recharger plus tard.
+
+Il n'y avait pas vraiment d'autres méthodes pour le faire sauf télécharger un addon mais je voulais en créer un pour le comprendre et me permettre facilement de l'utilisé.
+
+Avantages:
+- Facilement utilisable
+- Ne stock que les variables dont il a besoin d'avoir accès
+
+Désavantages:
+- Doir être codé
+
+https://github.com/Gyrcas/Bullethell_slide/assets/88252411/93325887-1b16-4590-b7f9-0cbbb38e9432
+
+
+
