@@ -58,5 +58,26 @@ Désavantages:
 
 https://github.com/Gyrcas/Bullethell_slide/assets/88252411/93325887-1b16-4590-b7f9-0cbbb38e9432
 
+---
+
+#### - DialogueCreator
+Permet de facilement créer, modifier ou jouer des dialogues. Offre diverses options de dialogues comme des choix, des scripts, des conditions, etc.
+
+Plusieurs éditeurs existaient déjà mais j'avais déjà créer un éditeur par le passé que je voulais recréer et il est plus à mes goûts que ceux qui étaient déjà disponibles.
+
+Avantages:
+- Simple
+- Puissant
+
+Désavantages:
+- Plus compliqué que prévu
+- Quelques problèmes d'affichages dans l'éditeur
+
+https://github.com/Gyrcas/Bullethell_slide/assets/88252411/ff861ece-d2fa-465b-ab3e-379a2fcf7b88
+
+---
+
+
+
 
 
