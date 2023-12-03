@@ -103,6 +103,11 @@ https://github.com/Gyrcas/Bullethell_slide/assets/88252411/7b17e4b7-175c-47cb-b5
 
 ---
 
+#### - Attaque Laser
+Les attaques du boss qui vise le joueur.
+
+J'aurais pu utiliser un simple RayCast2D pour vérifier la collision lors de l'attaque. Le problème, c'est qu'il n'y aurait pas eu de volume au laser. À la place, je crée un polygon pour correspondre à la taille et la cible du laser.
+
 ### Notions apprises et difficultés rencontrées
  
 #### - Curve2D et interpolation
