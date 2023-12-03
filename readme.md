@@ -100,7 +100,11 @@ Désavantages:
 
 Pour faire mon SmoothPolygon2D, j'ai enormément chercher comment transormer une simple suite de point en courbe. La méthode que j'ai trouvée utilise la ressource Curve2D avec sa fonction sample_baked pour obtenir une obtenir une interpolation de courbe à partir des points que je lui ai fournit pour une progression donnée.
 
-Les principales difficultés rencontrées ont été de trouvée la bonne manière de procédée pour executé l'interpolation. La page qui m'a donnée l'inspiration est la [page de godot sur le bezier et les courbes](https://docs.godotengine.org/en/stable/tutorials/math/beziers_and_curves.html).
+Les principales difficultés rencontrées ont été de trouvée la bonne manière de procédée pour executé l'interpolation. La page qui m'a donnée l'inspiration est la [page de Godot sur le bezier et les courbes](https://docs.godotengine.org/en/stable/tutorials/math/beziers_and_curves.html).
+
+#### - Addons
+
+J'ai appris comment faire des addons pour Godot comme mon SmoothPolygon2D ou mon DialogueCreator. J'étais surtout intéressé par ce sujet car je voulais intégrer mon créateur de dialogue directement dans Godot et à ma surprise, c'était assez simple! Je simplement trouvé comment en créé un en regardant dans la [documentation de Godot](https://docs.godotengine.org/en/stable/tutorials/plugins/editor/making_plugins.html).
 
 ## Conclusion
 
