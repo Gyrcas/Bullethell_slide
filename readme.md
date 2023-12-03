@@ -116,5 +116,6 @@ J'ai découvert comment faire de la modification de fichier car je voulais faire
 
 ## Conclusion
 
+J'ai bien aimé ce projet car c'est le premier projet Godot que j'ai poussé aussi loin et qui me parait prometteur pour le futur. Mon projet est déjà assez complet en soi donc je crois que j'ai déjà exploré tout ce que je voulais explorer. Même si j'aurais la possibilité de changer de projet, je garderais celui-ci. J'ai bien sûr des idées pour d'autres projets dans ma tête, mais celui-ci à une bonne chance de produire quelque chose d'intéressant.
 
 
