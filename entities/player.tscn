@@ -10,10 +10,10 @@
 [ext_resource type="Texture2D" path="res://textures/ui/bars/blue.png" id="5_jdmre"]
 [ext_resource type="PackedScene" path="res://ui/dialogue.tscn" id="7_mf1iq"]
 [ext_resource type="Script" path="res://ui/ui_script/perks.gd" id="7_o73hs"]
-[ext_resource type="Script" path="res://menus/menus_script/PauseMenu.gd" id="10_7v2dn"]
-[ext_resource type="Script" path="res://ui/ui_script/target.gd" id="12_df54d"]
+[ext_resource type="Script" path="res://menus/menus_script/PauseMenu.gd" id="10_qokt4"]
+[ext_resource type="Script" path="res://ui/ui_script/target.gd" id="12_bllxg"]
 
-[sub_resource type="Resource" id="Resource_sogf3"]
+[sub_resource type="Resource" id="Resource_alcf0"]
 resource_local_to_scene = true
 script = ExtResource("2_je2js")
 ignore_sender = true
@@ -239,7 +239,7 @@ vulnerabilities = Array[String]([])
 restistances = Array[String]([])
 nano_max = 100.0
 shoot_cooldown = 0.1
-bullet_preset = SubResource("Resource_sogf3")
+bullet_preset = SubResource("Resource_alcf0")
 max_speed = 15.0
 move_speed = 10.0
 turn_speed = 5.0
@@ -357,7 +357,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("10_7v2dn")
+script = ExtResource("10_qokt4")
 views_array = Array[String](["game_pause.tscn", "pause_inputs.tscn", "pause_options.tscn", "save_manager.tscn", "save_pillar_menu.tscn", "menu_tuto.tscn"])
 open_with_back = true
 
@@ -378,7 +378,7 @@ visible = false
 top_level = true
 z_index = 5
 material = SubResource("CanvasItemMaterial_gc3ky")
-script = ExtResource("12_df54d")
+script = ExtResource("12_bllxg")
 
 [node name="auto_target" type="Area2D" parent="."]
 visible = false
