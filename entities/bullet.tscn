@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cgx8w738iho7a"]
+[gd_scene load_steps=4 format=3 uid="uid://bcq0yew10u5c1"]
 
 [ext_resource type="Script" path="res://entities/entities_script/bullet.gd" id="1_7rf7m"]
 [ext_resource type="Script" path="res://resources/PolygonBody.gd" id="2_ypvik"]

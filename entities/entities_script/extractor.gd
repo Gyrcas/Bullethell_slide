@@ -36,7 +36,7 @@ func _physics_process(delta : float) -> void:
 	if bullet:
 		bullet.velocity = Vector2.ZERO
 	if can_hole && detection.get_collider() == Global.player:
-		var hole : Area2D = hole_scene.instantiate()
+		var hole : blackhole = hole_scene.instantiate()
 		can_hole = false
 		get_parent().add_child(hole)
 		hole.global_position = Global.player.global_position + Global.player.velocity / delta / 2
