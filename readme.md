@@ -77,6 +77,21 @@ https://github.com/Gyrcas/Bullethell_slide/assets/88252411/ff861ece-d2fa-465b-ab
 
 ---
 
+#### - Roue d'habilités
+Roue d'habilités permettant au joueur de selectionné une abilité puis de l'executer.
+
+Un UI plus simple aurait été possible, mais celui-ci est esthétique et intéressant.
+
+Avantages:
+- Beau
+- Adaptable
+
+Désavantages:
+- Commence à être bizarre si trop d'abilités
+
+![perk wheel](https://github.com/Gyrcas/Bullethell_slide/assets/88252411/f67f2013-b731-43e6-b37a-b71f320e5dc5)
+
+---
 
 
 
