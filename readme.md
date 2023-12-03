@@ -94,6 +94,15 @@ Désavantages:
 
 ---
 
+#### - Injection de mods
+Permet l'injection de code ajouté à une scène permettant de modifier le code du jeu pour modifier de mechanique de jeu, en ajouter ou même en supprimer.
+
+Bien qu'il y aurait eu plus simple pour permettre à n'importe qui d'éditer mon code puisque Godot est accessible à tous et que je pourrais laisser mon code non cripté, cependant, il serait difficile dans ce cas de fusionner différents "mods" dans le jeu. Mon code le permet. Je me suis inspirer de jeu comme Skyrim, Celeste et Fallout New Vegas qui ont tous une communauté de mods active et j'ai toujours adoré les jeux me permettant d'installer des mods.
+
+https://github.com/Gyrcas/Bullethell_slide/assets/88252411/7b17e4b7-175c-47cb-b59c-d61007a3b34b
+
+---
+
 ### Notions apprises et difficultés rencontrées
  
 #### - Curve2D et interpolation
