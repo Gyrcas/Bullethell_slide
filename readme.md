@@ -106,6 +106,14 @@ Les principales difficultés rencontrées ont été de trouvée la bonne manièr
 
 J'ai appris comment faire des addons pour Godot comme mon SmoothPolygon2D ou mon DialogueCreator. J'étais surtout intéressé par ce sujet car je voulais intégrer mon créateur de dialogue directement dans Godot et à ma surprise, c'était assez simple! Je simplement trouvé comment en créé un en regardant dans la [documentation de Godot](https://docs.godotengine.org/en/stable/tutorials/plugins/editor/making_plugins.html).
 
+#### - Tweens
+
+Le tweens sont géniaux! Je les ai découvert en cherchant un moyen de faire des animations avec des valeurs de départ changeantes. La seul difficultés rencontrées serait la modification d'un index spécifique d'un array grâce à un tween n'est pas possible de base. J'ai donc créé une variable avec un setter qui modifies mon index et puis je tween cette variable.
+
+#### - Modification de fichier
+
+J'ai découvert comment faire de la modification de fichier car je voulais faire une sauvegarde de mes options et aussi pouvoir lire les fichiers dans un dossiers. J'ai trouvé un forum qui m'a mené vers [cette page](https://docs.godotengine.org/en/3.1/tutorials/io/saving_games.html). La principale difficulté que j'ai rencontré est que au lieu de faire File.new(), il faut faire FileAccess.open(path) pour obtenir un fichier dans Godot 4.
+
 ## Conclusion
 
 
