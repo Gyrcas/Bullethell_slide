@@ -1,6 +1,8 @@
 # Artifact
 ###### Dylan Ducas
 
+https://github.com/Gyrcas/Bullethell_slide/blob/main/vid%C3%A9o%20pr%C3%A9sentation.mp4
+
 ## Introduction
 Artifact est un jeu d'action et d'aventure en vue de coté oû vous controllez un petit artéfact représenté par un triangle blanc. Le jeu s'inspire de jeu comme CastleVania: SOTN pour le monde ou l'on peut trouver des abilités pour rendre le joueur plus puissant et d'autre jeux surnommé "bullet hell" ou le but est d'esquiver un grand nombre de balle tout en tirant sur les enemies. Touhou est un exemple de bullet hell.
 
