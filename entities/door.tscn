@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://con7hjkkaviqn"]
+[gd_scene load_steps=4 format=3 uid="uid://con7hjkkaviqn"]
 
 [ext_resource type="Script" path="res://entities/entities_script/door.gd" id="1_r6qm0"]
+[ext_resource type="Texture2D" uid="uid://bu47foj0xu6hr" path="res://textures/pixel.png" id="2_u86kj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pk7rl"]
 resource_local_to_scene = true
@@ -8,6 +9,7 @@ size = Vector2(50, 100)
 
 [node name="door" type="StaticBody2D"]
 script = ExtResource("1_r6qm0")
+texture = ExtResource("2_u86kj")
 
 [node name="col" type="CollisionShape2D" parent="."]
 position = Vector2(25, 50)
@@ -16,4 +18,5 @@ shape = SubResource("RectangleShape2D_pk7rl")
 [node name="sprite" type="TextureRect" parent="."]
 offset_right = 50.0
 offset_bottom = 100.0
+texture = ExtResource("2_u86kj")
 expand_mode = 1

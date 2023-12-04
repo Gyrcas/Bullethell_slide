@@ -26,6 +26,11 @@ class_name cave_crash
 @onready var boss_cinematic : Node2D = $boss_cinematic
 @onready var scientist_pod : ScientistPod = $scientist_pod
 
+@onready var turret1 : Turret = $turret
+@onready var turret2 : Turret = $turret2
+
+@onready var door_turrets : Door = $door_turrets
+
 func play_music(_file : String = \"\") -> void:
 	var music_id : String = AudioPlayer.play(\"musics/Drifting Beyond the Stars.ogg\")
 	AudioPlayer.set_bus_by_name(music_id,\"Music\")
@@ -91,9 +96,14 @@ func _on_scientist_pod_interacted() -> void:
 		Global.shake_camera(Global.player.camera,Vector2(100,100),60,0.01)
 		boss_cinematic.play()
 		
+
+
+func _on_turret_died() -> void:
+	if (!turret1 || turret1.dying) && (!turret2 || turret2.dying):
+		door_turrets.open()
 "
 
-[sub_resource type="Resource" id="Resource_hw0gq"]
+[sub_resource type="Resource" id="Resource_u6300"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -109,7 +119,7 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_pcwfl"]
+[sub_resource type="Resource" id="Resource_sgt7x"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -125,7 +135,7 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_w4cba"]
+[sub_resource type="Resource" id="Resource_w5alv"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -847,14 +857,12 @@ frame = 47
 [node name="door2" parent="." instance=ExtResource("4_336vv")]
 position = Vector2(18343, -1537)
 rotation = -0.677964
-texture = ExtResource("5_2upfm")
 color = Color(0.533333, 0, 0, 1)
 dimensions = Vector2(200, 1500)
 
 [node name="door" parent="." instance=ExtResource("4_336vv")]
 position = Vector2(2847, 206)
 rotation = 0.349663
-texture = ExtResource("5_2upfm")
 color = Color(0.235294, 0.376471, 0, 1)
 dimensions = Vector2(50, 450)
 
@@ -870,17 +878,23 @@ position = Vector2(14465, 324)
 [node name="turret" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(23472, 4966)
 rotation = -0.418446
-bullet_preset = SubResource("Resource_hw0gq")
+bullet_preset = SubResource("Resource_u6300")
 
 [node name="turret2" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(22219, 4772)
 rotation = 0.0724223
-bullet_preset = SubResource("Resource_pcwfl")
+bullet_preset = SubResource("Resource_sgt7x")
+
+[node name="door_turrets" parent="." instance=ExtResource("4_336vv")]
+position = Vector2(21435, 5577)
+rotation = -0.6116
+color = Color(0.301961, 0.192157, 1, 1)
+dimensions = Vector2(50, 650)
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 z_index = 1
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_w4cba")
+bullet_preset = SubResource("Resource_w5alv")
 
 [node name="laser" parent="." instance=ExtResource("13_xknin")]
 position = Vector2(21169, 3710)
@@ -1044,5 +1058,7 @@ polygon = PackedVector2Array(13875, -1794, 14039, -1776, 14020, -1696, 14035, -1
 
 [connection signal="interacted" from="save_pillar" to="." method="_on_save_pillar_interacted" flags=18]
 [connection signal="interacted" from="scientist_pod" to="." method="_on_scientist_pod_interacted" flags=18]
+[connection signal="died" from="turret" to="." method="_on_turret_died"]
+[connection signal="died" from="turret2" to="." method="_on_turret_died"]
 [connection signal="body_entered" from="boss_zone" to="boss_zone" method="_on_body_entered" flags=18]
 [connection signal="body_entered" from="cinematic" to="cinematic" method="_on_body_entered" flags=18]
