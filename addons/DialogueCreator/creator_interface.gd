@@ -91,7 +91,10 @@ func load_save(box_data : Dictionary, parent : DialogueBox = null) -> DialogueBo
 	if parent:
 		box.parent = parent
 	if box_data.keys().has("position"):
-		box.global_position = Vector2(box_data.position[0],box_data.position[1])
+		box.position = Vector2(
+			box_data.position[0] - scroll.scroll_horizontal,
+			box_data.position[1] - scroll.scroll_vertical
+		)
 	box._on_type_item_selected(box_data.type)
 	for child in box.children:
 		child.queue_free()
@@ -107,7 +110,10 @@ func save(box : DialogueBox, blueprint : bool = false) -> Dictionary:
 	save.type = box.type_select.selected
 	save.content = box.content
 	if blueprint:
-		save.position = [box.global_position.x,box.global_position.y]
+		save.position = [
+			box.position.x + scroll.scroll_horizontal,
+			box.position.y + scroll.scroll_vertical
+		]
 		save.zoom = box.zoom
 	save.children = []
 	for child in box.children:

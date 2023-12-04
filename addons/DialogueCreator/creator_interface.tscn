@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://b1jnta3804y0u"]
 
 [ext_resource type="Script" path="res://addons/DialogueCreator/creator_interface.gd" id="1_ifglr"]
 
