@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://b8dyakschukwr"]
 
 [ext_resource type="Script" path="res://menus/menus_script/main_menu.gd" id="1_2jd54"]
-[ext_resource type="PackedScene" path="res://menus/pause_menu.tscn" id="2_t1veq"]
-[ext_resource type="Script" path="res://menus/menus_script/PauseMenu.gd" id="3_ksplk"]
+[ext_resource type="PackedScene" uid="uid://dh66vw8ss4rlv" path="res://menus/pause_menu.tscn" id="2_t1veq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5hoos"]
 bg_color = Color(0, 0, 0, 1)
@@ -119,15 +118,8 @@ layout_mode = 2
 focus_neighbor_top = NodePath("../mods")
 text = "Quit"
 
-[node name="pause_menu" type="Control" parent="." instance=ExtResource("2_t1veq")]
-process_mode = 3
+[node name="pause_menu" parent="." instance=ExtResource("2_t1veq")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("3_ksplk")
 views_array = Array[String](["pause_options.tscn", "pause_inputs.tscn", "save_manager.tscn", "mod_menu.tscn", "menu_tuto.tscn"])
 open_with_back = false
 

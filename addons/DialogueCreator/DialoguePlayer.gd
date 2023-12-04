@@ -62,6 +62,7 @@ func tween_typewritter(text : String) -> void:
 	if tween && tween.is_valid():
 		tween.kill()
 	visible_characters = -1
+	await get_tree().create_timer(0.1).timeout
 
 ##Play dialogue
 func play(dialogue : Dictionary, current_dialogue : Dictionary = dialogue) -> void:
