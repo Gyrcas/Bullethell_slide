@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bvqkegii4jywk" path="res://textures/ship.png" id="2_0sblj"]
 [ext_resource type="Script" path="res://addons/smoothpolygon/SmoothStaticPolygon2D.gd" id="3_2ktvo"]
 [ext_resource type="PackedScene" uid="uid://con7hjkkaviqn" path="res://entities/door.tscn" id="4_336vv"]
-[ext_resource type="PackedScene" uid="uid://bqc2vr2yoqbss" path="res://entities/player.tscn" id="4_mqsbn"]
+[ext_resource type="PackedScene" uid="uid://dnmktv804y06w" path="res://entities/player.tscn" id="4_mqsbn"]
 [ext_resource type="PackedScene" uid="uid://cksrr1rdojrue" path="res://entities/save_pillar.tscn" id="4_x3wy6"]
 [ext_resource type="Texture2D" uid="uid://bu47foj0xu6hr" path="res://textures/pixel.png" id="5_2upfm"]
 [ext_resource type="PackedScene" uid="uid://c4b0c0h1gmwi3" path="res://entities/scientist_pod.tscn" id="6_jdkdk"]
@@ -93,7 +93,7 @@ func _on_scientist_pod_interacted() -> void:
 		
 "
 
-[sub_resource type="Resource" id="Resource_jw5ye"]
+[sub_resource type="Resource" id="Resource_hw0gq"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -109,7 +109,7 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_st5c2"]
+[sub_resource type="Resource" id="Resource_pcwfl"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -125,7 +125,7 @@ velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
 type = "default"
 
-[sub_resource type="Resource" id="Resource_emou8"]
+[sub_resource type="Resource" id="Resource_w4cba"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -870,17 +870,17 @@ position = Vector2(14465, 324)
 [node name="turret" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(23472, 4966)
 rotation = -0.418446
-bullet_preset = SubResource("Resource_jw5ye")
+bullet_preset = SubResource("Resource_hw0gq")
 
 [node name="turret2" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(22219, 4772)
 rotation = 0.0724223
-bullet_preset = SubResource("Resource_st5c2")
+bullet_preset = SubResource("Resource_pcwfl")
 
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 z_index = 1
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_emou8")
+bullet_preset = SubResource("Resource_w4cba")
 
 [node name="laser" parent="." instance=ExtResource("13_xknin")]
 position = Vector2(21169, 3710)
