@@ -2,12 +2,12 @@ extends PauseMenuView
 
 @onready var mod_list : VBoxContainer = $vbox/scroll/split/mod_list
 @onready var buttons : VBoxContainer = $vbox/scroll/split/buttons
-var active_mods : Array = NodeLinker.active_mods.duplicate()
+var active_mods : Array = ModManager.active_mods.duplicate()
 
 func _ready() -> void:
 	for child in mod_list.get_children():
 		child.queue_free()
-	var mods : PackedStringArray = NodeLinker.get_mods_list()
+	var mods : PackedStringArray = ModManager.get_mods_list()
 	for mod in mods:
 		var mod_tab : CheckButton = CheckButton.new()
 		mod_tab.text = mod
@@ -53,11 +53,11 @@ func move(from : int, to : int, ignore_active : bool = false) -> void:
 	mod_list.move_child(check,to)
 
 func _on_apply_pressed() -> void:
-	var old_mods : Array = NodeLinker.active_mods
-	NodeLinker.active_mods = []
+	var old_mods : Array = ModManager.active_mods
+	ModManager.active_mods = []
 	for mod_tab in mod_list.get_children():
 		if mod_tab.button_pressed:
-			NodeLinker.active_mods.append(mod_tab.text)
-	NodeLinker.apply_mods(old_mods)
+			ModManager.active_mods.append(mod_tab.text)
+	ModManager.apply_mods(old_mods)
 	get_tree().paused = false
 	get_tree().reload_current_scene()

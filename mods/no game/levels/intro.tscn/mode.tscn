@@ -4,7 +4,7 @@
 script/source = "extends Node2D
 
 func _ready():
-	var script = load(FS.root_dir() + NodeLinker.mod_folder + \"no game/new_script.gd\")
+	var script = load(FS.root_dir() + ModManager.mod_folder + \"no game/new_script.gd\")
 	get_parent().set_script(script)
 "
 

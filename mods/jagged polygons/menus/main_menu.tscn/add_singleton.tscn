@@ -4,7 +4,7 @@
 script/source = "extends Node
 
 func _ready():
-	var singleton = load(NodeLinker.get_mod_path(\"jagged polygons\") + \"jaggleton.gd\")
+	var singleton = load(ModManager.get_mod_path(\"jagged polygons\") + \"jaggleton.gd\")
 	get_tree().root.add_child.call_deferred(singleton.new())
 "
 

@@ -52,7 +52,7 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fm780"]
 shader = SubResource("Shader_q0ofh")
-shader_parameter/opacity = 0.0198512
+shader_parameter/opacity = 0.0327949
 
 [node name="main_menu" type="Control"]
 layout_mode = 3
