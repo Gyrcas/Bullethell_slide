@@ -98,7 +98,7 @@ func _on_scientist_pod_interacted() -> void:
 		
 
 
-func _on_turret_died() -> void:
+func _on_turret_died(_body : Variant = null) -> void:
 	if (!turret1 || turret1.dying) && (!turret2 || turret2.dying):
 		door_turrets.open()
 "

@@ -57,7 +57,7 @@ var avoid_div : float = 100
 # All the types of damage. Some characters have resistance, weakness or immunities to attacks
 var damage_types : PackedStringArray = ["normal"]
 
-func die() -> void:
+func die(_body : Variant = null) -> void:
 	# Add nano back to the sender
 	if sender != null:
 		sender.nano += nano

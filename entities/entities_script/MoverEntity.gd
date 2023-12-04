@@ -40,7 +40,7 @@ func die() -> void:
 	AudioPlayer.set_position(sound_id, global_position)
 	AudioPlayer.set_bus_by_name(sound_id,"VFX")
 	anim.play("death")
-	died.emit()
+	died.emit(self)
 
 func set_health(value : float) -> void:
 	health = value

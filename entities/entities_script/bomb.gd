@@ -28,7 +28,7 @@ func collide(collision) -> void:
 			body.velocity += global_position.direction_to(body.global_position) * 25
 	die()
 
-func die() -> void:
+func die(_body : Variant = null) -> void:
 	if sender != null:
 		sender.nano += nano
 	if !death_particles_scene:
