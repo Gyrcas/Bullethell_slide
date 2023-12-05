@@ -103,7 +103,7 @@ func _on_turret_died(_body : Variant = null) -> void:
 		door_turrets.open()
 "
 
-[sub_resource type="Resource" id="Resource_17rpk"]
+[sub_resource type="Resource" id="Resource_2sb3e"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -117,9 +117,10 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bullet"
 
-[sub_resource type="Resource" id="Resource_n7ub8"]
+[sub_resource type="Resource" id="Resource_j7geh"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -133,9 +134,10 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bullet"
 
-[sub_resource type="Resource" id="Resource_1je6c"]
+[sub_resource type="Resource" id="Resource_g136x"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -149,6 +151,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(1, 1, 1, 1)
+avoid_radius = 68.0
 type = "bullet"
 
 [sub_resource type="GDScript" id="GDScript_i8ysm"]
@@ -846,7 +849,6 @@ position = Vector2(31, 5)
 polygon = PackedVector2Array(-410, 202, -216, 212, -104, 315, -3, 343, -8, 371, 18, 377, 32, 408, 71, 393, 92, 446, 165, 460, 186, 475, 223, 498, 267, 532, 311, 565, 432, 703, 575, 736, 487, 935, 224.676, 912.689, 99, 902, -191, 706, -453, 499)
 
 [node name="ship" type="Sprite2D" parent="background/ship_clip"]
-texture_filter = 1
 position = Vector2(-521, 191)
 rotation = 2.0944
 scale = Vector2(13.0636, 12.5502)
@@ -878,12 +880,12 @@ position = Vector2(14465, 324)
 [node name="turret" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(23472, 4966)
 rotation = -0.418446
-bullet_preset = SubResource("Resource_17rpk")
+bullet_preset = SubResource("Resource_2sb3e")
 
 [node name="turret2" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(22219, 4772)
 rotation = 0.0724223
-bullet_preset = SubResource("Resource_n7ub8")
+bullet_preset = SubResource("Resource_j7geh")
 
 [node name="door_turrets" parent="." instance=ExtResource("4_336vv")]
 position = Vector2(21435, 5577)
@@ -894,7 +896,7 @@ dimensions = Vector2(50, 650)
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 z_index = 1
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_1je6c")
+bullet_preset = SubResource("Resource_g136x")
 
 [node name="laser" parent="." instance=ExtResource("13_xknin")]
 position = Vector2(21169, 3710)

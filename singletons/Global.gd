@@ -13,12 +13,24 @@ var debug_pos : Vector2 = Vector2.ZERO
 const time_pitch_div : float = 5
 const time_tween_mult : float = 2
 
-func set_time_scale(time_scale : float, change_sound : bool = true) -> void:
+var last_time_scale_priority : int = 1
+
+var current_time_scale : float = 1
+
+func set_time_scale(time_scale : float, change_sound : bool = true, priority : int = 1) -> void:
+	if current_time_scale != 1 && last_time_scale_priority < priority:
+		return
+	last_time_scale_priority = priority
+	current_time_scale = time_scale
 	Engine.time_scale = time_scale
 	if change_sound:
 		AudioPlayer.set_bus_pitch(1 - (1 - time_scale) / time_pitch_div)
 
-func tween_time_scale(final_scale : float,time : float, tween_sound : bool = true) -> void:
+func tween_time_scale(final_scale : float,time : float, tween_sound : bool = true, priority : int = 1) -> void:
+	if current_time_scale != 1 && last_time_scale_priority < priority:
+		return
+	current_time_scale = final_scale
+	last_time_scale_priority = priority
 	var tween : Tween = create_tween()
 	tween.parallel().tween_property(Engine,"time_scale",final_scale,time)
 	if !tween_sound:

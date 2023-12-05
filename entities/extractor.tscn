@@ -19,6 +19,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bomb"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nkuxf"]

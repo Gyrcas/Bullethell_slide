@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://resources/PolygonBody.gd" id="2_ypvik"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_joffy"]
-radius = 18.0278
+radius = 68.4471
 
 [node name="bullet" type="CharacterBody2D"]
 collision_layer = 2

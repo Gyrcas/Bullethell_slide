@@ -14,6 +14,7 @@ class_name BulletRes
 @export var sender : Node2D
 @export var velocity : Vector2 = Vector2.ZERO
 @export var color : Color = Color(1,1,1)
+@export var avoid_radius : float = 68
 @export_enum("bullet","bomb") var type : String = "bullet"
 
 var bullet_scene : PackedScene = await NodeLinker.request_resource("bullet.tscn")
@@ -32,6 +33,7 @@ func instantiate() -> Bullet:
 	bullet.move_speed = move_speed
 	bullet.target_node = target_node
 	bullet.damage = damage
+	bullet.avoid_radius = avoid_radius
 	bullet.maniability = maniability
 	bullet.nano = nano
 	bullet.set_sender(sender)

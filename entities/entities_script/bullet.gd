@@ -7,12 +7,23 @@ class_name Bullet
 # COllision to avoid bullets sticking too close together
 @onready var avoid : Area2D = $avoid
 
+@onready var avoid_col : CollisionShape2D = $avoid/col
+
 var color : Color = Color(1,1,1)
 
 var death_particles_scene : PackedScene = await NodeLinker.request_resource("death_particles.tscn")
 
 # How much nano the bullet cost
 var nano : int = 10
+
+var avoid_radius : float = 68 : set = set_avoid_radius
+
+func set_avoid_radius(value : float) -> void:
+	avoid_radius = value
+	if !is_node_ready():
+		await ready
+	avoid_col.shape.radius = value
+	
 
 # Who created the bullet
 var sender : Node2D : set = set_sender

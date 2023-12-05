@@ -77,6 +77,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bullet"
 
 [sub_resource type="Resource" id="Resource_xx0gp"]
@@ -93,6 +94,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bomb"
 
 [sub_resource type="Resource" id="Resource_h1v3a"]
@@ -109,6 +111,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bullet"
 
 [sub_resource type="Resource" id="Resource_pxlan"]
@@ -125,6 +128,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bullet"
 
 [sub_resource type="Resource" id="Resource_3khn5"]
@@ -141,6 +145,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bullet"
 
 [sub_resource type="Resource" id="Resource_w23xr"]
@@ -157,6 +162,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bullet"
 
 [sub_resource type="Resource" id="Resource_7iksy"]
@@ -173,6 +179,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bomb"
 
 [sub_resource type="Resource" id="Resource_li1w6"]
@@ -189,6 +196,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bomb"
 
 [sub_resource type="Resource" id="Resource_p3b2b"]
@@ -205,6 +213,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bullet"
 
 [sub_resource type="GDScript" id="GDScript_o7n4e"]
@@ -247,6 +256,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bullet"
 
 [sub_resource type="Resource" id="Resource_k4jt1"]
@@ -263,6 +273,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bullet"
 
 [sub_resource type="Resource" id="Resource_mif43"]
@@ -279,6 +290,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bullet"
 
 [sub_resource type="Resource" id="Resource_73xnd"]
@@ -295,6 +307,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bomb"
 
 [sub_resource type="Resource" id="Resource_eea5m"]
@@ -311,6 +324,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
+avoid_radius = 68.0
 type = "bullet"
 
 [sub_resource type="Resource" id="Resource_4nxke"]
@@ -327,6 +341,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(1, 1, 1, 1)
+avoid_radius = 68.0
 type = "bullet"
 
 [sub_resource type="Resource" id="Resource_62fyf"]
@@ -342,6 +357,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(1, 1, 1, 1)
+avoid_radius = 68.0
 type = "bullet"
 
 [node name="boss1" type="Node2D"]

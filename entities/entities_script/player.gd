@@ -13,6 +13,7 @@ class_name Player
 @onready var perks_wheel : PerksWheel = $camera/ui/perks
 @onready var col : CollisionShape2D = $col
 @onready var dialogue : CanvasLayer = $camera/ui/hud/dialogue
+@onready var hit_slow_mo_area : Area2D = $hit_slow_mo_area
 
 var interaction : Node = null : set = set_interaction
 var controllable : bool = true
@@ -85,6 +86,7 @@ func _physics_process(delta : float) -> void:
 	var speed : float = velocity.x / velocity.normalized().x
 	if is_nan(speed):
 		speed = 0.0
+	
 	# Execute velocity and get collision
 	var collision : Variant = do_move(move,turn,delta, speed)
 	# If collision, manage collision
@@ -98,14 +100,48 @@ func _physics_process(delta : float) -> void:
 		Input.is_action_pressed("left_click") && can_shoot && nano >= bullet_preset.nano && !perks_wheel.visible && controllable
 	)
 	
+	ultra_mode(delta, move)
+	
 	trail.points[trail.points.size() - 1] = global_position
 	
 	auto_target.global_position = camera.get_screen_center_position()
-
 #Auto Target----------------------------------------------
 var target_zone_width : float = 300
 @onready var auto_target : Area2D = $auto_target
 var current_target_id : int = -1
+
+var old_maniab : float = maniability
+var old_move_speed : float = move_speed
+var old_turn_speed : float = turn_speed
+var ultra_mode_move_speed : float = 25
+var ultra_mode_turn_speed : float = 5
+var ultra_mode_maniab : float = 1
+var ultra_mode_cost : float = 25
+var ultra_modeb_recharge : float = 1
+var ultra_mode_usage : float = 0
+
+func ultra_mode(delta : float, move : int) -> void:
+	if Input.is_action_pressed("ultra_mode") && nano >= ultra_mode_cost * delta && controllable:
+		var m_cost : float = ultra_mode_cost * delta
+		if !move:
+			Global.set_time_scale(0.3,true,2)
+		else:
+			Global.set_time_scale(0.4,true,2)
+			m_cost /= 2
+		nano -= m_cost
+		ultra_mode_usage += m_cost
+		maniability = old_maniab + ultra_mode_maniab
+		move_speed = old_move_speed + ultra_mode_move_speed
+		turn_speed = old_turn_speed + ultra_mode_turn_speed
+	elif ultra_mode_usage > 0:
+		move_speed = old_move_speed
+		maniability = old_maniab
+		turn_speed = old_turn_speed
+		Global.set_time_scale(1,true,2)
+		ultra_mode_usage -= ultra_mode_cost * delta / 2
+		nano += ultra_mode_cost * delta / 2
+		if ultra_mode_usage < 0:
+			ultra_mode_usage = 0
 
 func _input(event : InputEvent) -> void:
 	if !controllable:
@@ -163,3 +199,8 @@ func _on_anim_animation_finished(anim_name : String) -> void:
 			on_death()
 		"end":
 			end_anim_done.emit()
+
+var can_ultra_mode : bool = true
+
+func _on_ultra_mode_timer_timeout() -> void:
+	can_ultra_mode = true

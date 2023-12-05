@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dnmktv804y06w"]
+[gd_scene load_steps=24 format=3 uid="uid://dnmktv804y06w"]
 
 [ext_resource type="Script" path="res://entities/entities_script/player.gd" id="1_mah8r"]
 [ext_resource type="Script" path="res://resources/PolygonBody.gd" id="2_h6qts"]
@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" path="res://ui/dialogue.tscn" id="7_mf1iq"]
 [ext_resource type="Script" path="res://ui/ui_script/perks.gd" id="7_o73hs"]
 
-[sub_resource type="Resource" id="Resource_om7dn"]
+[sub_resource type="Resource" id="Resource_rfrv4"]
 resource_local_to_scene = true
 script = ExtResource("2_je2js")
 ignore_sender = true
@@ -25,6 +25,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(1, 1, 1, 1)
+avoid_radius = 68.0
 type = "bullet"
 
 [sub_resource type="GDScript" id="GDScript_lsb1g"]
@@ -225,13 +226,16 @@ _data = {
 "start": SubResource("Animation_qdl1q")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_5gkyc"]
+radius = 132.136
+
 [node name="player" type="CharacterBody2D"]
 motion_mode = 1
 wall_min_slide_angle = 3.14159
 platform_on_leave = 2
 safe_margin = 0.1
 script = ExtResource("1_mah8r")
-bullet_preset = SubResource("Resource_om7dn")
+bullet_preset = SubResource("Resource_rfrv4")
 
 [node name="body" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-14, -14, 31, 0, -14, 13, -12, 0)
@@ -368,7 +372,17 @@ libraries = {
 "": SubResource("AnimationLibrary_q2yjb")
 }
 
+[node name="hit_slow_mo_area" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hit_slow_mo_area"]
+shape = SubResource("CircleShape2D_5gkyc")
+
+[node name="ultra_mode_timer" type="Timer" parent="."]
+
 [connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout" flags=18]
 [connection signal="timeout" from="trail_timer" to="." method="_on_trail_timer_timeout" flags=18]
 [connection signal="body_exited" from="auto_target" to="." method="_on_auto_target_body_exited" flags=18]
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished" flags=18]
+[connection signal="timeout" from="ultra_mode_timer" to="." method="_on_ultra_mode_timer_timeout"]
