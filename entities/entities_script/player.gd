@@ -119,9 +119,30 @@ var ultra_mode_maniab : float = 1
 var ultra_mode_cost : float = 25
 var ultra_modeb_recharge : float = 1
 var ultra_mode_usage : float = 0
+const ultra_mode_cooldown : float = 1
+var ultra_mode_on : bool = false
+
+@onready var ultra_mode_timer : Timer = $ultra_mode/timer
+@onready var ultra_mode_particles : CPUParticles2D = $ultra_mode/particles
+@onready var ultra_mode_modulate : CanvasModulate = $ultra_mode/modulate
+@onready var ultra_mode_light : PointLight2D = $ultra_mode/light
+
+var ultra_mode_tween : Tween
 
 func ultra_mode(delta : float, move : int) -> void:
-	if Input.is_action_pressed("ultra_mode") && nano >= ultra_mode_cost * delta && controllable:
+	if Input.is_action_pressed("ultra_mode") && controllable && can_ultra_mode:
+		if nano < ultra_mode_cost * delta:
+			can_ultra_mode = false
+			ultra_mode_timer.start(ultra_mode_cooldown)
+			return
+		if !ultra_mode_on:
+			ultra_mode_on = true
+			ultra_mode_particles.emitting = true
+			if ultra_mode_tween && ultra_mode_tween.is_valid():
+				ultra_mode_tween.kill()
+			ultra_mode_tween = create_tween()
+			ultra_mode_tween.parallel().tween_property(ultra_mode_light,"energy",1,0.5)
+			ultra_mode_tween.parallel().tween_property(ultra_mode_modulate,"color",Color("2e2e2e"),0.5)
 		var m_cost : float = ultra_mode_cost * delta
 		if !move:
 			Global.set_time_scale(0.3,true,2)
@@ -142,6 +163,19 @@ func ultra_mode(delta : float, move : int) -> void:
 		nano += ultra_mode_cost * delta / 2
 		if ultra_mode_usage < 0:
 			ultra_mode_usage = 0
+		remove_ultra_mode()
+	else:
+		remove_ultra_mode()
+
+func remove_ultra_mode() -> void:
+	if ultra_mode_on:
+		ultra_mode_on = false
+		ultra_mode_particles.emitting = false
+		if ultra_mode_tween && ultra_mode_tween.is_valid():
+			ultra_mode_tween.kill()
+		ultra_mode_tween = create_tween()
+		ultra_mode_tween.parallel().tween_property(ultra_mode_light,"energy",0,0.5)
+		ultra_mode_tween.parallel().tween_property(ultra_mode_modulate,"color",Color(1,1,1),0.5)
 
 func _input(event : InputEvent) -> void:
 	if !controllable:
