@@ -14,13 +14,19 @@ class_name BulletRes
 @export var sender : Node2D
 @export var velocity : Vector2 = Vector2.ZERO
 @export var color : Color = Color(1,1,1)
-@export_enum("default","bomb") var type : String = "default"
+@export_enum("bullet","bomb") var type : String = "bullet"
 
 var bullet_scene : PackedScene = await NodeLinker.request_resource("bullet.tscn")
 
 func instantiate() -> Bullet:
 	var bullet : Bullet = bullet_scene.instantiate()
-	bullet.set_script(Global.bullet_script[type])
+	match type:
+		"bullet":
+			bullet.set_script(Bullet)
+		"bomb":
+			bullet.set_script(Bomb)
+		_:
+			bullet.set_script(Bullet)
 	bullet.max_speed = max_speed
 	bullet.turn_speed = turn_speed
 	bullet.move_speed = move_speed

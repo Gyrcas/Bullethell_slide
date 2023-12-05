@@ -123,7 +123,7 @@ func _input(event : InputEvent) -> void:
 		elif interaction:
 			interaction.interact()
 	if event.is_action_pressed("projectile_1"):
-		change_bullet_type("default")
+		change_bullet_type("bullet")
 	if event.is_action_pressed("projectile_2"):
 		change_bullet_type("bomb")
 

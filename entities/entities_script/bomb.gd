@@ -17,10 +17,10 @@ func _ready() -> void:
 	blast_zone.add_child.call_deferred(col)
 
 func collide(collision) -> void:
-	var collider : Node2D = collision.get_collider()
-	if collider.get("sender") == sender:
-		add_collision_exception_with(collider)
+	var collider : Node2D = check_collider(collision)
+	if !collider:
 		return
+
 	for body in blast_zone.get_overlapping_bodies():
 		if body is MoverEntity:
 			body.apply_damage(damage,damage_types)

@@ -13,7 +13,7 @@ func execute(sender : MoverEntity, params : Dictionary = {}) -> void:
 	ray.global_position = sender.global_position
 	ray.target_position = params.target - sender.global_position
 	sender.add_child(ray)
-	apply_cost(sender)
+	sender.apply_nano_cost_with_time(nano_cost,nano_reload_time)
 	move.call_deferred(sender,params,ray)
 
 func move(sender : MoverEntity,params : Dictionary, ray : RayCast2D) -> void:

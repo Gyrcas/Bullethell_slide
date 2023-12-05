@@ -18,7 +18,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(1, 1, 1, 1)
-type = "default"
+type = "bullet"
 
 [sub_resource type="Animation" id="Animation_cuhyy"]
 resource_name = "death"

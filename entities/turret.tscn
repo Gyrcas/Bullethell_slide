@@ -19,7 +19,7 @@ global_position = Vector2(0, 0)
 rotation = 0.0
 velocity = Vector2(0, 0)
 color = Color(0.717647, 0, 0, 1)
-type = "default"
+type = "bullet"
 
 [sub_resource type="Animation" id="Animation_02q7r"]
 length = 0.001

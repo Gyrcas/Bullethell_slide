@@ -79,11 +79,16 @@ func die(_body : Variant = null) -> void:
 		get_parent().add_child(particles)
 	queue_free()
 
-func collide(collision) -> void:
+func check_collider(collision : Variant) -> Node2D:
 	var collider : Node2D = collision.get_collider()
-	
-	if collider.get("sender") == sender:
+	if collider.get("sender") == sender || collider is Bullet:
 		add_collision_exception_with(collider)
+		return null
+	return collider
+
+func collide(collision : Variant) -> void:
+	var collider : Node2D = check_collider(collision)
+	if !collider:
 		return
 	
 	if collider is MoverEntity:

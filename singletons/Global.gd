@@ -5,11 +5,6 @@ var player : Player
 
 const auto_target_collision_level : int = 3
 
-var bullet_script : Dictionary = {
-	"default":Bullet.new().get_script(),
-	"bomb":Bomb.new().get_script()
-}
-
 var storage : Dictionary = {}
 
 var debug_open : bool = false
@@ -69,6 +64,7 @@ func change_scene_to_file(filename : String, mod : String = "") -> void:
 		tween.kill()
 	get_tree().change_scene_to_file(path)
 	scene_changed.emit()
+	add_debug.call_deferred()
 
 signal scene_changed
 

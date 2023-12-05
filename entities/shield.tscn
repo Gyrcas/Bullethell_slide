@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=3 uid="uid://bfmqndreebse6"]
+
+[ext_resource type="Texture2D" uid="uid://bu47foj0xu6hr" path="res://textures/pixel.png" id="2_4f1lq"]
+
+[sub_resource type="GDScript" id="GDScript_4p30d"]
+script/source = "extends Node2D
+class_name Shield
+
+@onready var col : CollisionShape2D = $body/col
+@onready var sprite : TextureRect = $body/sprite
+@onready var body : StaticBody2D = $body
+
+@export var distance : float = 100 : set = set_distance
+
+var shield_owner : MoverEntity
+
+func set_distance(value : float) -> void:
+	distance = value
+	if is_node_ready():
+		await ready
+	body.position.x = value
+
+@export var dimensions : Vector2 = Vector2 (50,100) : set = set_dimensions
+
+func set_dimensions(value : Vector2) -> void:
+	dimensions = value
+	if is_node_ready():
+		await ready
+	sprite.position = dimensions / 2
+	sprite.size = dimensions
+
+@export var cost_by_hit : float = 10
+
+var active : bool = false : set = set_active
+
+func set_active(value : bool) -> void:
+	active = value
+	visible = value
+	if is_node_ready():
+		await ready
+	col.disabled = !value
+
+var target_angle : float = 0
+
+func _physics_process(_delta : float) -> void:
+	rotation_degrees = target_angle - shield_owner.rotation_degrees
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qnnvl"]
+size = Vector2(50, 100)
+
+[node name="shield" type="Node2D"]
+script = SubResource("GDScript_4p30d")
+
+[node name="body" type="StaticBody2D" parent="."]
+position = Vector2(100, 0)
+collision_layer = 2
+collision_mask = 3
+
+[node name="col" type="CollisionShape2D" parent="body"]
+shape = SubResource("RectangleShape2D_qnnvl")
+
+[node name="sprite" type="TextureRect" parent="body"]
+offset_left = -25.0
+offset_top = -50.0
+offset_right = 25.0
+offset_bottom = 50.0
+texture = ExtResource("2_4f1lq")

@@ -42,6 +42,17 @@ func die() -> void:
 	anim.play("death")
 	died.emit(self)
 
+func apply_nano_cost_with_time(nano_cost : float, time : int) -> void:
+	var timer : Timer = Timer.new()
+	add_child(timer)
+	nano -= nano_cost
+	for i in time:
+		timer.start(1)
+		await timer.timeout
+		nano += nano_cost / time
+	timer.queue_free()
+	
+
 func set_health(value : float) -> void:
 	health = value
 	if health <= 0 && !dying:
