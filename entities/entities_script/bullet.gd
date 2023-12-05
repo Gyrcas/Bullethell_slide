@@ -117,6 +117,9 @@ func _physics_process(delta : float) -> void:
 	
 	var turn : float = angle_target / abs(angle_target)
 	
+	var sp : float = (velocity.x / velocity.normalized().x) if velocity else 1.0
+	velocity = velocity.move_toward(global_transform.x * sp,maniability)
+	
 	# Avoid other bullets
 	for body in avoid.get_overlapping_bodies():
 		if body is Bullet && body != self:

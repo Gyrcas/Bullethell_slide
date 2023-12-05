@@ -488,5 +488,4 @@ ignore_points = PackedInt32Array()
 ignore_points_outline = PackedInt32Array()
 smoothed_pol = PackedVector2Array(544.392, -9707.77, 646.331, -9588.58, 730.589, -9600.62, 814.799, -9676.85, 869.489, -9766.06, 916.398, -9874.01, 936.079, -10027.2, 881.68, -10074.7, 777.402, -10096.3, 654.823, -10103.1, 504.261, -10097.5, 424.425, -9983.12, 454.315, -9873.21, 467, -9835, 467, -9835)
 
-[connection signal="end_anim_done" from="player" to="." method="_on_player_end_anim_done"]
 [connection signal="died" from="boss_1" to="." method="_on_boss_1_died" flags=18]
