@@ -28,7 +28,7 @@ func _physics_process(_delta : float) -> void:
 	bullet_preset.target_node = Global.player
 	detection.target_position = detection.global_position.direction_to(Global.player.global_position) * (detection.global_position.distance_to(Global.player.global_position) + 5)
 	var bullet : Bullet = shoot(
-		detection.get_collider() == Global.player && nano >= bullet_preset.nano && can_shoot && !waiting_for_burst
+		detection.get_collider() == Global.player && nano >= bullet_preset.nano && can_shoot && !waiting_for_burst && !dying
 	)
 	if bullet:
 		bullet.global_position = bullet_preset.global_position

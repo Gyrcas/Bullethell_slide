@@ -30,6 +30,8 @@ var trail_length : int = 50
 const trail_update_time : float = 0.05
 @onready var trail_timer : Timer = $trail_timer
 
+# collision var
+const max_speed_bouce : float = 10
 
 func set_health(value : float) -> void:
 	if value < health:
@@ -89,6 +91,8 @@ func _physics_process(delta : float) -> void:
 	if collision:
 		velocity = velocity.bounce(collision.get_normal())
 		velocity += collision.get_normal()
+		if speed > max_speed_bouce:
+			velocity = velocity.normalized() * max_speed_bouce
 		
 	shoot(
 		Input.is_action_pressed("left_click") && can_shoot && nano >= bullet_preset.nano && !perks_wheel.visible && controllable
