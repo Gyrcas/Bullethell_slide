@@ -27,10 +27,10 @@ func _physics_process(_delta : float) -> void:
 				global_position.distance_to(
 					Global.player.global_position
 				) / distant_slow_mo, 0.2, 1
-			)
+			) , true, 3
 		)
 	elif Global.player.dying:
-		Global.set_time_scale(1)
+		Global.set_time_scale(1,true,3)
 	
 
 #When laser shot finished, shoot again

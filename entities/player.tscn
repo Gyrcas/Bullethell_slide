@@ -271,6 +271,17 @@ value = 100.0
 texture_under = ExtResource("3_8b3ji")
 texture_progress = ExtResource("4_xj7c0")
 
+[node name="Label" type="Label" parent="camera/ui/hud/health"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Health"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="nanos" type="TextureProgressBar" parent="camera/ui/hud"]
 layout_mode = 0
 offset_top = 48.0
@@ -279,6 +290,17 @@ offset_bottom = 96.0
 value = 100.0
 texture_under = ExtResource("3_8b3ji")
 texture_progress = ExtResource("5_jdmre")
+
+[node name="Label" type="Label" parent="camera/ui/hud/nanos"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Energy"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="bullet_type" type="Label" parent="camera/ui/hud"]
 layout_mode = 1

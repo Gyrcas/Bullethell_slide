@@ -65,6 +65,7 @@ func _on_nodes_child_entered_tree(node : Node) -> void:
 		used_ids.append(node.id)
 
 func _physics_process(_delta : float) -> void:
+	#print(get_tree().edited_scene_root.get_viewport().get_mouse_position())
 	queue_redraw()
 
 func _on_new_pressed() -> void:

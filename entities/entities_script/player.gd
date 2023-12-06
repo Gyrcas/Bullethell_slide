@@ -43,6 +43,7 @@ func set_health(value : float) -> void:
 		health_bar,"value",health / health_max * health_bar.max_value,0.1
 	)
 	if health <= 0 && !dying:
+		controllable = false
 		die()
 
 func set_nano(value : float) -> void:
@@ -113,11 +114,13 @@ var current_target_id : int = -1
 var old_maniab : float = maniability
 var old_move_speed : float = move_speed
 var old_turn_speed : float = turn_speed
+var old_max_speed : float = max_speed
+var ultra_mode_max_speed : float = 5
 var ultra_mode_move_speed : float = 25
 var ultra_mode_turn_speed : float = 5
 var ultra_mode_maniab : float = 1
-var ultra_mode_cost : float = 25
-var ultra_modeb_recharge : float = 1
+var ultra_mode_cost : float = 100
+var ultra_mode_recharge_div : float = 2
 var ultra_mode_usage : float = 0
 const ultra_mode_cooldown : float = 1
 var ultra_mode_on : bool = false
@@ -141,26 +144,25 @@ func ultra_mode(delta : float, move : int) -> void:
 			if ultra_mode_tween && ultra_mode_tween.is_valid():
 				ultra_mode_tween.kill()
 			ultra_mode_tween = create_tween()
-			ultra_mode_tween.parallel().tween_property(ultra_mode_light,"energy",1,0.5)
-			ultra_mode_tween.parallel().tween_property(ultra_mode_modulate,"color",Color("2e2e2e"),0.5)
+			#ultra_mode_tween.parallel().tween_property(ultra_mode_light,"energy",1,0.2)
+			ultra_mode_tween.parallel().tween_property(ultra_mode_modulate,"color",Color("006cff"),0.2)
+			maniability = old_maniab + ultra_mode_maniab
+			move_speed = old_move_speed + ultra_mode_move_speed
+			turn_speed = old_turn_speed + ultra_mode_turn_speed
+			max_speed = old_max_speed + ultra_mode_max_speed
+		ultra_mode_light.energy = move_toward(ultra_mode_light.energy,nano / nano_max,0.1)
 		var m_cost : float = ultra_mode_cost * delta
-		if !move:
-			Global.set_time_scale(0.3,true,2)
-		else:
+		if move:
 			Global.set_time_scale(0.4,true,2)
+		else:
+			Global.set_time_scale(0.3,true,2)
 			m_cost /= 2
 		nano -= m_cost
 		ultra_mode_usage += m_cost
-		maniability = old_maniab + ultra_mode_maniab
-		move_speed = old_move_speed + ultra_mode_move_speed
-		turn_speed = old_turn_speed + ultra_mode_turn_speed
 	elif ultra_mode_usage > 0:
-		move_speed = old_move_speed
-		maniability = old_maniab
-		turn_speed = old_turn_speed
 		Global.set_time_scale(1,true,2)
-		ultra_mode_usage -= ultra_mode_cost * delta / 2
-		nano += ultra_mode_cost * delta / 2
+		ultra_mode_usage -= ultra_mode_cost * delta / ultra_mode_recharge_div
+		nano += ultra_mode_cost * delta / ultra_mode_recharge_div
 		if ultra_mode_usage < 0:
 			ultra_mode_usage = 0
 		remove_ultra_mode()
@@ -169,6 +171,10 @@ func ultra_mode(delta : float, move : int) -> void:
 
 func remove_ultra_mode() -> void:
 	if ultra_mode_on:
+		move_speed = old_move_speed
+		maniability = old_maniab
+		turn_speed = old_turn_speed
+		max_speed = old_max_speed
 		ultra_mode_on = false
 		ultra_mode_particles.emitting = false
 		if ultra_mode_tween && ultra_mode_tween.is_valid():
@@ -178,8 +184,6 @@ func remove_ultra_mode() -> void:
 		ultra_mode_tween.parallel().tween_property(ultra_mode_modulate,"color",Color(1,1,1),0.5)
 
 func _input(event : InputEvent) -> void:
-	if !controllable:
-		return
 	if event.is_action_pressed("auto_target"):
 		current_target_id += 1
 		do_target()
