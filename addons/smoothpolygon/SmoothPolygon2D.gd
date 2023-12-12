@@ -99,8 +99,11 @@ func do_polygon_operation(value : Polygon2D, operate : String = operation, do_de
 			new_pol.self_modulate = self_modulate
 			get_parent().add_child(new_pol)
 			new_pol.polygon = results[i]
+			new_pol.owner = owner
 	if do_delete:
 		value.queue_free()
+
+
 
 @export var delete_other_polygon : bool = false
 
