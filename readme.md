@@ -38,7 +38,7 @@ Disons que je veut modifier la scène player.tscn. la chemin du fichier est:
 
 dossier_de_jeu/entities/player.tscn
 
-Donc, pour que le mod soit fonctionnel, il devrait avoir être dans un dossier avec le nom du mod à l'intérieur du dossier de mods:
+Donc, pour que le mod soit fonctionnel, il devrait être dans un dossier avec le nom du mod à l'intérieur du dossier de mods:
 
 (player.tscn est un dossier et non un fichier dans cette exemple)
 
