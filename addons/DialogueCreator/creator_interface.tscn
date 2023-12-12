@@ -61,6 +61,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Export"
 
+[node name="defaut_folder" type="Button" parent="menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Set default folder"
+
 [node name="file_dialog" type="FileDialog" parent="."]
 ok_button_text = "Save"
 
@@ -70,4 +75,6 @@ ok_button_text = "Save"
 [connection signal="pressed" from="menu/save" to="." method="_on_save_pressed" flags=18]
 [connection signal="pressed" from="menu/load" to="." method="_on_load_pressed" flags=18]
 [connection signal="pressed" from="menu/export" to="." method="_on_export_pressed" flags=18]
+[connection signal="pressed" from="menu/defaut_folder" to="." method="_on_defaut_folder_pressed"]
+[connection signal="dir_selected" from="file_dialog" to="." method="_on_file_dialog_dir_selected"]
 [connection signal="file_selected" from="file_dialog" to="." method="_on_file_dialog_file_selected" flags=18]

@@ -3,8 +3,6 @@ extends Polygon2D
 class_name SmoothPolygon2D
 ## Will smoothen the transition between each points of the polygon
 
-
-
 ## How far the new smoothed polygon can be from the old polygon lines
 @export var allowed_distance : float = 5000 : set = set_allowed_distance
 

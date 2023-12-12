@@ -14,6 +14,16 @@ var saving : bool = false
 
 var zoom : float = 1
 
+var config : Dictionary = {
+	"default_path":"res://"
+}
+
+const config_path : String = "res://addons/DialogueCreator/DCConfig.json"
+
+func _ready() -> void:
+	var file : FileAccess = FileAccess.open(config_path,FileAccess.READ)
+	config = JSON.parse_string(file.get_as_text())
+
 func _draw() -> void:
 	var biggest : Vector2 = global_position
 	var lines : PackedVector2Array = []
@@ -42,6 +52,7 @@ func get_first_available_id() -> int:
 
 func _on_save_pressed() -> void:
 	file_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
+	file_dialog.current_path = config.default_path
 	saving = true
 	export = false
 	file_dialog.visible = true
@@ -49,11 +60,13 @@ func _on_save_pressed() -> void:
 
 func _on_load_pressed() -> void:
 	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+	file_dialog.current_path = config.default_path
 	saving = false
 	file_dialog.visible = true
 
 func _on_export_pressed() -> void:
 	file_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
+	file_dialog.current_path = config.default_path
 	saving = true
 	export = true
 	file_dialog.visible = true
@@ -148,3 +161,15 @@ func _on_file_dialog_file_selected(path : String) -> void:
 func _on_nodes_child_exiting_tree(node : Node) -> void:
 	if nodes.get_child_count() == 1:
 		nodes.add_child.call_deferred(preload("res://addons/DialogueCreator/box.tscn").instantiate())
+
+
+func _on_defaut_folder_pressed() -> void:
+	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
+	file_dialog.current_path = config.default_path
+	file_dialog.visible = true
+
+
+func _on_file_dialog_dir_selected(dir : String) -> void:
+	config.default_path = dir
+	var file : FileAccess = FileAccess.open(config_path,FileAccess.WRITE)
+	file.store_string(JSON.stringify(config))

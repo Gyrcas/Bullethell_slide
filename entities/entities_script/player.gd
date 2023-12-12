@@ -122,7 +122,8 @@ var ultra_mode_maniab : float = 1
 var ultra_mode_cost : float = 100
 var ultra_mode_recharge_div : float = 2
 var ultra_mode_usage : float = 0
-const ultra_mode_cooldown : float = 1
+var ultra_mode_cooldown : float = 1
+var ultra_mode_no_move_cost_div : float = 2
 var ultra_mode_on : bool = false
 
 @onready var ultra_mode_timer : Timer = $ultra_mode/timer
@@ -137,7 +138,6 @@ func ultra_mode(delta : float, move : int) -> void:
 		if nano < ultra_mode_cost * delta:
 			can_ultra_mode = false
 			ultra_mode_timer.start(ultra_mode_cooldown)
-			return
 		if !ultra_mode_on:
 			ultra_mode_on = true
 			ultra_mode_particles.emitting = true
@@ -156,7 +156,7 @@ func ultra_mode(delta : float, move : int) -> void:
 			Global.set_time_scale(0.4,true,2)
 		else:
 			Global.set_time_scale(0.3,true,2)
-			m_cost /= 2
+			m_cost /= ultra_mode_no_move_cost_div
 		nano -= m_cost
 		ultra_mode_usage += m_cost
 	elif ultra_mode_usage > 0:
