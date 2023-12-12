@@ -34,7 +34,7 @@ Après de nombreuses recherches, j'ai découvert qu'il est possible de modifier 
 
 Pour ce qui est de la gestion des mods, j'ai décidé de simplifier la procedure en obligeant les mods à immiter la structure du projet. Par exemple:
 
-Disons que je veut modifier la scène player.tscn. la chemin du fichier est:
+Disons que je veut modifier la scène player.tscn. le chemin du fichier est:
 
 dossier_de_jeu/entities/player.tscn
 
