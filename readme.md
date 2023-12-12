@@ -33,11 +33,15 @@ Dans mon jeu, je voulais offrir la possibilité de pouvoir modifier le code du j
 Après de nombreuses recherches, j'ai découvert qu'il est possible de modifier et de sauvegardé les fichiers de scène (.tscn). J'ai alors réalisé que je pouvais injecter directement du contenu supplémentaire dans les fichiers. Les mods sont ajouter comme enfant du node principal de la scène. Étonnamant, il est même possible de créer un mod qui rajoute un Singleton au jeu en modifiant le menu principal. En effet, en ajoutant n'importe quel node comme enfant du root, celui-ci devient un Singleton.
 
 Pour ce qui est de la gestion des mods, j'ai décidé de simplifier la procedure en obligeant les mods à immiter la structure du projet. Par exemple:
+
 Disons que je veut modifier la scène player.tscn. la chemin du fichier est:
+
 dossier_de_jeu/entities/player.tscn
 
 Donc, pour que le mod soit fonctionnel, il devrait avoir être dans un dossier avec le nom du mod à l'intérieur du dossier de mods:
+
 (player.tscn est un dossier et non un fichier dans cette exemple)
+
 dossier_de_jeu/mods/nom_du_mod/entities/player.tscn/mon_mod.tscn
 
 https://github.com/Gyrcas/Bullethell_slide/assets/88252411/7b17e4b7-175c-47cb-b59c-d61007a3b34b
