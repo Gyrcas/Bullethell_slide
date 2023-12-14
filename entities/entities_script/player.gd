@@ -79,6 +79,18 @@ func _ready() -> void:
 
 var joy_stick_dead_zone : float = 0.2
 
+func directional_turn() -> int:
+	var target_vector : Vector2 = Vector2(
+		Input.get_joy_axis(0,JOY_AXIS_LEFT_X),
+		Input.get_joy_axis(0,JOY_AXIS_LEFT_Y)
+	)
+	if abs(target_vector.x) < joy_stick_dead_zone:
+		target_vector.x = 0
+	if abs(target_vector.y) < joy_stick_dead_zone:
+		target_vector.y = 0
+	var angle_target : float = get_angle_to(global_position + target_vector)
+	return (angle_target / abs(angle_target)) if angle_target else 0
+
 func _physics_process(delta : float) -> void:
 	# Get movement inputs
 	var move : int = 0
@@ -86,16 +98,15 @@ func _physics_process(delta : float) -> void:
 	
 	if !dying && controllable:
 		if Input.is_joy_known(0):
-			var target_vector : Vector2 = Vector2(
-				Input.get_joy_axis(0,JOY_AXIS_LEFT_X),
-				Input.get_joy_axis(0,JOY_AXIS_LEFT_Y)
-			)
-			if abs(target_vector.x) < joy_stick_dead_zone:
-				target_vector.x = 0
-			if abs(target_vector.y) < joy_stick_dead_zone:
-				target_vector.y = 0
-			var angle_target : float = get_angle_to(global_position + target_vector)
-			turn = angle_target / abs(angle_target) if angle_target else 0
+			if Global.use_directional_turn:
+				turn = directional_turn()
+			else:
+				turn = int(Input.get_axis("left","right"))
+				if turn == 0:
+					if Input.get_joy_axis(0,JOY_AXIS_LEFT_X) > 0 + joy_stick_dead_zone:
+						turn = 1
+					elif Input.get_joy_axis(0,JOY_AXIS_LEFT_X) < 0 - joy_stick_dead_zone:
+						turn = -1
 			if Input.is_action_pressed("controller_forward"):
 				move = 1
 			elif Input.is_action_pressed("controller_backward"):

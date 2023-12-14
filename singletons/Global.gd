@@ -17,6 +17,8 @@ var last_time_scale_priority : int = 1
 
 var current_time_scale : float = 1
 
+var use_directional_turn : bool = true
+
 func set_time_scale(time_scale : float, change_sound : bool = true, priority : int = 1) -> void:
 	if current_time_scale != 1 && last_time_scale_priority < priority:
 		return
@@ -53,6 +55,8 @@ func _ready() -> void:
 	var settings : Dictionary = JSON.parse_string(FS.read(
 		await NodeLinker.request_resource("settings.json",true)
 	))
+	if settings.has("use_directional_turn"):
+		use_directional_turn = settings.use_directional_turn
 	if !settings.has("window_type"):
 		settings["window_type"] = 0
 	match int(settings.window_type):
@@ -138,6 +142,3 @@ func get_actions_as_text(action : String) -> String:
 	if events.size() == 0:
 		return ""
 	return events[0].as_text()
-
-func is_valid_device_input(event : InputEvent, device : int = 0) -> bool:
-	return !(event is InputEventJoypadButton || event is InputEventJoypadMotion) || event.device == device

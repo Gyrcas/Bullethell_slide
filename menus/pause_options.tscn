@@ -28,13 +28,19 @@ text = "map inputs"
 [node name="tuto" type="Button" parent="center/vbox"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../inputs")
-focus_neighbor_bottom = NodePath("../volume")
+focus_neighbor_bottom = NodePath("../use_directional_turn")
 text = "Tutorial
 "
 
-[node name="volume" type="VSplitContainer" parent="center/vbox"]
+[node name="use_directional_turn" type="CheckButton" parent="center/vbox"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../tuto")
+focus_neighbor_bottom = NodePath("../volume")
+text = "Use Directional Turn"
+
+[node name="volume" type="VSplitContainer" parent="center/vbox"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../use_directional_turn")
 focus_neighbor_bottom = NodePath("../dialogue")
 focus_mode = 2
 dragger_visibility = 2
@@ -80,4 +86,5 @@ popup/item_1/id = 1
 
 [connection signal="pressed" from="center/vbox/inputs" to="." method="_on_inputs_pressed" flags=18]
 [connection signal="pressed" from="center/vbox/tuto" to="." method="_on_tuto_pressed"]
+[connection signal="toggled" from="center/vbox/use_directional_turn" to="." method="_on_use_directional_turn_toggled"]
 [connection signal="item_selected" from="center/vbox/window_type" to="." method="_on_window_type_item_selected" flags=18]

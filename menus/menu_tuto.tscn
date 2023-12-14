@@ -20,7 +20,14 @@ const texts : Dictionary = {
 	\"debug\":\"Press \\\"#{key}\\\" to open or close the debug overlay.\",
 	\"skip_to_end\":\"Press \\\"#{key}\\\" to skip to the end of the game.\",
 	\"mute\":\"Press \\\"#{key}\\\" to mute or unmute the game.\",
-	\"auto_target\":\"Press \\\"#{key}\\\" to auto target an enemy or target the next enemy.\"
+	\"auto_target\":\"Press \\\"#{key}\\\" to auto target an enemy or target the next enemy.\",
+	\"ultra_mode\":\"Press \\\"#{key}\\\" to slow down time, increase your speed and turn faster. Will cost energy\",
+	\"pause_menu\":\"Press \\\"#{key}\\\" to open the pause menu.\",
+	\"controller_forward\":\"Press \\\"#{key}\\\" to go forward with a controller\",
+	\"controller_backward\":\"Press\\\"#{key}\\\" to go backward with a controller.\\n Use the left stick to turn.\",
+	\"extra\":[
+		\"Use the left stick on a controller to turn. Change depending if the \\\"use directional turn\\\" is activated.\"
+	]
 }
 
 func on_back_menu() -> void:
@@ -38,6 +45,15 @@ func open_close(opening : bool) -> void:
 		var key : String = InputMap.action_get_events(action)[0].as_text()
 		label.text = texts[action] if texts.get(action) else \"N/A \" + action
 		label.text = label.text.replace(\"#{key}\",key)
+		inputs.add_child(label)
+		label = Label.new()
+		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		label.text = \"-------------------------------------\"
+		inputs.add_child(label)
+	for text in texts.extra:
+		var label : Label = Label.new()
+		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		label.text = text
 		inputs.add_child(label)
 		label = Label.new()
 		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
