@@ -139,6 +139,5 @@ func get_actions_as_text(action : String) -> String:
 		return ""
 	return events[0].as_text()
 
-func restart_game() -> void:
-	OS.execute(OS.get_executable_path(), [])
-	get_tree().quit()
+func is_valid_device_input(event : InputEvent, device : int = 0) -> bool:
+	return !(event is InputEventJoypadButton || event is InputEventJoypadMotion) || event.device == device

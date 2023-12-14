@@ -1,7 +1,8 @@
 extends PauseMenuView
 
 func on_back_menu() -> void:
-	pause_menu.change_view("options")
+	if !input_mapper.waiting_input:
+		pause_menu.change_view("options")
 	
 @onready var input_mapper : InputsMapper = $InputsMapper
 

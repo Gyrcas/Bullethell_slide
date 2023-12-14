@@ -3,6 +3,8 @@ class_name PauseMenuView
 
 var override_inputs : bool = false
 
+var can_close_with_open_menu : bool = false
+
 var pause_menu : PauseMenu
 
 var last_focus : Control

@@ -2,6 +2,9 @@ extends PauseMenuView
 
 @onready var resume : Button = $center/vbox/resume
 
+func _init() -> void:
+	can_close_with_open_menu = true
+
 func _on_resume_pressed() -> void:
 	pause_menu.visible = false
 	get_tree().paused = false

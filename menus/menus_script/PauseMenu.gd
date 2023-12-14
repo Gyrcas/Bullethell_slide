@@ -42,12 +42,16 @@ func change_view(view_name : String, params : Dictionary = {}) -> void:
 	current_view = view
 
 func _input(event : InputEvent) -> void:
-	if current_view && event.is_action_pressed("back") && !current_view.override_inputs:
-		if get_tree().paused:
+	if current_view && !current_view.override_inputs:
+		if get_tree().paused && event.is_action_pressed("back"):
 			if current_view.has_method("on_back_menu"):
 				current_view.on_back_menu()
-		elif open_with_back && !visible && !get_tree().paused:
-			open()
+		elif event.is_action_pressed("pause_menu") && open_with_back:
+			if !visible && !get_tree().paused:
+				open()
+			elif visible && get_tree().paused && current_view.can_close_with_open_menu:
+				current_view.on_back_menu()
+			
 
 signal closed
 

@@ -24,6 +24,8 @@ func set_changed(value : bool) -> void:
 	changed = value
 	inputs_changed.emit()
 
+const joypad_motion_id : String = "jpmtn"
+
 func create_key(key : InputEvent, input : String) -> HSplitContainer:
 	var split : HSplitContainer = HSplitContainer.new()
 	split.dragger_visibility = SplitContainer.DRAGGER_HIDDEN
@@ -44,7 +46,7 @@ func create_key(key : InputEvent, input : String) -> HSplitContainer:
 				key_lbl.text = "left click mouse"
 			MOUSE_BUTTON_RIGHT:
 				key_lbl.text = "right click mouse"
-	elif key is InputEventJoypadButton:
+	elif key is InputEventJoypadButton || key is InputEventJoypadMotion:
 		key_lbl.text = key.as_text()
 	return split
 
@@ -63,6 +65,8 @@ func save_to_file() -> void:
 				settings["inputs"][action].append(mouse_button_id + str(input.button_index))
 			elif input is InputEventJoypadButton:
 				settings["inputs"][action].append(joypad_btn_id + str(input.button_index))
+			elif input is InputEventJoypadMotion:
+				settings["inputs"][action].append(joypad_motion_id + str(input.axis) + "_" + str(input.axis_value))
 	FS.write(settings_file,JSON.stringify(settings))
 	
 func load_file() -> void:
@@ -92,9 +96,14 @@ func load_file() -> void:
 			elif joypad_btn_id in key:
 				input_event = InputEventJoypadButton.new()
 				input_event.button_index = int(key.split(joypad_btn_id)[1])
+				input_event.device = 0
+			elif joypad_motion_id in key:
+				input_event = InputEventJoypadMotion.new()
+				var split : PackedStringArray = key.split(joypad_motion_id)[1].split("_")
+				input_event.axis = int(split[0])
+				input_event.axis_value = float(split[1])
+				input_event.device = 0
 			InputMap.action_add_event(input,input_event)
-			if event_pairing.has(input):
-				InputMap.action_add_event(event_pairing[input],input_event)
 	load_inputs()
 
 static func get_actions() -> PackedStringArray:
@@ -106,6 +115,7 @@ static func get_actions() -> PackedStringArray:
 	return new_actions
 
 func load_inputs() -> void:
+	InputMap.load_from_project_settings()
 	for child in grid.get_children():
 		child.queue_free()
 	var actions : PackedStringArray = InputsMapper.get_actions()
@@ -144,6 +154,8 @@ func load_inputs() -> void:
 					del_btn.focus_neighbor_left = del_btn.get_path_to(input_btn)
 					input_btn.focus_neighbor_right = input_btn.get_path_to(del_btn)
 				previous_del = del_btn
+				if event_pairing.has(input) && !( key is InputEventJoypadButton && key.button_index in [1,11,12,13,14]):
+					InputMap.action_add_event(event_pairing[input],key)
 		while input_size < grid.columns - 1:
 			grid.add_child(Control.new())
 			input_size += 1
@@ -161,13 +173,19 @@ var waiting_input : bool = false
 var action_add : String = ""
 
 func add_input(action : String) -> void:
+	add_timer.start(0.1)
+	await add_timer.timeout
 	waiting_input = true
 	action_add = action.replace(" ","_")
 
 func _input(event : InputEvent) -> void:
 	if !waiting_input:
 		return
-	if event is InputEventKey || event is InputEventJoypadButton:
+	if !is_valid_event_device(event):
+		return
+	if event is InputEventKey || event is InputEventJoypadButton || event is InputEventJoypadMotion:
+		add_timer.start(0.1)
+		await add_timer.timeout
 		waiting_input = false
 		InputMap.action_add_event(action_add,event)
 		if event_pairing.has(action_add):
@@ -182,6 +200,9 @@ func on_reset_btn_pressed() -> void:
 	InputMap.load_from_project_settings()
 	load_inputs()
 
+func is_valid_event_device(event : InputEvent) -> bool:
+	return !(event is InputEventJoypadButton || event is InputEventJoypadMotion) || event.device == 0
+
 func remove_input(action : String,input : InputEvent) -> void:
 	InputMap.action_erase_event(action,input)
 	if event_pairing.has(action):
@@ -189,7 +210,10 @@ func remove_input(action : String,input : InputEvent) -> void:
 	changed = true
 	load_inputs()
 
+var add_timer : Timer = Timer.new()
+
 func _ready() -> void:
+	add_child(add_timer)
 	var scroll : ScrollContainer = ScrollContainer.new()
 	scroll.size = size
 	add_child(scroll)

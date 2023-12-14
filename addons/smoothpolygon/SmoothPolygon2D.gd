@@ -66,6 +66,7 @@ func split_polygon(value : PackedVector2Array, parent : Node2D = get_parent()) -
 		parent.add_child(pol)
 		pol.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
 		pol.polygon = p
+	
 
 func do_polygon_operation(value : Polygon2D, operate : String = operation, do_delete : bool = delete_other_polygon, decompose : bool = false) -> void:
 	if value == self || value == null:

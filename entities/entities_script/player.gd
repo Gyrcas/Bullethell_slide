@@ -77,13 +77,33 @@ func _ready() -> void:
 	bullet_preset.sender = self
 	bullet_preset.target_node = target
 
+var joy_stick_dead_zone : float = 0.2
+
 func _physics_process(delta : float) -> void:
 	# Get movement inputs
-	var move : int = int(Input.get_axis("down","up"))
-	var turn : int = int(Input.get_axis("left","right"))
-	if dying || !controllable:
-		move = 0
-		turn = 0
+	var move : int = 0
+	var turn : int = 0
+	
+	if !dying && controllable:
+		if Input.is_joy_known(0):
+			var target_vector : Vector2 = Vector2(
+				Input.get_joy_axis(0,JOY_AXIS_LEFT_X),
+				Input.get_joy_axis(0,JOY_AXIS_LEFT_Y)
+			)
+			if abs(target_vector.x) < joy_stick_dead_zone:
+				target_vector.x = 0
+			if abs(target_vector.y) < joy_stick_dead_zone:
+				target_vector.y = 0
+			var angle_target : float = get_angle_to(global_position + target_vector)
+			turn = angle_target / abs(angle_target) if angle_target else 0
+			if Input.is_action_pressed("controller_forward"):
+				move = 1
+			elif Input.is_action_pressed("controller_backward"):
+				move = -1
+		else:
+			move = int(Input.get_axis("down","up"))
+			turn = int(Input.get_axis("left","right"))
+	
 	var speed : float = velocity.x / velocity.normalized().x
 	if is_nan(speed):
 		speed = 0.0
