@@ -2,7 +2,7 @@
 Dylan Ducas
 
 ## Introduction
-Artifact est un jeu inspiré par des jeux "bullethell", par exemple Touhou, mais avec une plus grande liberté de mouvement. Le jeu possède une histoire très courte et pas complète; La fin du jeu est juste après le premier boss.
+Artifact est un jeu inspiré par des jeux "bullethell", par exemple Touhou, mais avec une plus grande liberté de mouvement. Le jeu possède une histoire très courte et pas complète; La fin du jeu est juste après le premier boss. Vous incarné un petit vaisseau triangulaire, une sorte d'artéfacte, qui peut tirer des balles auto-guidées et des bombes et qui se déplace sans gravité.
 
 ## Concepts
 
