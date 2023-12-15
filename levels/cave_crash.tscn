@@ -103,7 +103,7 @@ func _on_turret_died(_body : Variant = null) -> void:
 		door_turrets.open()
 "
 
-[sub_resource type="Resource" id="Resource_il7xw"]
+[sub_resource type="Resource" id="Resource_w4j80"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -120,7 +120,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bullet"
 
-[sub_resource type="Resource" id="Resource_6k8ia"]
+[sub_resource type="Resource" id="Resource_3o4sy"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -137,7 +137,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bullet"
 
-[sub_resource type="Resource" id="Resource_8lxuk"]
+[sub_resource type="Resource" id="Resource_kqagt"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -880,12 +880,12 @@ position = Vector2(14465, 324)
 [node name="turret" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(23472, 4966)
 rotation = -0.418446
-bullet_preset = SubResource("Resource_il7xw")
+bullet_preset = SubResource("Resource_w4j80")
 
 [node name="turret2" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(22219, 4772)
 rotation = 0.0724223
-bullet_preset = SubResource("Resource_6k8ia")
+bullet_preset = SubResource("Resource_3o4sy")
 
 [node name="door_turrets" parent="." instance=ExtResource("4_336vv")]
 position = Vector2(21435, 5577)
@@ -896,7 +896,7 @@ dimensions = Vector2(50, 650)
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 z_index = 1
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_8lxuk")
+bullet_preset = SubResource("Resource_kqagt")
 
 [node name="laser" parent="." instance=ExtResource("13_xknin")]
 position = Vector2(21169, 3710)

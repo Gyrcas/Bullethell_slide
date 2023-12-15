@@ -225,7 +225,7 @@ func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("interact"):
 		if dying:
 			on_death()
-		elif interaction:
+		elif interaction && controllable:
 			interaction.interact()
 	if event.is_action_pressed("projectile_1"):
 		change_bullet_type("bullet")
