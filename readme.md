@@ -80,4 +80,12 @@ Dans mon jeu, j'ai un système de sauvegarde qui me permet de sauvegardé l'éta
 
 https://github.com/Gyrcas/Bullethell_slide/assets/88252411/580b6741-0f95-435a-9d3f-de58c2e6b00e
 
+---
+
+#### - InputsMapper
+Dans mon jeu, je me suis créer un système pour changer certaines touches dans mon jeu. J'ai recherché comment fonctionne le [InputMap](https://docs.godotengine.org/en/stable/classes/class_inputmap.html) pour trouvé comment faire.
+
+![inputsmapper](https://github.com/Gyrcas/Bullethell_slide/assets/88252411/53f185a4-22af-4bcb-921e-b80ede9c0dad)
+
+---
 
