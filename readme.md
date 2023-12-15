@@ -54,3 +54,24 @@ dossier_de_jeu/mods/nom_du_mod/entities/player.tscn/mon_mod.tscn
 https://github.com/Gyrcas/Bullethell_slide/assets/88252411/7b17e4b7-175c-47cb-b59c-d61007a3b34b
 
 ---
+
+#### - Target
+Dans mon jeu, j'ai une target qui peut automatiquement visée les enemies. Les balles du joueur sont associées à la target et la suivent automatiquement
+Je l'ai inventé donc pas de source.
+
+![target](https://github.com/Gyrcas/Bullethell_slide/assets/88252411/2cca7316-8a3d-43f3-a98f-6f1b41529984)
+
+---
+
+#### - Shader black hole
+Dans mon jeu, j'ai combiné des shaders, plus exactement un effet de ripple et d'abération chromatique, pour créer des effets de trous noirs intéressants.
+J'ai pris ces shaders puis les ai combiné:
+
+[ripple](https://godotshaders.com/shader/ripple-shader/)
+
+[abération chromatique](https://godotshaders.com/shader/just-chromatic-aberration/)
+
+https://github.com/Gyrcas/Bullethell_slide/assets/88252411/b0328aac-951c-417d-911c-9f840b4f387b
+
+
+
