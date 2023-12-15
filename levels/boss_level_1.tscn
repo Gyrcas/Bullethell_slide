@@ -63,7 +63,7 @@ func _on_player_end_anim_done() -> void:
 	Global.change_scene_to_file(\"end_demo.tscn\")
 "
 
-[sub_resource type="Resource" id="Resource_lscjl"]
+[sub_resource type="Resource" id="Resource_bhbs2"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = true
@@ -80,7 +80,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bullet"
 
-[sub_resource type="Resource" id="Resource_07ok5"]
+[sub_resource type="Resource" id="Resource_avx8q"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = false
@@ -97,7 +97,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bomb"
 
-[sub_resource type="Resource" id="Resource_jv8jf"]
+[sub_resource type="Resource" id="Resource_wfunr"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = true
@@ -114,7 +114,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bullet"
 
-[sub_resource type="Resource" id="Resource_ssv74"]
+[sub_resource type="Resource" id="Resource_5y155"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = true
@@ -131,7 +131,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bullet"
 
-[sub_resource type="Resource" id="Resource_pkkww"]
+[sub_resource type="Resource" id="Resource_fkcy0"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = true
@@ -148,7 +148,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bullet"
 
-[sub_resource type="Resource" id="Resource_stbrb"]
+[sub_resource type="Resource" id="Resource_vn3jb"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = true
@@ -165,7 +165,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bullet"
 
-[sub_resource type="Resource" id="Resource_po2a1"]
+[sub_resource type="Resource" id="Resource_hdnb0"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = false
@@ -182,7 +182,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bomb"
 
-[sub_resource type="Resource" id="Resource_grtfl"]
+[sub_resource type="Resource" id="Resource_l0r74"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = false
@@ -199,7 +199,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bomb"
 
-[sub_resource type="Resource" id="Resource_xdjvl"]
+[sub_resource type="Resource" id="Resource_tdhbm"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = true
@@ -242,7 +242,7 @@ func on_timer_timeout(laser : Laser, timer : Timer,speed : float) -> void:
 		laser.open()
 "
 
-[sub_resource type="Resource" id="Resource_fwgkj"]
+[sub_resource type="Resource" id="Resource_nr4q5"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = true
@@ -259,7 +259,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bullet"
 
-[sub_resource type="Resource" id="Resource_qpka5"]
+[sub_resource type="Resource" id="Resource_ug5gi"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = true
@@ -276,7 +276,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bullet"
 
-[sub_resource type="Resource" id="Resource_yre06"]
+[sub_resource type="Resource" id="Resource_hlyfg"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = true
@@ -293,7 +293,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bullet"
 
-[sub_resource type="Resource" id="Resource_0yc50"]
+[sub_resource type="Resource" id="Resource_twxls"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = false
@@ -310,7 +310,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bomb"
 
-[sub_resource type="Resource" id="Resource_8olge"]
+[sub_resource type="Resource" id="Resource_qqknr"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = true
@@ -327,7 +327,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bullet"
 
-[sub_resource type="Resource" id="Resource_othsk"]
+[sub_resource type="Resource" id="Resource_e7mcr"]
 resource_local_to_scene = true
 script = ExtResource("3_v6esh")
 ignore_sender = true
@@ -380,43 +380,43 @@ polygon = PackedVector2Array(1426, 257, 1367, 2265, -438, 2521, -1194, -226, -19
 [node name="turret" parent="enemies" instance=ExtResource("5_pwuv3")]
 position = Vector2(-1094, -4242)
 rotation = 1.309
-bullet_preset = SubResource("Resource_lscjl")
+bullet_preset = SubResource("Resource_bhbs2")
 
 [node name="extractor" parent="enemies" instance=ExtResource("6_b8uvo")]
 position = Vector2(790, -5762)
-bullet_preset = SubResource("Resource_07ok5")
+bullet_preset = SubResource("Resource_avx8q")
 
 [node name="turret2" parent="enemies" instance=ExtResource("5_pwuv3")]
 position = Vector2(977, -4676)
 rotation = -0.785397
-bullet_preset = SubResource("Resource_jv8jf")
+bullet_preset = SubResource("Resource_wfunr")
 
 [node name="turret3" parent="enemies" instance=ExtResource("5_pwuv3")]
 position = Vector2(1058, -7295)
-bullet_preset = SubResource("Resource_ssv74")
+bullet_preset = SubResource("Resource_5y155")
 
 [node name="turret4" parent="enemies" instance=ExtResource("5_pwuv3")]
 position = Vector2(256, -8290)
 rotation = -3.14159
-bullet_preset = SubResource("Resource_pkkww")
+bullet_preset = SubResource("Resource_fkcy0")
 
 [node name="turret5" parent="enemies" instance=ExtResource("5_pwuv3")]
 position = Vector2(-342, -10308)
 rotation = 1.83259
-bullet_preset = SubResource("Resource_stbrb")
+bullet_preset = SubResource("Resource_vn3jb")
 
 [node name="extractor2" parent="enemies" instance=ExtResource("6_b8uvo")]
 position = Vector2(824, -7971)
-bullet_preset = SubResource("Resource_po2a1")
+bullet_preset = SubResource("Resource_hdnb0")
 
 [node name="extractor3" parent="enemies" instance=ExtResource("6_b8uvo")]
 position = Vector2(-219, -4588)
-bullet_preset = SubResource("Resource_grtfl")
+bullet_preset = SubResource("Resource_l0r74")
 
 [node name="turret6" parent="enemies" instance=ExtResource("5_pwuv3")]
 position = Vector2(336, -6290)
 rotation = 3.14159
-bullet_preset = SubResource("Resource_xdjvl")
+bullet_preset = SubResource("Resource_tdhbm")
 
 [node name="lasers" type="Node2D" parent="enemies"]
 script = SubResource("GDScript_o7n4e")
@@ -436,26 +436,26 @@ dimensions = Vector2(100, 800)
 [node name="turret7" parent="enemies" instance=ExtResource("5_pwuv3")]
 position = Vector2(-906, -5675)
 rotation = 0.785397
-bullet_preset = SubResource("Resource_fwgkj")
+bullet_preset = SubResource("Resource_nr4q5")
 
 [node name="turret8" parent="enemies" instance=ExtResource("5_pwuv3")]
 position = Vector2(0, -7444)
 rotation = -0.785397
-bullet_preset = SubResource("Resource_qpka5")
+bullet_preset = SubResource("Resource_ug5gi")
 
 [node name="turret9" parent="enemies" instance=ExtResource("5_pwuv3")]
 position = Vector2(1234, -10817)
 rotation = -1.83259
-bullet_preset = SubResource("Resource_yre06")
+bullet_preset = SubResource("Resource_hlyfg")
 
 [node name="extractor4" parent="enemies" instance=ExtResource("6_b8uvo")]
 position = Vector2(830, -9142)
-bullet_preset = SubResource("Resource_0yc50")
+bullet_preset = SubResource("Resource_twxls")
 
 [node name="turret10" parent="enemies" instance=ExtResource("5_pwuv3")]
 position = Vector2(602, -9652)
 rotation = -2.35619
-bullet_preset = SubResource("Resource_8olge")
+bullet_preset = SubResource("Resource_qqknr")
 
 [node name="SmoothStaticPolygon2D" type="Polygon2D" parent="."]
 self_modulate = Color(0.239216, 0.0392157, 0, 1)
@@ -468,7 +468,7 @@ smoothed_pol = PackedVector2Array(-415.879, 2028.65, -415.927, 1994.35, -416.013
 
 [node name="player" parent="." instance=ExtResource("2_4bhqi")]
 rotation = -1.5708
-bullet_preset = SubResource("Resource_othsk")
+bullet_preset = SubResource("Resource_e7mcr")
 
 [node name="boss_1" parent="." instance=ExtResource("4_pmhn5")]
 position = Vector2(525, -12421)

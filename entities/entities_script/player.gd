@@ -98,6 +98,10 @@ func _physics_process(delta : float) -> void:
 	
 	if !dying && controllable:
 		if Input.is_joy_known(0):
+			if !target.visible:
+				target.current_target = self
+				target.follow_mouse = false
+			
 			if Global.use_directional_turn:
 				turn = directional_turn()
 			else:
