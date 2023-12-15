@@ -12,12 +12,15 @@ var selecting_target : bool = false
 
 var half_screen : Vector2
 
+var target_controller : Vector2
+
 func _ready() -> void:
 	if GS.data.get("dash_aquired"):
 		perks.append(DashPerk.new())
 	visible = false
 	Engine.time_scale = 1
 	half_screen = get_viewport_rect().size / 2
+	target_controller = half_screen
 
 func draw_wheel() -> void:
 	var inc : float = deg_to_rad(360) / perks.size()
@@ -50,6 +53,8 @@ func _draw() -> void:
 			perks[selected_arc].perk_range * Global.player.camera.zoom.x,
 			Color(1, 0, 0, 0.1)
 		)
+		if Input.is_joy_known(0):
+			draw_circle(target_controller,50,Color(0,0,0,0.2))
 	else:
 		draw_wheel()
 
@@ -68,7 +73,10 @@ func draw_arc_between_circle(center : Vector2, radius1 : float, radius2 : float,
 	draw_colored_polygon(points_arc,color)
 
 
-func _process(_delta : float) -> void:
+const speed_target_controller : float = 5000
+var joy_stick_dead_zone : float = 0.2
+
+func _process(delta : float) -> void:
 	if !visible:
 		return
 	if !Global.player.controllable:
@@ -77,10 +85,18 @@ func _process(_delta : float) -> void:
 	var angle : float = Vector2(1,0).angle_to(half_screen.direction_to(get_local_mouse_position()))
 	if angle < 0:
 		angle += deg_to_rad(360)
-	var last_selected : int = selected_arc
 	selected_arc = floor(angle / (deg_to_rad(360) / perks.size()))
-	if last_selected != selected_arc:
-		queue_redraw()
+	
+	var controller_input : Vector2 = Vector2(
+		Input.get_joy_axis(0,JOY_AXIS_RIGHT_X),
+		Input.get_joy_axis(0,JOY_AXIS_RIGHT_Y)
+	)
+	if abs(controller_input.x) < joy_stick_dead_zone:
+		controller_input.x = 0
+	if abs(controller_input.y) < joy_stick_dead_zone:
+		controller_input.y = 0
+	target_controller += controller_input * speed_target_controller * delta
+	queue_redraw()
 
 const time_trans_speed : float = 0.02
 
@@ -94,10 +110,15 @@ func _input(event : InputEvent) -> void:
 			visible = !visible
 			Global.tween_time_scale(0.1 if visible else 1.0,time_trans_speed)
 		selecting_target = false
+		if visible:
+			target_controller = half_screen
 		queue_redraw()
 	if event.is_action_pressed("left_click") && visible:
 		if selecting_target:
 			var mouse : Vector2 = get_viewport().get_camera_2d().get_global_mouse_position()
+			if Input.is_joy_known(0):
+				mouse = (target_controller - half_screen) / Global.player.camera.zoom + Global.player.global_position
+			
 			if perks[selected_arc].nano_cost > Global.player.nano || perks[selected_arc].perk_range < Global.player.global_position.distance_to(mouse):
 				return
 			selecting_target = false
