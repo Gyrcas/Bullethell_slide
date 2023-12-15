@@ -1,5 +1,8 @@
 # Artifact
-###### Dylan Ducas
+Dylan Ducas
+
+## Introduction
+Artifact est un jeu inspiré par des jeux "bullethell", par exemple Touhou, mais avec une plus grande liberté de mouvement. Le jeu possède une histoire très courte et pas complète; La fin du jeu est juste après le premier boss.
 
 #### - Smooth Polygon
 Dans ce projet, je voulais la possibilité de faire des niveaux possèdants de courbes suffisament arrondies comme dans le jeu dont je me suis inspiré au début: DATA WING.
@@ -31,6 +34,8 @@ https://github.com/Gyrcas/Bullethell_slide/assets/88252411/ff861ece-d2fa-465b-ab
 Dans mon jeu, je voulais offrir la possibilité de pouvoir modifier le code du jeu sans avoir à éditer le code source. J'ai toujours été fan de jeu offrant la possibilité de mod comme les jeux de la franchise Elder Scrolls ou bien ceux de Fallout.
 
 Après de nombreuses recherches, j'ai découvert qu'il est possible de modifier et de sauvegardé les fichiers de scène (.tscn). J'ai alors réalisé que je pouvais injecter directement du contenu supplémentaire dans les fichiers. Les mods sont ajouter comme enfant du node principal de la scène. Étonnamant, il est même possible de créer un mod qui rajoute un Singleton au jeu en modifiant le menu principal. En effet, en ajoutant n'importe quel node comme enfant du root, celui-ci devient un Singleton.
+
+(Note) De plus, j'ai découvert récemment qu'un jeu utilise un système similaire pour ses DLC, Crosscode.
 
 Pour ce qui est de la gestion des mods, j'ai décidé de simplifier la procedure en obligeant les mods à immiter la structure du projet. Par exemple:
 
