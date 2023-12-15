@@ -89,3 +89,7 @@ Dans mon jeu, je me suis créer un système pour changer certaines touches dans 
 
 ---
 
+#### - Système de perks
+Dans mon jeu, j'ai un système de perks(habilités) qui offre de grandes possibilités même si pour l'instant, il n'y a que le Dash pour l'instant. J'ai créé ce concept par moi-même donc pas de resources. Un menu en cercle permet de choisir le perk à executé.
+
+https://github.com/Gyrcas/Bullethell_slide/assets/88252411/b8664973-ec42-4ab1-aa6d-a4d4649d4084
