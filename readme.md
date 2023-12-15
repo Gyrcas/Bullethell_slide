@@ -73,5 +73,11 @@ J'ai pris ces shaders puis les ai combiné:
 
 https://github.com/Gyrcas/Bullethell_slide/assets/88252411/b0328aac-951c-417d-911c-9f840b4f387b
 
+---
+
+#### - Système de sauvegarde
+Dans mon jeu, j'ai un système de sauvegarde qui me permet de sauvegardé l'état du jeu pour ensuite le charger plus tard. Je l'ai inventé sans consulté d'autre source.
+
+https://github.com/Gyrcas/Bullethell_slide/assets/88252411/580b6741-0f95-435a-9d3f-de58c2e6b00e
 
 
