@@ -4,6 +4,8 @@ Dylan Ducas
 ## Introduction
 Artifact est un jeu inspiré par des jeux "bullethell", par exemple Touhou, mais avec une plus grande liberté de mouvement. Le jeu possède une histoire très courte et pas complète; La fin du jeu est juste après le premier boss.
 
+## Concepts
+
 #### - Smooth Polygon
 Dans ce projet, je voulais la possibilité de faire des niveaux possèdants de courbes suffisament arrondies comme dans le jeu dont je me suis inspiré au début: DATA WING.
 
