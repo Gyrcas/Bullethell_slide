@@ -2,7 +2,7 @@
 Dylan Ducas
 
 ## Introduction
-Artifact est un jeu inspiré par des jeux "bullethell", par exemple Touhou, mais avec une plus grande liberté de mouvement. Le jeu possède une histoire très courte et pas complète; La fin du jeu est juste après le premier boss.
+Artifact est un jeu inspiré par des jeux "bullethell", par exemple Touhou, mais avec une plus grande liberté de mouvement. Le jeu possède une histoire très courte et pas complète; La fin du jeu est juste après le premier boss. Vous incarné un petit vaisseau triangulaire, une sorte d'artéfacte, qui peut tirer des balles auto-guidées et des bombes et qui se déplace sans gravité.
 
 ## Concepts
 
@@ -54,3 +54,42 @@ dossier_de_jeu/mods/nom_du_mod/entities/player.tscn/mon_mod.tscn
 https://github.com/Gyrcas/Bullethell_slide/assets/88252411/7b17e4b7-175c-47cb-b59c-d61007a3b34b
 
 ---
+
+#### - Target
+Dans mon jeu, j'ai une target qui peut automatiquement visée les enemies. Les balles du joueur sont associées à la target et la suivent automatiquement
+Je l'ai inventé donc pas de source.
+
+![target](https://github.com/Gyrcas/Bullethell_slide/assets/88252411/2cca7316-8a3d-43f3-a98f-6f1b41529984)
+
+---
+
+#### - Shader black hole
+Dans mon jeu, j'ai combiné des shaders, plus exactement un effet de ripple et d'abération chromatique, pour créer des effets de trous noirs intéressants.
+J'ai pris ces shaders puis les ai combiné:
+
+[ripple](https://godotshaders.com/shader/ripple-shader/)
+
+[abération chromatique](https://godotshaders.com/shader/just-chromatic-aberration/)
+
+https://github.com/Gyrcas/Bullethell_slide/assets/88252411/b0328aac-951c-417d-911c-9f840b4f387b
+
+---
+
+#### - Système de sauvegarde
+Dans mon jeu, j'ai un système de sauvegarde qui me permet de sauvegardé l'état du jeu pour ensuite le charger plus tard. Je l'ai inventé sans consulté d'autre source.
+
+https://github.com/Gyrcas/Bullethell_slide/assets/88252411/580b6741-0f95-435a-9d3f-de58c2e6b00e
+
+---
+
+#### - InputsMapper
+Dans mon jeu, je me suis créer un système pour changer certaines touches dans mon jeu. J'ai recherché comment fonctionne le [InputMap](https://docs.godotengine.org/en/stable/classes/class_inputmap.html) pour trouvé comment faire.
+
+![inputsmapper](https://github.com/Gyrcas/Bullethell_slide/assets/88252411/53f185a4-22af-4bcb-921e-b80ede9c0dad)
+
+---
+
+#### - Système de perks
+Dans mon jeu, j'ai un système de perks(habilités) qui offre de grandes possibilités même si pour l'instant, il n'y a que le Dash pour l'instant. J'ai créé ce concept par moi-même donc pas de resources. Un menu en cercle permet de choisir le perk à executé.
+
+https://github.com/Gyrcas/Bullethell_slide/assets/88252411/b8664973-ec42-4ab1-aa6d-a4d4649d4084
