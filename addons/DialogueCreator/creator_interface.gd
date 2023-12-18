@@ -170,6 +170,6 @@ func _on_defaut_folder_pressed() -> void:
 
 
 func _on_file_dialog_dir_selected(dir : String) -> void:
-	config.default_path = dir
+	config.default_path = dir + "/"
 	var file : FileAccess = FileAccess.open(config_path,FileAccess.WRITE)
 	file.store_string(JSON.stringify(config))

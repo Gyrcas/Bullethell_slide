@@ -1,11 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://ynktybnwe6n2"]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://entities/entities_script/extractor.gd" id="1_sq0fq"]
 [ext_resource type="Script" path="res://entities/entities_script/BulletRes.gd" id="2_rkbe8"]
-[ext_resource type="Texture2D" uid="uid://cm12sdyt03knq" path="res://icon.svg" id="3_rasb6"]
-[ext_resource type="Animation" uid="uid://bqe02inrdvmmd" path="res://resources/animation/death_animation.res" id="4_ja6nq"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="3_rasb6"]
+[ext_resource type="Animation" path="res://resources/animation/death_animation.res" id="4_ja6nq"]
 
-[sub_resource type="Resource" id="Resource_nw3ps"]
+[sub_resource type="Resource" id="Resource_6l2ti"]
 resource_local_to_scene = true
 script = ExtResource("2_rkbe8")
 ignore_sender = false
@@ -32,10 +32,22 @@ _data = {
 
 [node name="extractor" type="CharacterBody2D"]
 script = ExtResource("1_sq0fq")
+move_range = Vector2(1000, 1000)
+move_cooldown = 5.0
+hole_cooldown = 10.0
+health_max = 5.0
+imunities = Array[String]([])
+vulnerabilities = Array[String]([])
+restistances = Array[String]([])
+nano_max = 100.0
 shoot_cooldown = 5.0
-bullet_preset = SubResource("Resource_nw3ps")
+bullet_preset = SubResource("Resource_6l2ti")
 max_speed = 5.0
 move_speed = 1.0
+turn_speed = 5.0
+friction = 3.0
+gravity = Vector2(0, 0)
+maniability = 0.25
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.5, 1.5)

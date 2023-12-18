@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dnmktv804y06w"]
+[gd_scene load_steps=27 format=3 uid="uid://ic0fjdqero37"]
 
 [ext_resource type="Script" path="res://entities/entities_script/player.gd" id="1_mah8r"]
 [ext_resource type="Script" path="res://resources/PolygonBody.gd" id="2_h6qts"]
@@ -12,7 +12,7 @@
 [ext_resource type="Script" path="res://ui/ui_script/perks.gd" id="7_o73hs"]
 [ext_resource type="Texture2D" uid="uid://dm8gav5stwvra" path="res://textures/spot.png" id="11_n7764"]
 
-[sub_resource type="Resource" id="Resource_rfrv4"]
+[sub_resource type="Resource" id="Resource_kemur"]
 resource_local_to_scene = true
 script = ExtResource("2_je2js")
 ignore_sender = true
@@ -242,7 +242,7 @@ wall_min_slide_angle = 3.14159
 platform_on_leave = 2
 safe_margin = 0.1
 script = ExtResource("1_mah8r")
-bullet_preset = SubResource("Resource_rfrv4")
+bullet_preset = SubResource("Resource_kemur")
 
 [node name="body" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-14, -14, 31, 0, -14, 13, -12, 0)
@@ -440,4 +440,4 @@ texture_scale = 50.0
 [connection signal="timeout" from="trail_timer" to="." method="_on_trail_timer_timeout" flags=18]
 [connection signal="body_exited" from="auto_target" to="." method="_on_auto_target_body_exited" flags=18]
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished" flags=18]
-[connection signal="timeout" from="ultra_mode/timer" to="." method="_on_ultra_mode_timer_timeout"]
+[connection signal="timeout" from="ultra_mode/timer" to="." method="_on_ultra_mode_timer_timeout" flags=18]
