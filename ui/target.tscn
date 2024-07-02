@@ -231,4 +231,4 @@ libraries = {
 
 [node name="two_click_target_timer" type="Timer" parent="."]
 
-[connection signal="timeout" from="two_click_target_timer" to="." method="_on_two_click_target_timer_timeout" flags=18]
+[connection signal="timeout" from="two_click_target_timer" to="." method="_on_two_click_target_timer_timeout"]

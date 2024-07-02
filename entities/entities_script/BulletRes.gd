@@ -5,13 +5,13 @@ class_name BulletRes
 @export var max_speed : float = 15
 @export var move_speed : float = 2.5
 @export var turn_speed : float = 10
-@export var target_node : Node2D
+var target_node : Node2D
 @export var damage : float = 1
 @export var maniability : float = 0.25
 @export var nano : int = 10
 @export var global_position : Vector2 = Vector2.ZERO
 @export var rotation : float = 0
-@export var sender : Node2D
+var sender : Node2D
 @export var velocity : Vector2 = Vector2.ZERO
 @export var color : Color = Color(1,1,1)
 @export var avoid_radius : float = 68

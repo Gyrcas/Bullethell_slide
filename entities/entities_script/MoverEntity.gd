@@ -92,7 +92,6 @@ func check_dependance() -> void:
 
 func _ready() -> void:
 	check_dependance()
-	bullet_preset.sender = self
 
 func shoot(can : bool = can_shoot && nano >= bullet_preset.nano) -> Bullet:
 	if can:

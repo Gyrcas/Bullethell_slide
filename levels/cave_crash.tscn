@@ -103,7 +103,7 @@ func _on_turret_died(_body : Variant = null) -> void:
 		door_turrets.open()
 "
 
-[sub_resource type="Resource" id="Resource_b25ke"]
+[sub_resource type="Resource" id="Resource_jac1o"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -120,7 +120,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bullet"
 
-[sub_resource type="Resource" id="Resource_pnn0y"]
+[sub_resource type="Resource" id="Resource_epf2h"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -137,7 +137,7 @@ color = Color(0.717647, 0, 0, 1)
 avoid_radius = 68.0
 type = "bullet"
 
-[sub_resource type="Resource" id="Resource_r4y6p"]
+[sub_resource type="Resource" id="Resource_ei658"]
 resource_local_to_scene = true
 script = ExtResource("7_4ea8p")
 ignore_sender = true
@@ -880,12 +880,12 @@ position = Vector2(14465, 324)
 [node name="turret" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(23472, 4966)
 rotation = -0.418446
-bullet_preset = SubResource("Resource_b25ke")
+bullet_preset = SubResource("Resource_jac1o")
 
 [node name="turret2" parent="." instance=ExtResource("7_tj60k")]
 position = Vector2(22219, 4772)
 rotation = 0.0724223
-bullet_preset = SubResource("Resource_pnn0y")
+bullet_preset = SubResource("Resource_epf2h")
 
 [node name="door_turrets" parent="." instance=ExtResource("4_336vv")]
 position = Vector2(21435, 5577)
@@ -896,7 +896,7 @@ dimensions = Vector2(50, 650)
 [node name="player" parent="." instance=ExtResource("4_mqsbn")]
 z_index = 1
 position = Vector2(583, 637)
-bullet_preset = SubResource("Resource_r4y6p")
+bullet_preset = SubResource("Resource_ei658")
 
 [node name="laser" parent="." instance=ExtResource("13_xknin")]
 position = Vector2(21169, 3710)
@@ -1055,9 +1055,7 @@ position = Vector2(559, -529)
 color = Color(0.141176, 0.141176, 0.141176, 1)
 polygon = PackedVector2Array(13875, -1794, 14039, -1776, 14020, -1696, 14035, -1573, 13835, -1587, 13813, -1661, 13864, -1723)
 
-[connection signal="interacted" from="save_pillar" to="." method="_on_save_pillar_interacted" flags=18]
-[connection signal="interacted" from="scientist_pod" to="." method="_on_scientist_pod_interacted" flags=18]
-[connection signal="died" from="turret" to="." method="_on_turret_died" flags=18]
-[connection signal="died" from="turret2" to="." method="_on_turret_died" flags=18]
-[connection signal="body_entered" from="boss_zone" to="boss_zone" method="_on_body_entered" flags=18]
-[connection signal="body_entered" from="cinematic" to="cinematic" method="_on_body_entered" flags=18]
+[connection signal="interacted" from="save_pillar" to="." method="_on_save_pillar_interacted"]
+[connection signal="interacted" from="scientist_pod" to="." method="_on_scientist_pod_interacted"]
+[connection signal="body_entered" from="boss_zone" to="boss_zone" method="_on_body_entered"]
+[connection signal="body_entered" from="cinematic" to="cinematic" method="_on_body_entered"]

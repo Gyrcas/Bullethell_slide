@@ -50,8 +50,13 @@ func add_debug() -> void:
 	debug.visible = debug_open
 	debug.global_position = debug_pos
 
+func root_child_entered(node : Node) -> void:
+	if node == get_tree().current_scene:
+		add_debug.call_deferred()
+
 func _ready() -> void:
 	add_debug.call_deferred()
+	get_tree().root.child_entered_tree.connect(root_child_entered)
 	var settings : Dictionary = JSON.parse_string(FS.read(
 		await NodeLinker.request_resource("settings.json",true)
 	))
@@ -80,7 +85,6 @@ func change_scene_to_file(filename : String, mod : String = "") -> void:
 		tween.kill()
 	get_tree().change_scene_to_file(path)
 	scene_changed.emit()
-	add_debug.call_deferred()
 
 signal scene_changed
 
